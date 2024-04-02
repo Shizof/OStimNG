@@ -26,7 +26,7 @@ set(CommonLibPath "extern/CommonLibSSE-NG")
 set(CommonLibName "CommonLibSSE")
 set(GameVersion "Skyrim")
 
-if (DEFINED CommonLibPath AND NOT ${CommonLibPath} STREQUAL "")
+if (DEFINED CommonLibPath AND NOT ${CommonLibPath} STREQUAL "" AND IS_DIRECTORY ${CommonLibPath})
         add_subdirectory(${CommonLibPath} ${CommonLibName} EXCLUDE_FROM_ALL)
 else ()
         message(
