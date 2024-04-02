@@ -101,8 +101,8 @@ extern "C" DLLEXPORT constinit auto SKSEPlugin_Version = []() {
     v.PluginVersion(REL::Version("7.3.5.4"sv));
     v.PluginName("OStim");
     v.AuthorName("VersuchDrei");
-    v.UsesAddressLibrary();
-    v.UsesNoStructs();
+    v.UsesAddressLibrary(true);
+    v.HasNoStructUse(true);
 
     return v;
 }();
@@ -115,7 +115,7 @@ extern "C" DLLEXPORT bool SKSEAPI SKSEPlugin_Query(const SKSE::QueryInterface* a
     return true;
 }
 
-extern "C" DLLEXPORT bool SKSEAPI SKSEPlugin_Load(const LoadInterface* skse) {
+extern "C" DLLEXPORT bool SKSEAPI SKSEPlugin_Load(const SKSE::LoadInterface* skse) {
     InitializeLogging();
 
     auto* plugin = PluginDeclaration::GetSingleton();
