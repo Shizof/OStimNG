@@ -117,6 +117,9 @@ namespace GameAPI {
     }
 
     void GameCamera::toggleFlyCamInner() {
+        if (REL::Module::IsVR()) {
+            return; // TODO: TFC crashes in VR, we may still want some version of it?
+        }
         const auto scriptFactory = RE::IFormFactory::GetConcreteFormFactoryByType<RE::Script>();
         const auto script = scriptFactory ? scriptFactory->Create() : nullptr;
         if (script) {
