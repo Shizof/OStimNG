@@ -36,7 +36,7 @@ namespace UI::Search {
             OverrideFunction(optionBoxes, new doSearchFunction, "doSearch");
             OverrideFunction(optionBoxes, new doSelectOptionFunction, "doSelectOption");
             OverrideFunction(optionBoxes, new doSetInputtingTextFunction, "doSetInputtingText");
-
+            OStimMenu::PostRegister();
         });
     }
 

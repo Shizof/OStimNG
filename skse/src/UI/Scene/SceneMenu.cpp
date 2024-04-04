@@ -26,6 +26,7 @@ namespace UI::Scene {
 
             RE::GFxValue args[1]{UI::Settings::fadeTime};
             optionBoxes.Invoke("SetSettings", nullptr, args, 1);
+            OStimMenu::PostRegister();
         });
     }
 
