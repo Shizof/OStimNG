@@ -27,7 +27,16 @@ namespace UI {
         }
     }
 
-    void OStimMenu::PostRegister() {}
+    void OStimMenu::PostRegister() { 
+        logger::info("PostRegister, hiding menu {}", menuName);
+        auto ui = RE::UI::GetSingleton();
+        if (ui) {
+            auto msgQ = RE::UIMessageQueue::GetSingleton();
+            if (msgQ) {
+                msgQ->AddMessage(menuName, RE::UI_MESSAGE_TYPE::kHide, nullptr);
+            }
+        }
+    }
 
     void OStimMenu::Register(std::string menuName, RE::UI::Create_t* createFn) {
         auto ui = RE::UI::GetSingleton();
