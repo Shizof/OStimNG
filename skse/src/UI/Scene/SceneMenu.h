@@ -45,9 +45,9 @@ namespace UI::Scene {
 			optionsOpen = isOpen;
 		}
 		void BuildOptionsData();
+        void BuildMenuData(MenuData& menudata);
 
 	private:
-		void BuildMenuData(MenuData& menudata);
 		void SendControl(int32_t control);
 		void GetOptionBoxes(RE::GFxValue& optionBoxes);
 		void GetMenuSelectorMenu(RE::GFxValue& settingsMenu);
