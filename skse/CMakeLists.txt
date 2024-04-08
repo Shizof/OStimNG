@@ -226,6 +226,15 @@ set(sources
         src/ModAPI/OstimNG-API-Main.h
         src/ModAPI/OstimNG-API-Scene.h 
         src/ModAPI/OstimNG-API-Scene.cpp
+	src/VRAPI/OstimVRinterface001.h
+	src/VRAPI/OstimVRinterface001.cpp
+	src/VRAPI/OstimVRpluginapi.h
+	src/VRAPI/OstimVRpluginapi.cpp
+	src/VRAPI/OstimVR.h
+	src/VRAPI/OstimVR.cpp
+	src/VRAPI/vrikinterface001.h
+	src/VRAPI/vrikinterface001.cpp
+    src/VRAPI/Utility.hpp
 
         ${CMAKE_CURRENT_BINARY_DIR}/version.rc)
 
