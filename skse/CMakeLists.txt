@@ -234,6 +234,8 @@ set(sources
 	src/VRAPI/OstimVR.cpp
 	src/VRAPI/vrikinterface001.h
 	src/VRAPI/vrikinterface001.cpp
+	src/VRAPI/spellwheelinterface001.h
+	src/VRAPI/spellwheelinterface001.cpp
     src/VRAPI/Utility.hpp
 
         ${CMAKE_CURRENT_BINARY_DIR}/version.rc)
