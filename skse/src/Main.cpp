@@ -79,6 +79,12 @@ namespace {
                 } else {
                     logger::info("Did not get VRIK interface");
                 }
+                OStimVR::spellWheelInterface = spellwheelPluginApi::getSpellWheelInterface001();
+                if (OStimVR::spellWheelInterface) {
+                    logger::info("Got Spell Wheel VR interface");
+                } else {
+                    logger::info("Did not get Spell Wheel VR interface");
+                }
 
                 Core::postpostLoad();
 
