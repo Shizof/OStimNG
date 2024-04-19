@@ -143,16 +143,88 @@ bool OstimVRPluginAPI::OstimVRInterface001::InTransition()
     auto state = UI::UIState::GetSingleton();
     auto currentNode = state->currentNode;
 
-    bool isInTransition = !currentNode || (currentNode->isTransition || state->currentThread->isInSequence() ||
-            (state->currentThread->getThreadFlags() & OStim::ThreadFlag::NO_PLAYER_CONTROL));
+    return currentNode && currentNode->isTransition;
 
-    if (!isInTransition)
-    {
-        UI::Scene::MenuData menuData;
+    //check if data exists
+       /* UI::Scene::MenuData menuData;
         GetOstimSceneMenuData(menuData); 
 
         return (menuData.options.size() == 0);
-    } else {
-        return true;
+    */
+}
+
+bool OstimVRPluginAPI::OstimVRInterface001::InSequence() {
+    auto state = UI::UIState::GetSingleton();
+        
+    return (state && state->currentThread && (state->currentThread->isInSequence() ||
+            ((state->currentThread && state->currentThread->getThreadFlags() & OStim::ThreadFlag::NO_PLAYER_CONTROL))));
+        //}
+}
+
+void OstimVRPluginAPI::OstimVRInterface001::GetSceneOffsets(float& offsetX, float& offsetY, float& offsetZ, float& rotationOffset) 
+{
+    OStimVR::GetSceneOffsets(offsetX, offsetY, offsetZ, rotationOffset);
+}
+
+void OstimVRPluginAPI::OstimVRInterface001::GetGlobalOffsets(float& offsetX, float& offsetY, float& offsetZ, float& rotationOffset) 
+{
+    OStimVR::GetGlobalOffsets(offsetX, offsetY, offsetZ, rotationOffset);
+}
+
+void OstimVRPluginAPI::OstimVRInterface001::ModifyOffsets(float offsetX, float offsetY, float offsetZ, float rotationOffset, bool global) 
+{
+    OStimVR::ModifyOffsets(offsetX, offsetY, offsetZ, rotationOffset, global);
+}
+
+void OstimVRPluginAPI::OstimVRInterface001::SaveGlobalOffsets() 
+{ 
+    OStimVR::saveGlobalAlignmentConfig(); 
+}
+
+void OstimVRPluginAPI::OstimVRInterface001::SaveSceneOffsets() { OStimVR::saveSceneAlignmentsConfig(); }
+
+void OstimVRPluginAPI::OstimVRInterface001::SaveSceneOffsetsForAllSet() 
+{ 
+    OStimVR::saveSceneAlignmentsForAllSetConfig();
+}
+
+void OstimVRPluginAPI::OstimVRInterface001::GetExcitements(float& domRatio, float& subRatio, float& thirdRatio,
+                                                           bool& domEnabled, bool& subEnabled, bool& thirdEnabled) {
+    OStim::ThreadManager* threadManager = OStim::ThreadManager::GetSingleton();
+
+    if (threadManager != nullptr && threadManager->playerThreadRunning()) 
+    {
+        auto playerThread = threadManager->getPlayerThread();
+        if (playerThread != nullptr) 
+        {
+            auto domActor = playerThread->GetActor(0);
+            auto subActor = playerThread->GetActor(1);
+            auto thirdActor = playerThread->GetActor(2);
+
+            if (domActor != nullptr) {
+                domEnabled = true;
+                domRatio = clamp(domActor->getExcitement() / 100.0f, 0.0f, 1.0f);
+            } 
+            else {
+                domEnabled = false;
+                domRatio = 0.0f;
+            }
+            if (subActor != nullptr) {
+                subEnabled = true;
+                subRatio = clamp(subActor->getExcitement() / 100.0f, 0.0f, 1.0f);
+            } 
+            else {
+                subEnabled = false;
+                subRatio = 0.0f;
+            }
+            if (thirdActor != nullptr) {
+                thirdEnabled = true;
+                thirdRatio = clamp(thirdActor->getExcitement() / 100.0f, 0.0f, 1.0f);
+            } 
+            else {
+                thirdEnabled = false;
+                thirdRatio = 0.0f;
+            }
+        }
     }
 }

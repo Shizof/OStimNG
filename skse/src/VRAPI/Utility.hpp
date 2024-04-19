@@ -18,6 +18,7 @@
 #include <deque>
 #include <random>
 #include <regex>
+#include <iomanip>
 
 #define TOLERANCE   0.00000001f
 
@@ -1242,6 +1243,119 @@ static inline RE::NiPoint3 GetForwardVector(float rotationAngleRadians)
 static inline RE::NiPoint3 GetSidewaysVector(const RE::NiPoint3& forwardVector) 
 {
     return RE::NiPoint3(-forwardVector.y, forwardVector.x, 0.0f); 
+}
+
+
+// Fetches information about a node
+inline std::string getNodeDesc(RE::NiAVObject* node) {
+    // Use periods to indicate the depth in the scene graph
+    if (!node) {
+        return "Missing node";
+    }
+
+    // Include the node's type followed by its name
+    std::string text;
+    if (node->GetRTTI() && node->GetRTTI()->name)
+        text = text + node->GetRTTI()->name + " ";
+    else
+        text = text + "UnknownType ";
+    if (node->name.empty() == false)
+        text = text + node->name.c_str();
+    else
+        text = text + "Unnamed";
+
+    return text;
+}
+
+// Writes information about a node to the log file
+inline void logNode(int depth, RE::NiAVObject* node) {
+    auto text = std::string(depth, '.') + getNodeDesc(node);
+    float h6, a6, b6;
+    node->world.rotate.ToEulerAnglesXYZ(h6, a6, b6);
+    float h6l, a6l, b6l;
+    node->local.rotate.ToEulerAnglesXYZ(h6l, a6l, b6l);
+    h6 = h6 * 57.295776f;
+    a6 = a6 * 57.295776f;
+    b6 = b6 * 57.295776f;
+    h6l = h6l * 57.295776f;
+    a6l = a6l * 57.295776f;
+    b6l = b6l * 57.295776f;
+    logger::info("{}: {} -Rot: {}|{}|{} - {}|{}|{}", depth, text.c_str(), h6, a6, b6, h6l, a6l, b6l);
+}
+
+// Lists all parents of a bone to the log file
+inline void logParents(RE::NiAVObject* bone) {
+    RE::NiNode* node = bone ? bone->AsNode() : 0;
+    int depth = 1;
+    while (node) {
+        // auto blanks = std::string(depth, '.');
+        // log("%sNode name = %s, RTTI = %s\n", blanks.c_str(), node->m_name, node->GetRTTI()->name);
+        logNode(depth, node);
+        node = node->parent;
+        ++depth;
+    }
+}
+
+// Lists all children of a bone to the log file, filtering by RTTI type name
+inline void logChildren(RE::NiAVObject* bone, int depth, int maxDepth, const char* filter) {
+    if (!bone) return;
+
+    if (filter != 0 && filter[0]) {
+        if (bone->GetRTTI()->name != nullptr && strcmp(bone->GetRTTI()->name, filter) != 0) {
+            return;
+        }
+    }
+    // auto blanks = std::string(depth, '.');
+    // log("%sNode name = %s, RTTI = %s\n", blanks.c_str(), bone->m_name, bone->GetRTTI()->name);
+    logNode(depth, bone);
+    RE::NiNode* node = bone ? bone->AsNode() : 0;
+    if (!node) return;
+
+    for (auto& child : node->GetChildren()) {
+        if (depth < maxDepth || maxDepth < 0) {
+            logChildren(child.get(), depth + 1, maxDepth, filter);
+        }
+    }
+}
+inline RE::NiAVObject* getplayerSkeletonRoot(bool firstPerson) {
+    auto player = RE::PlayerCharacter::GetSingleton();
+    return player->Get3D1(firstPerson);
+}
+
+static inline void GetPlayerNodeList() {
+    logger::info("------------Player first person skeleton-------------");
+    logChildren(getplayerSkeletonRoot(true), 0, 100, "");
+    logger::info("------------Player third person skeleton-------------");
+    logChildren(getplayerSkeletonRoot(false), 0, 100, "");
+}	
+
+
+
+static inline std::string floatToStr(float& number, int precision) 
+{
+    std::stringstream ss;
+    ss << std::fixed << std::setprecision(precision) << number;
+    std::string mystring = ss.str();
+    return mystring;
+}
+
+template <typename T>
+static inline std::string join(const T& v, const std::string& delim) {
+    std::ostringstream s;
+    for (const auto& i : v) {
+        if (&i != &v[0]) {
+            s << delim;
+        }
+        s << i;
+    }
+    return s.str();
+}
+
+static inline std::string removeDigits(std::string& str)
+{
+    std::string newStr = str;
+    newStr.erase(std::remove_if(std::begin(newStr), std::end(newStr), [](auto ch) { return std::isdigit(ch); }), newStr.end());
+    return newStr;
 }
 
 #pragma warning(pop)
