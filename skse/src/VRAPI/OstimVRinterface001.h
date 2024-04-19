@@ -40,6 +40,22 @@ namespace OstimVRPluginAPI
         virtual bool IsCameraFirstPerson() = 0;
 
         virtual bool InTransition() = 0;
+
+        virtual bool InSequence() = 0;
+
+        virtual void GetSceneOffsets(float& offsetX, float& offsetY, float& offsetZ, float& rotationOffset) = 0;
+
+        virtual void GetGlobalOffsets(float& offsetX, float& offsetY, float& offsetZ, float& rotationOffset) = 0;
+
+        virtual void ModifyOffsets(float offsetX, float offsetY, float offsetZ, float rotationOffset, bool global) = 0;
+
+        virtual void SaveGlobalOffsets() = 0;
+
+        virtual void SaveSceneOffsets() = 0;
+
+        virtual void SaveSceneOffsetsForAllSet() = 0;
+
+        virtual void GetExcitements(float& domRatio, float& subRatio, float& thirdRatio, bool& domEnabled, bool& subEnabled, bool& thirdEnabled) = 0;
     };
 }  // namespace OstimVRPluginAPI
 
