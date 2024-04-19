@@ -80,6 +80,8 @@ namespace Threading {
 
         inline Threading::Threads::NodeHandler* getNodeHandler() { return nodeHandler; }
     
+        inline GameAPI::GamePosition getCenter() { return center; };
+
         virtual RE::BSEventNotifyControl ProcessEvent(const RE::BSAnimationGraphEvent* a_event, RE::BSTEventSource<RE::BSAnimationGraphEvent>* a_eventSource) override;
 
         Serialization::OldThread serialize();

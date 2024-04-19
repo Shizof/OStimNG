@@ -236,6 +236,8 @@ set(sources
 	src/VRAPI/vrikinterface001.cpp
 	src/VRAPI/spellwheelinterface001.h
 	src/VRAPI/spellwheelinterface001.cpp
+	src/VRAPI/ControllerFixinterface001.h
+	src/VRAPI/ControllerFixinterface001.cpp
     src/VRAPI/Utility.hpp
 
         ${CMAKE_CURRENT_BINARY_DIR}/version.rc)
