@@ -33,6 +33,7 @@ namespace OStimVR
     float lockHmdSpeed = 50.0f;
 
     // OStimVR Settings General
+    int enableVRIKScaling = 1;
     float heightAdjustSpeed = 1.0f;
     int defaultThirdPerson = 0;
 
@@ -138,6 +139,19 @@ namespace OStimVR
                 /*if (CurrentCameraFirstPerson) {
                     vrikInterface->setSettingDouble("lockHmdToBody", 1);
                 }*/
+                if (enableVRIKScaling) {
+                    auto gameActors = state->currentThread->getGameActors();
+                    for (int i = 0; i < gameActors.size(); i++) {
+                        if (gameActors[i].isPlayer()) {
+                            const float playerScale = gameActors[i].getScale();
+                            vrikInterface->setSettingDouble("bodySize", playerScale);
+                            vrikInterface->setSettingDouble("armSize", playerScale);
+                            vrikInterface->setSettingDouble("armLength", 1.0f);
+
+                            break;
+                        }
+                    }
+                }
             }
         }
     }
@@ -174,7 +188,23 @@ namespace OStimVR
         /*if (CurrentCameraFirstPerson)
         {
             vrikInterface->setSettingDouble("lockHmdToBody", 1);        
-        } */    
+        } */  
+        if (enableVRIKScaling && state && state->currentThread) 
+        {
+            auto gameActors = state->currentThread->getGameActors();
+            for (int i = 0; i < gameActors.size(); i++) 
+            {
+                if (gameActors[i].isPlayer()) 
+                {
+                    const float playerScale = gameActors[i].getScale();
+                    vrikInterface->setSettingDouble("bodySize", playerScale);
+                    vrikInterface->setSettingDouble("armSize", playerScale);
+                    vrikInterface->setSettingDouble("armLength", 1.0f);
+
+                    break;
+                }
+            }
+        }
     }
 
     void SetOstimVRSettings(bool firstPerson)
@@ -452,8 +482,11 @@ namespace OStimVR
         output << "LockHmdMinThreshold = 2.0     #Lock HMD in place min threshold. May cause nausea at 0. Default is 2.0.\n";
         output << "LockHmdSpeed = 50.0           #Lock HMD in place speed. May cause nausea at high values if used with low min-max threshold values. You can increase it to make it faster to snap in place. Default is 50.0.\n";
         output << "\n";
-        output << "# OStimVR Settings General\n";
-        output << "HeightAdjustSpeed = 1.0       #Snapback speed for viewpoint. Higher speeds may cause nausea. Default is 1.0.\n";
+        output << "# OStimVR Settings General\n";         
+        output << "EnableVRIKScaling = 1         #Apply Ostim scaling settings to VRIK body.\n";
+        output << "\n";
+        output << "HeightAdjustSpeed = 1.0       #Snapback speed for viewpoint. Higher speeds may cause nausea. "
+                  "Default is 1.0.\n";
         output << "\n";
         output << "ShowControllersInThirdPerson = 1 #Shows openvr controllers while in third person mode.\n ";
         output << "\n";
@@ -511,9 +544,12 @@ namespace OStimVR
                             else if (variableName == "HeightAdjustSpeed") {
                                 heightAdjustSpeed = std::strtof(variableValue.c_str(), 0);
                             } 
+                            else if (variableName == "EnableVRIKScaling") {
+                                enableVRIKScaling = std::stoi(variableValue);
+                            } 
                             else if (variableName == "ShowControllersInThirdPerson") {
                                 showControllersInThirdPerson = std::stoi(variableValue);
-                            } 
+                            }  
                             else if (variableName == "DefaultThirdPerson") {
                                 defaultThirdPerson = std::stoi(variableValue);
 
