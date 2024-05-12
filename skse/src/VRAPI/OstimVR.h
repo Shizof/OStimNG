@@ -1,6 +1,7 @@
 #pragma once
 #include <PCH.h>
 #include "vrikinterface001.h"
+#include "planckinterface001.h"
 #include "spellwheelinterface001.h"
 #include "ControllerFixinterface001.h"
 #include "Utility.hpp"
@@ -17,6 +18,7 @@ namespace OStimVR
     using VM = RE::BSScript::Internal::VirtualMachine;
 
     extern vrikPluginApi::IVrikInterface001* vrikInterface;
+    extern PlanckPluginAPI::IPlanckInterface001* planckInterface;
     extern spellwheelPluginApi::ISpellWheelInterface001* spellWheelInterface;
     extern ControllerFixPluginApi::IControllerFixInterface001* controllerFixInterface;
 
@@ -36,7 +38,7 @@ namespace OStimVR
     void ModifyOffsets(float offsetX, float offsetY, float offsetZ, float rotationOffset, bool global);
     void PrintNodesTree(int depth, std::vector<Graph::Node*>& visitedList, Graph::Node* node);
 
-    void VRIKLockPositionAndRotation(float rotSin, float rotCos, float x, float y, float z, float r);
+    void VRIKLockPositionAndRotation(float rotSin, float rotCos, float x, float y, float z, float r, float playerScale);
 
 
     struct OstimVRAlignment
