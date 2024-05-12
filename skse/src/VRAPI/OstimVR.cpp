@@ -3,6 +3,7 @@
 namespace OStimVR 
 {
     vrikPluginApi::IVrikInterface001* vrikInterface;
+    PlanckPluginAPI::IPlanckInterface001* planckInterface;
     spellwheelPluginApi::ISpellWheelInterface001* spellWheelInterface;
     ControllerFixPluginApi::IControllerFixInterface001* controllerFixInterface;
 
@@ -40,6 +41,8 @@ namespace OStimVR
     int showControllersInThirdPerson = 1;
 
     bool CurrentCameraFirstPerson = true;
+
+    std::vector<RE::Actor*> aggressionIgnoredActorsList;
 
     std::unordered_map<std::string, OstimVRAlignment> sceneAlignmentMap;
     OstimVRAlignment globalAlignments;
@@ -156,7 +159,7 @@ namespace OStimVR
         }
     }
 
-    void VRIKLockPositionAndRotation(float rotSin, float rotCos, float x, float y, float z, float r)
+    void VRIKLockPositionAndRotation(float rotSin, float rotCos, float x, float y, float z, float r, float playerScale)
     {
         ostimAlignmentX = x;
         ostimAlignmentY = y;
@@ -189,21 +192,11 @@ namespace OStimVR
         {
             vrikInterface->setSettingDouble("lockHmdToBody", 1);        
         } */  
-        if (enableVRIKScaling && state && state->currentThread) 
+        if (enableVRIKScaling) 
         {
-            auto gameActors = state->currentThread->getGameActors();
-            for (int i = 0; i < gameActors.size(); i++) 
-            {
-                if (gameActors[i].isPlayer()) 
-                {
-                    const float playerScale = gameActors[i].getScale();
-                    vrikInterface->setSettingDouble("bodySize", playerScale);
-                    vrikInterface->setSettingDouble("armSize", playerScale);
-                    vrikInterface->setSettingDouble("armLength", 1.0f);
-
-                    break;
-                }
-            }
+            vrikInterface->setSettingDouble("bodySize", playerScale);
+            vrikInterface->setSettingDouble("armSize", playerScale);
+            vrikInterface->setSettingDouble("armLength", 1.0f);
         }
     }
 
@@ -381,6 +374,22 @@ namespace OStimVR
         }
         
         CameraSwitchFunc(!defaultThirdPerson);
+
+        if (planckInterface != nullptr) {
+            aggressionIgnoredActorsList.clear();
+            auto state = UI::UIState::GetSingleton();
+            if (state) {
+                if (state->currentThread) {
+                    auto gameActors = state->currentThread->getGameActors();
+                    for (int i = 0; i < gameActors.size(); i++) {
+                        if (gameActors[i].form!=nullptr && gameActors[i].isPlayer() == false) {
+                            planckInterface->AddAggressionIgnoredActor(gameActors[i].form);
+                            aggressionIgnoredActorsList.emplace_back(gameActors[i].form);
+                        }
+                    }
+                }
+            }
+        }
     }
 
     void PlayerSceneEnd() 
@@ -388,6 +397,16 @@ namespace OStimVR
         // Set VRIK settings back
         if (vrikInterface != nullptr) {
             vrikInterface->restoreSettings();
+        }
+
+        // Set PLANCK setting back
+        if (planckInterface != nullptr) {
+            for (int i = 0; i < aggressionIgnoredActorsList.size(); i++) {
+                if (aggressionIgnoredActorsList[i] != nullptr) {
+                    planckInterface->RemoveAggressionIgnoredActor(aggressionIgnoredActorsList[i]);
+                }
+            }
+            aggressionIgnoredActorsList.clear();
         }
 
         RE::Setting* snapAmount = RE::GetINISetting("fGamepadLookAngleSnapAmount:VRInput");

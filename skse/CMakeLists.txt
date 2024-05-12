@@ -239,6 +239,8 @@ set(sources
 	src/VRAPI/ControllerFixinterface001.h
 	src/VRAPI/ControllerFixinterface001.cpp
     src/VRAPI/Utility.hpp
+	src/VRAPI/planckinterface001.h
+	src/VRAPI/planckinterface001.cpp
 
         ${CMAKE_CURRENT_BINARY_DIR}/version.rc)
 

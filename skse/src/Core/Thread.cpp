@@ -383,7 +383,8 @@ namespace Threading {
         if (REL::Module::IsVR() && threadActor->getActor().isPlayer()) 
         {
             OStimVR::VRIKLockPositionAndRotation(sin, cos, center.x + cos * x + sin * y, center.y - sin * x + cos * y,
-                                                 center.z + z, center.r + MathUtil::toRadians(r));
+                                                 center.z + z, center.r + MathUtil::toRadians(r),
+                                                 threadActor->getActor().getScale());
         } 
         else 
         {
