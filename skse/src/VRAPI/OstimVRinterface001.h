@@ -56,6 +56,14 @@ namespace OstimVRPluginAPI
         virtual void SaveSceneOffsetsForAllSet() = 0;
 
         virtual void GetExcitements(float& domRatio, float& subRatio, float& thirdRatio, bool& domEnabled, bool& subEnabled, bool& thirdEnabled) = 0;
+                
+        virtual bool IsPLANCKCollisionsEnabled() = 0;
+
+        virtual bool IsHandTrackingEnabled() = 0;
+
+        virtual void TogglePLANCKMode() = 0;
+
+        virtual void ToggleHandTrackingMode() = 0;
     };
 }  // namespace OstimVRPluginAPI
 

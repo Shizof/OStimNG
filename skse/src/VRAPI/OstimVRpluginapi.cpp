@@ -55,9 +55,8 @@ void OstimVRPluginAPI::OstimVRInterface001::GetMenuData(char ** outStr, int & ou
     // Converting menuData to string here (doing it this way instead of vector or std::string etc. so that older c++ versions can read it)
     for (int i = 0; i < menuData.options.size(); i++) 
     {
-        //order is nodeId|title|description|imagePath|border
+        //order is nodeId|description|imagePath|border
         std::string str= menuData.options[i].nodeId + "|" 
-            + menuData.options[i].title + "|"
         + menuData.options[i].description + "|"
         + menuData.options[i].imagePath + "|"
         + menuData.options[i].border;
@@ -83,7 +82,7 @@ void OstimVRPluginAPI::OstimVRInterface001::SelectOption(const char* id)
         if (strcmp(id, "options") == 0)
         {
             sceneMenu->SetOptionsOpen(true);
-            sceneMenu->UpdateMenuData();
+            //sceneMenu->UpdateMenuData();
         } 
         else 
         {
@@ -227,4 +226,29 @@ void OstimVRPluginAPI::OstimVRInterface001::GetExcitements(float& domRatio, floa
             }
         }
     }
+}
+
+
+bool OstimVRPluginAPI::OstimVRInterface001::IsPLANCKCollisionsEnabled() {
+    return OStimVR::disablePLANCKduringScenes == false;
+};
+
+bool OstimVRPluginAPI::OstimVRInterface001::IsHandTrackingEnabled() { return OStimVR::trackHands; };
+
+void OstimVRPluginAPI::OstimVRInterface001::TogglePLANCKMode() 
+{ 
+    OStimVR::disablePLANCKduringScenes = OStimVR::disablePLANCKduringScenes == false;
+    if (OStimVR::disablePLANCKduringScenes)
+    {
+        OStimVR::AddRagdollCollisionIgnoredActors();
+    }
+    else {
+        OStimVR::RemoveRagdollCollisionIgnoredActors();
+    }
+}
+
+void OstimVRPluginAPI::OstimVRInterface001::ToggleHandTrackingMode() 
+{
+    OStimVR::trackHands = OStimVR::trackHands == false;
+    OStimVR::SetVRIKHandTracking();
 }

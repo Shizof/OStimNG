@@ -58,9 +58,9 @@ namespace UI {
     void UIState::SetThread(Threading::Thread* thread) {
         currentThread = thread;
         currentNode = thread->getCurrentNodeInternal();
-        UI::Align::AlignMenu::GetMenu()->ThreadChanged();
-        UI::Scene::SceneMenu::GetMenu()->BuildOptionsData();
-        UI::Scene::SceneMenu::GetMenu()->UpdateMenuData();
+        //UI::Align::AlignMenu::GetMenu()->ThreadChanged();
+        //UI::Scene::SceneMenu::GetMenu()->BuildOptionsData();
+        //UI::Scene::SceneMenu::GetMenu()->UpdateMenuData();
     }
 
     void UIState::NodeChanged(Threading::Thread* thread, Graph::Node* node) {
@@ -70,7 +70,7 @@ namespace UI {
         currentNode = node;
         SKSE::GetTaskInterface()->AddTask([node]() {
             UI::Align::AlignMenu::GetMenu()->NodeChanged();
-            UI::Scene::SceneMenu::GetMenu()->UpdateMenuData();
+            //UI::Scene::SceneMenu::GetMenu()->UpdateMenuData();
             UI::Scene::SceneMenu::GetMenu()->UpdateSpeed();
         });        
     }
