@@ -78,7 +78,7 @@ namespace UI {
     void OStimMenu::AdvanceMovie(float a_interval, std::uint32_t a_currentTime) {
         Update();
         if (_isOpen) {
-            RE::IMenu::AdvanceMovie(a_interval, a_currentTime);
+            //RE::IMenu::AdvanceMovie(a_interval, a_currentTime);
         }
     }
 

@@ -95,7 +95,7 @@ namespace UI::Scene {
 	}
 
 	void SceneOptions::BuildOptions(MenuPage* parent, Graph::MenuNode& page) {
-		for (auto& option : page.options) {
+        for (auto& option : page.options) {
 			if (option.repeat == "actor") {
 				auto& thread = UI::UIState::GetSingleton()->currentThread;
 				for (auto& actorKvP : thread->getActors()) {

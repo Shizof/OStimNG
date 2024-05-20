@@ -25,12 +25,12 @@ namespace UI::Align {
         UI::Settings::LoadSettings();
         ApplyPositions();
 
-        QueueUITask([this]() {
+        /*QueueUITask([this]() {
             Locker locker(_lock);
             RE::GFxValue alignmentInfo;
             GetAlignmentInfo(alignmentInfo);
             alignmentInfo.Invoke("Show");
-        });
+        });*/
     }
 
     void AlignMenu::PostRegister() {
@@ -130,7 +130,7 @@ namespace UI::Align {
     }
 
     void AlignMenu::Handle(UI::Controls control) {
-        switch (control) {
+        /*switch (control) {
             case Up: {
                 ScrollSelectedField(-1);
             } break;
@@ -149,7 +149,7 @@ namespace UI::Align {
             case No: {
                 CycleIncrement();
             } break;
-        }
+        }*/
     }
 
     void AlignMenu::ApplyPositions() {

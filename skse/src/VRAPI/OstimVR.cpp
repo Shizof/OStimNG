@@ -38,11 +38,14 @@ namespace OStimVR
     float heightAdjustSpeed = 1.0f;
     int defaultThirdPerson = 0;
 
+    int disablePLANCKduringScenes = 0;
+
     int showControllersInThirdPerson = 1;
 
     bool CurrentCameraFirstPerson = true;
 
-    std::vector<RE::Actor*> aggressionIgnoredActorsList;
+    std::vector<RE::Actor*> ignoredActorsForAggressionList;
+    std::vector<RE::Actor*> ignoredActorsForCollisionList;
 
     std::unordered_map<std::string, OstimVRAlignment> sceneAlignmentMap;
     OstimVRAlignment globalAlignments;
@@ -315,6 +318,20 @@ namespace OStimVR
         }
     }
 
+    void SetVRIKHandTracking()
+    {
+        if (vrikInterface != nullptr) {
+            if (CurrentCameraFirstPerson && trackHands) {
+                vrikInterface->setSettingDouble("enableLeftArm", 1);
+                vrikInterface->setSettingDouble("enableRightArm", 1);
+                vrikInterface->setSettingDouble("enableInteractiveHands", 0);
+            } else {
+                vrikInterface->setSettingDouble("enableLeftArm", 0);
+                vrikInterface->setSettingDouble("enableRightArm", 0);
+            }
+        }
+    }
+
     void CameraSwitchFunc(bool firstPerson)
     {
         //logger::info("Applying {} settings", firstPerson ? "First Person" : "Third Person");
@@ -376,19 +393,60 @@ namespace OStimVR
         CameraSwitchFunc(!defaultThirdPerson);
 
         if (planckInterface != nullptr) {
-            aggressionIgnoredActorsList.clear();
+            ignoredActorsForAggressionList.clear();
+            if (disablePLANCKduringScenes) {
+                ignoredActorsForCollisionList.clear();
+            }
             auto state = UI::UIState::GetSingleton();
             if (state) {
                 if (state->currentThread) {
                     auto gameActors = state->currentThread->getGameActors();
                     for (int i = 0; i < gameActors.size(); i++) {
-                        if (gameActors[i].form!=nullptr && gameActors[i].isPlayer() == false) {
+                        if (gameActors[i].form != nullptr && gameActors[i].form->formID != 0x14) {
                             planckInterface->AddAggressionIgnoredActor(gameActors[i].form);
-                            aggressionIgnoredActorsList.emplace_back(gameActors[i].form);
+                            ignoredActorsForAggressionList.emplace_back(gameActors[i].form);
+                            if (disablePLANCKduringScenes) {
+                                planckInterface->AddIgnoredActor(gameActors[i].form);
+                                ignoredActorsForCollisionList.emplace_back(gameActors[i].form);
+                            }
                         }
                     }
                 }
+            }            
+        }
+    }
+
+    void AddRagdollCollisionIgnoredActors()
+    {
+        ignoredActorsForCollisionList.clear();
+        auto state = UI::UIState::GetSingleton();
+        if (state) {
+            if (state->currentThread) {
+                auto gameActors = state->currentThread->getGameActors();
+                for (int i = 0; i < gameActors.size(); i++) {
+                    if (gameActors[i].form != nullptr && gameActors[i].form->formID!=0x14) {
+                        if (disablePLANCKduringScenes) {
+                            //logger::error("Adding {:X} to planck ignored actors", gameActors[i].form->formID);
+
+                            planckInterface->AddIgnoredActor(gameActors[i].form);
+                        }
+                        ignoredActorsForCollisionList.emplace_back(gameActors[i].form);
+                    }
+                }
             }
+        } 
+    }
+
+    void RemoveRagdollCollisionIgnoredActors()
+    {
+        if (planckInterface != nullptr) {
+            for (int i = 0; i < ignoredActorsForCollisionList.size(); i++) {
+                if (ignoredActorsForCollisionList[i] != nullptr) {
+                    //logger::error("Removing {:X} from planck ignored actors", ignoredActorsForCollisionList[i]->formID);
+                    planckInterface->RemoveIgnoredActor(ignoredActorsForCollisionList[i]);
+                }
+            }
+            ignoredActorsForCollisionList.clear();
         }
     }
 
@@ -401,12 +459,13 @@ namespace OStimVR
 
         // Set PLANCK setting back
         if (planckInterface != nullptr) {
-            for (int i = 0; i < aggressionIgnoredActorsList.size(); i++) {
-                if (aggressionIgnoredActorsList[i] != nullptr) {
-                    planckInterface->RemoveAggressionIgnoredActor(aggressionIgnoredActorsList[i]);
+            for (int i = 0; i < ignoredActorsForAggressionList.size(); i++) {
+                if (ignoredActorsForAggressionList[i] != nullptr) {
+                    planckInterface->RemoveAggressionIgnoredActor(ignoredActorsForAggressionList[i]);
                 }
             }
-            aggressionIgnoredActorsList.clear();
+            ignoredActorsForAggressionList.clear();
+            RemoveRagdollCollisionIgnoredActors();
         }
 
         RE::Setting* snapAmount = RE::GetINISetting("fGamepadLookAngleSnapAmount:VRInput");
@@ -501,8 +560,10 @@ namespace OStimVR
         output << "LockHmdMinThreshold = 2.0     #Lock HMD in place min threshold. May cause nausea at 0. Default is 2.0.\n";
         output << "LockHmdSpeed = 50.0           #Lock HMD in place speed. May cause nausea at high values if used with low min-max threshold values. You can increase it to make it faster to snap in place. Default is 50.0.\n";
         output << "\n";
-        output << "# OStimVR Settings General\n";         
+        output << "# OStimVR Settings General\n";
         output << "EnableVRIKScaling = 1         #Apply Ostim scaling settings to VRIK body.\n";
+        output << "\n";
+        output << "DisablePLANCKduringScenes = 0   #Disable PLANCK collision during scenes.\n";
         output << "\n";
         output << "HeightAdjustSpeed = 1.0       #Snapback speed for viewpoint. Higher speeds may cause nausea. "
                   "Default is 1.0.\n";
@@ -573,6 +634,8 @@ namespace OStimVR
                                 defaultThirdPerson = std::stoi(variableValue);
 
                                 CurrentCameraFirstPerson = !defaultThirdPerson;
+                            } else if (variableName == "DisablePLANCKduringScenes") {
+                                disablePLANCKduringScenes = std::stoi(variableValue);
                             } 
                         }
                     }
