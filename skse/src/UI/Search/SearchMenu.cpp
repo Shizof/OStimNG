@@ -42,17 +42,17 @@ namespace UI::Search {
 
     void SearchMenu::SendControl(int32_t control) {
 
-        QueueUITask([this, control]() {
+        /*QueueUITask([this, control]() {
             Locker locker(_lock);
             RE::GFxValue optionBoxes;
             GetControlHandler(optionBoxes);
             const RE::GFxValue val{ control };
             optionBoxes.Invoke("HandleKeyboardInput", nullptr, &val, 1);
-        });
+        });*/
     }
 
     void SearchMenu::Handle(UI::Controls control) {
-        switch (control) {
+        /*switch (control) {
             case Up: {
                 SendControl(0);
             } break;
@@ -65,7 +65,7 @@ namespace UI::Search {
             case No: {
                 SendControl(5);
             } break;
-        }
+        }*/
     }
 
     void SearchMenu::Show() {
@@ -84,13 +84,13 @@ namespace UI::Search {
             }
         }
         
-        QueueUITask([this]() {
+        /*QueueUITask([this]() {
             Locker locker(_lock);
             RE::GFxValue optionBoxes;
             GetControlHandler(optionBoxes);
             const RE::GFxValue arg{ true };
             optionBoxes.Invoke("SetIsOpen", nullptr, &arg, 1);           
-        }); 
+        });*/ 
     }
 
     void SearchMenu::Hide() {

@@ -52,6 +52,13 @@ namespace OstimVRPluginAPI
 
         virtual void GetExcitements(float& domRatio, float& subRatio, float& thirdRatio, bool& domEnabled, bool& subEnabled, bool& thirdEnabled);
 
+        virtual bool IsPLANCKCollisionsEnabled();
+
+        virtual bool IsHandTrackingEnabled();
+
+        virtual void TogglePLANCKMode();
+
+        virtual void ToggleHandTrackingMode();
     };
 }  // namespace OstimVRPluginAPI
 extern OstimVRPluginAPI::OstimVRInterface001 g_interface001;
