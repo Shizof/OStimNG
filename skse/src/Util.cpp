@@ -77,7 +77,14 @@ namespace util {
         if (patch == 659 || patch == 1179) {
             path /= "My Games/Skyrim Special Edition GOG"sv;
         } else {
-            path /= "My Games/Skyrim Special Edition"sv;
+            if (REL::Module::IsVR())
+            {
+                path /= "My Games/Skyrim VR"sv;
+            }
+            else
+            {
+                path /= "My Games/Skyrim Special Edition"sv;
+            }
         }
 
         return path;
