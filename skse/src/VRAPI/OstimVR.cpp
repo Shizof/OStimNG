@@ -27,7 +27,7 @@ namespace OStimVR
 
     // OStimVR Settings 1st person
     int trackHands = 1;
-    float nearDistance = 2.0f;
+    float nearDistance = 3.0f;
 
     float lockHmdMinThreshold = 20.0f;
     float lockHmdMaxThreshold = 2.0f;
@@ -45,7 +45,6 @@ namespace OStimVR
     bool CurrentCameraFirstPerson = true;
 
     std::vector<RE::Actor*> ignoredActorsForAggressionList;
-    std::vector<RE::Actor*> ignoredActorsForCollisionList;
 
     std::unordered_map<std::string, OstimVRAlignment> sceneAlignmentMap;
     OstimVRAlignment globalAlignments;
@@ -60,35 +59,59 @@ namespace OStimVR
     float ostimAlignmentZ = 0.0f;
     float ostimAlignmentR = 0.0f;
 
-    void MovePlayerInThirdPersonStart() 
+    double activeRagdollStartDistanceOrgValue = 50.0;
+    double activeRagdollEndDistanceOrgValue = 60.0;
+
+    void MovePlayerInThirdPersonStart(bool firstPerson) 
     {
-        SKSE::GetTaskInterface()->AddTask([]() 
-        {
+        //SKSE::GetTaskInterface()->AddTask([firstPerson]() {
             OstimVRAlignment sceneAlignment;
             auto state = UI::UIState::GetSingleton();
             if (state) {
                 if (state->currentThread) {
                     auto center = state->currentThread->getCenter();
 
-                    float sin = std::sin(center.r);
-                    float cos = std::cos(center.r);
+                    if (firstPerson) {
+                        auto player = RE::PlayerCharacter::GetSingleton();
+                        if (player != nullptr && player->AsReference()) {
+                            RE::NiPoint3 newPos = player->AsReference()->GetPosition();
+                            newPos.x = center.x;
+                            newPos.y = center.y;
 
-                    auto player = RE::PlayerCharacter::GetSingleton();
-                    if (player != nullptr && player->AsReference()) {
-                        RE::NiPoint3 newPos = player->AsReference()->GetPosition(); 
-                        newPos.x = newPos.x + (sin * -50.0f);
-                        newPos.y = newPos.y + (cos * -50.0f);
+                            player->SetRotationZ(center.r);
+                            player->AsReference()->SetPosition(newPos);
+                        }
+                    } else {
+                        float sin = std::sin(center.r);
+                        float cos = std::cos(center.r);
 
-                        player->AsReference()->SetPosition(newPos);                  
+                        auto player = RE::PlayerCharacter::GetSingleton();
+                        if (player != nullptr && player->AsReference()) {
+                            RE::NiPoint3 newPos = player->AsReference()->GetPosition();
+
+                            // Forward displacement
+                             newPos.x = newPos.x + (sin * 25.0f);
+                             newPos.y = newPos.y + (cos * 25.0f);
+
+                            // Side displacement
+                            float sideDisplacement = 15.0f;
+                            newPos.x += (-cos * sideDisplacement);
+                            newPos.y += (sin * sideDisplacement);
+
+                            player->SetRotationZ(center.r + 1.571f);
+                            player->AsReference()->SetPosition(newPos);
+
+                            // player->AsReference()->SetPosition(RE::NiPoint3(center.x, center.y, center.z));
+                        }
                     }
                 }
-            }            
-        });
+            }
+        //});
     }
 
     void RotatePlayerInFirstPersonSwitch()
     { 
-        SKSE::GetTaskInterface()->AddTask([]() {
+        //SKSE::GetTaskInterface()->AddTask([]() {
             OstimVRAlignment sceneAlignment;
             auto state = UI::UIState::GetSingleton();
             if (state) {
@@ -104,7 +127,7 @@ namespace OStimVR
                     }
                 }
             }
-        });        
+        //});        
     }
 
     void ModifyAlignment()
@@ -206,7 +229,8 @@ namespace OStimVR
     void SetOstimVRSettings(bool firstPerson)
     {
         if (firstPerson) {
-            RotatePlayerInFirstPersonSwitch();
+            MovePlayerInThirdPersonStart(firstPerson);
+            //RotatePlayerInFirstPersonSwitch();
 
             EnablePlayerControlsFunc(VM::GetSingleton(), 0, 0, true, false, false, true, false, true, false, true, 0);
             DisablePlayerControlsFunc(VM::GetSingleton(), 0, 0, false, true, true, false, true, false, true, false, 0);
@@ -229,7 +253,34 @@ namespace OStimVR
                     *g_bDisablePlayerCollision = true;
                 }
             }
+        } else {
+            MovePlayerInThirdPersonStart(firstPerson);
         }
+        if (!firstPerson) {
+            auto ini = RE::INISettingCollection::GetSingleton();
+            if (ini) {
+                RE::Setting* playerCollision = ini->GetSetting("bDisablePlayerCollision:Havok");
+                if (playerCollision) {
+                    playerCollision->data.b = true;
+                    *g_bDisablePlayerCollision = true;
+                }
+            }
+
+            auto player = RE::PlayerCharacter::GetSingleton();
+            if (player != nullptr) player->SetAIDriven(false);
+            EnablePlayerControlsFunc(VM::GetSingleton(), 0, 0, true, false, false, true, false, true, false, true, 0);
+            DisablePlayerControlsFunc(VM::GetSingleton(), 0, 0, false, true, true, false, true, false, true, false, 0);
+
+            if (prevGamepadLookAngleSnapAmount >= 0) {
+                RE::Setting* snapAmount = RE::GetINISetting("fGamepadLookAngleSnapAmount:VRInput");
+                if (snapAmount) {
+                    snapAmount->data.f = prevGamepadLookAngleSnapAmount;
+                    *g_fGamepadLookAngleSnapAmount = prevGamepadLookAngleSnapAmount;
+                }
+            }
+        } 
+                
+        ModifyAlignment();
 
         if (vrikInterface != nullptr) {
             vrikInterface->setSettingDouble("lockHeightToBody", firstPerson ? 1.0 : lockHeightToBody);
@@ -258,33 +309,6 @@ namespace OStimVR
             vrikInterface->setSettingDouble("rotateHmdToBodySeconds", firstPerson ? 2.0 : 0);
             vrikInterface->setSettingDouble("lockHmdToBody", firstPerson ? 1 : 0);
         }
-
-        if (!firstPerson) 
-        {
-            auto ini = RE::INISettingCollection::GetSingleton();
-            if (ini) {
-                RE::Setting* playerCollision = ini->GetSetting("bDisablePlayerCollision:Havok");
-                if (playerCollision) {
-                    playerCollision->data.b = true;
-                    *g_bDisablePlayerCollision = true;
-                }
-            }
-
-            auto player = RE::PlayerCharacter::GetSingleton();
-            if (player != nullptr) player->SetAIDriven(false);
-            EnablePlayerControlsFunc(VM::GetSingleton(), 0, 0, true, false, false, true, false, true, false, true, 0);
-            DisablePlayerControlsFunc(VM::GetSingleton(), 0, 0, false, true, true, false, true, false, true, false, 0);
-
-            if (prevGamepadLookAngleSnapAmount >= 0) {
-                RE::Setting* snapAmount = RE::GetINISetting("fGamepadLookAngleSnapAmount:VRInput");
-                if (snapAmount) {
-                    snapAmount->data.f = prevGamepadLookAngleSnapAmount;
-                    *g_fGamepadLookAngleSnapAmount = prevGamepadLookAngleSnapAmount;
-                }
-            }
-            MovePlayerInThirdPersonStart();
-        }  
-        ModifyAlignment();
 
         if (showControllersInThirdPerson) 
         {
@@ -316,6 +340,8 @@ namespace OStimVR
                 }
             }*/
         }
+
+        
     }
 
     void SetVRIKHandTracking()
@@ -334,10 +360,34 @@ namespace OStimVR
 
     void CameraSwitchFunc(bool firstPerson)
     {
+        if (firstPerson)
+        {
+            auto state = UI::UIState::GetSingleton();
+            if (state) {
+                if (state->currentThread) {
+                    auto center = state->currentThread->getCenter();
+
+                    if (firstPerson) {
+                        auto player = RE::PlayerCharacter::GetSingleton();
+                        if (player != nullptr && player->AsReference()) {
+                            RE::NiPoint3 newPos = player->AsReference()->GetPosition();
+                            float distSqr = newPos.GetSquaredDistance(RE::NiPoint3(center.x, center.y, center.z));
+                            //logger::info("Dist: {}", distSqr);
+                            if (distSqr > 25000.0f)
+                            {
+                                RE::DebugNotification("You need to be closer to your real body.");
+                                return;
+                            }
+                        }
+                    }
+                }
+            }
+        }
         //logger::info("Applying {} settings", firstPerson ? "First Person" : "Third Person");
 
         CurrentCameraFirstPerson = firstPerson;
-        SetOstimVRSettings(firstPerson);
+
+        SKSE::GetTaskInterface()->AddTask([firstPerson]() { SetOstimVRSettings(firstPerson); });
     }
     
     void PlayerSceneStart() 
@@ -394,59 +444,48 @@ namespace OStimVR
 
         if (planckInterface != nullptr) {
             ignoredActorsForAggressionList.clear();
-            if (disablePLANCKduringScenes) {
-                ignoredActorsForCollisionList.clear();
-            }
             auto state = UI::UIState::GetSingleton();
             if (state) {
                 if (state->currentThread) {
                     auto gameActors = state->currentThread->getGameActors();
                     for (int i = 0; i < gameActors.size(); i++) {
-                        if (gameActors[i].form != nullptr && gameActors[i].form->formID != 0x14) {
+                        if (gameActors[i].form != nullptr  && gameActors[i].form->formID != 0x14) {
                             planckInterface->AddAggressionIgnoredActor(gameActors[i].form);
                             ignoredActorsForAggressionList.emplace_back(gameActors[i].form);
-                            if (disablePLANCKduringScenes) {
-                                planckInterface->AddIgnoredActor(gameActors[i].form);
-                                ignoredActorsForCollisionList.emplace_back(gameActors[i].form);
-                            }
                         }
                     }
                 }
-            }            
+            }  
+            if (disablePLANCKduringScenes)
+            {
+                planckInterface->GetSettingDouble("activeRagdollStartDistance", activeRagdollStartDistanceOrgValue);
+                planckInterface->GetSettingDouble("activeRagdollEndDistance", activeRagdollEndDistanceOrgValue);
+
+                planckInterface->SetSettingDouble("activeRagdollStartDistance", abs(activeRagdollStartDistanceOrgValue) * -1);
+                planckInterface->SetSettingDouble("activeRagdollEndDistance", abs(activeRagdollEndDistanceOrgValue) * -1);
+            }
         }
     }
 
     void AddRagdollCollisionIgnoredActors()
-    {
-        ignoredActorsForCollisionList.clear();
-        auto state = UI::UIState::GetSingleton();
-        if (state) {
-            if (state->currentThread) {
-                auto gameActors = state->currentThread->getGameActors();
-                for (int i = 0; i < gameActors.size(); i++) {
-                    if (gameActors[i].form != nullptr && gameActors[i].form->formID!=0x14) {
-                        if (disablePLANCKduringScenes) {
-                            //logger::error("Adding {:X} to planck ignored actors", gameActors[i].form->formID);
+    {        
+        if (disablePLANCKduringScenes) {
+            planckInterface->GetSettingDouble("activeRagdollStartDistance", activeRagdollStartDistanceOrgValue);
+            planckInterface->GetSettingDouble("activeRagdollEndDistance", activeRagdollEndDistanceOrgValue);
 
-                            planckInterface->AddIgnoredActor(gameActors[i].form);
-                        }
-                        ignoredActorsForCollisionList.emplace_back(gameActors[i].form);
-                    }
-                }
-            }
-        } 
+            planckInterface->SetSettingDouble("activeRagdollStartDistance", abs(activeRagdollStartDistanceOrgValue) * -1);
+            planckInterface->SetSettingDouble("activeRagdollEndDistance", abs(activeRagdollEndDistanceOrgValue) * -1);
+        }
     }
 
     void RemoveRagdollCollisionIgnoredActors()
     {
         if (planckInterface != nullptr) {
-            for (int i = 0; i < ignoredActorsForCollisionList.size(); i++) {
-                if (ignoredActorsForCollisionList[i] != nullptr) {
-                    //logger::error("Removing {:X} from planck ignored actors", ignoredActorsForCollisionList[i]->formID);
-                    planckInterface->RemoveIgnoredActor(ignoredActorsForCollisionList[i]);
-                }
-            }
-            ignoredActorsForCollisionList.clear();
+            planckInterface->GetSettingDouble("activeRagdollStartDistance", activeRagdollStartDistanceOrgValue);
+            planckInterface->GetSettingDouble("activeRagdollEndDistance", activeRagdollEndDistanceOrgValue);
+
+            planckInterface->SetSettingDouble("activeRagdollStartDistance", abs(activeRagdollStartDistanceOrgValue));
+            planckInterface->SetSettingDouble("activeRagdollEndDistance", abs(activeRagdollEndDistanceOrgValue));
         }
     }
 
@@ -526,6 +565,8 @@ namespace OStimVR
                 }
             }*/
         }
+
+        CurrentCameraFirstPerson = !defaultThirdPerson;
     }
 
     void saveNewConfig() 
@@ -553,7 +594,7 @@ namespace OStimVR
         output << "# OStimVR Settings 1st person\n";
         output << "TrackHands = 1                #When enabled, your VRIK body hands will be attached to your controllers.\n";
         output << "\n";
-        output << "NearDistance = 2.0            #Sets VRIK Neardistance value to this value automatically in Ostim VR scenes. Default is 2.0.\n";
+        output << "NearDistance = 3.0            #Sets VRIK Neardistance value to this value automatically in Ostim VR scenes. Default is 3.0.\n";
         output << "\n";
         output << "LockHmdMaxThreshold = 20.0    #Lock HMD in place max threshold. May cause nausea at 0. You can "
                   "tighten it to prevent going off place. Default is 20.0.\n";
