@@ -47,7 +47,7 @@ namespace {
     }
 
     void UnspecificedSenderMessageHandler(SKSE::MessagingInterface::Message* a_msg) {        
-        switch (a_msg->type) {
+        switch (a_msg->type) {            
             case OSAInterfaceExchangeMessage::kMessage_ExchangeInterface: {
                 OSAInterfaceExchangeMessage* exchangeMessage = (OSAInterfaceExchangeMessage*)a_msg->data;
                 exchangeMessage->interfaceMap = InterfaceMap::GetSingleton();
@@ -55,8 +55,13 @@ namespace {
             case OStim::InterfaceExchangeMessage::MESSAGE_TYPE: {
                 OStim::InterfaceExchangeMessage* message = (OStim::InterfaceExchangeMessage*)a_msg->data;
                 message->interfaceMap = Interface::InterfaceMapImpl::getSingleton();
-            }
-            case OstimVRPluginAPI::OstimVRMessage::kMessage_GetInterface : {
+            } break;
+        }
+    }
+
+    void OstimVRMessageHandler(SKSE::MessagingInterface::Message* a_msg) {
+        switch (a_msg->type) {            
+            case OstimVRPluginAPI::OstimVRMessage::kMessage_GetInterface: {
                 OstimVRPluginAPI::OstimVRMessage* ostimMessage = (OstimVRPluginAPI::OstimVRMessage*)a_msg->data;
                 ostimMessage->GetApiFunction = OstimVRPluginAPI::GetApi;
                 logger::info("Provided OstimVR plugin interface to {}", a_msg->sender);
@@ -67,10 +72,15 @@ namespace {
     void MessageHandler(SKSE::MessagingInterface::Message* a_msg) {        
         switch (a_msg->type) {
             case SKSE::MessagingInterface::kPostLoad: {
+                auto message = SKSE::GetMessagingInterface();
+                if (message) {
+                    message->RegisterListener(nullptr, OstimVRMessageHandler);
+                }
+
                 SKSE::GetNiNodeUpdateEventSource()->AddEventSink(Events::EventListener::GetSingleton());
                 SKSE::GetCrosshairRefEventSource()->AddEventSink(Events::EventListener::GetSingleton());
 
-                Core::postLoad();
+                Core::postLoad();                
             } break;
             case SKSE::MessagingInterface::kPostPostLoad: {
                 OStimVR::vrikInterface = vrikPluginApi::getVrikInterface001();
@@ -135,7 +145,7 @@ namespace {
 
 extern "C" DLLEXPORT constinit auto SKSEPlugin_Version = []() {
     SKSE::PluginVersionData v;
-    v.PluginVersion(REL::Version("7.3.0.3"sv));
+    v.PluginVersion(REL::Version("7.3.1.0"sv));
     v.PluginName("OStim");
     v.AuthorName("VersuchDrei");
     v.UsesAddressLibrary(true);
@@ -147,7 +157,7 @@ extern "C" DLLEXPORT constinit auto SKSEPlugin_Version = []() {
 extern "C" DLLEXPORT bool SKSEAPI SKSEPlugin_Query(const SKSE::QueryInterface* a_skse, SKSE::PluginInfo* a_info) {
     a_info->infoVersion = SKSE::PluginInfo::kVersion;
     a_info->name = "OStim";
-    a_info->version = 0x07030003;
+    a_info->version = 0x07030010;
 
     return true;
 }
