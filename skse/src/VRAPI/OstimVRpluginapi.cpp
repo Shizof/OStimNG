@@ -235,6 +235,8 @@ bool OstimVRPluginAPI::OstimVRInterface001::IsPLANCKCollisionsEnabled() {
 
 bool OstimVRPluginAPI::OstimVRInterface001::IsHandTrackingEnabled() { return OStimVR::trackHands; };
 
+bool OstimVRPluginAPI::OstimVRInterface001::IsLockHeightToBodyEnabled() { return OStimVR::lockHeightToBody; };
+
 void OstimVRPluginAPI::OstimVRInterface001::TogglePLANCKMode() 
 { 
     OStimVR::disablePLANCKduringScenes = OStimVR::disablePLANCKduringScenes == false;
@@ -251,4 +253,10 @@ void OstimVRPluginAPI::OstimVRInterface001::ToggleHandTrackingMode()
 {
     OStimVR::trackHands = OStimVR::trackHands == false;
     OStimVR::SetVRIKHandTracking();
+}
+
+
+void OstimVRPluginAPI::OstimVRInterface001::ToggleLockHeightToBodyMode() {
+    OStimVR::lockHeightToBody = OStimVR::lockHeightToBody == false;
+    OStimVR::SetVRIKLockHeightToBody();
 }

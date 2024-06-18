@@ -22,6 +22,7 @@ namespace OStimVR
     extern spellwheelPluginApi::ISpellWheelInterface001* spellWheelInterface;
     extern ControllerFixPluginApi::IControllerFixInterface001* controllerFixInterface;
 
+    extern int lockHeightToBody;
     extern int trackHands;
     extern int disablePLANCKduringScenes;
     extern bool CurrentCameraFirstPerson;
@@ -30,6 +31,7 @@ namespace OStimVR
     void RemoveRagdollCollisionIgnoredActors();
     void SetVRIKHandTracking();
 
+    void SetVRIKLockHeightToBody();
 
     void PlayerSceneStart();
     void PlayerSceneEnd();

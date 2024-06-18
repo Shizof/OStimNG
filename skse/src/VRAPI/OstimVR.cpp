@@ -358,6 +358,13 @@ namespace OStimVR
         }
     }
 
+    void SetVRIKLockHeightToBody() 
+    {
+        if (vrikInterface != nullptr) {
+            vrikInterface->setSettingDouble("lockHeightToBody", CurrentCameraFirstPerson ? 1.0 : lockHeightToBody);
+        }
+    }
+
     void CameraSwitchFunc(bool firstPerson)
     {
         if (firstPerson)

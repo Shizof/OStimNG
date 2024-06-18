@@ -56,9 +56,13 @@ namespace OstimVRPluginAPI
 
         virtual bool IsHandTrackingEnabled();
 
+        virtual bool IsLockHeightToBodyEnabled();
+
         virtual void TogglePLANCKMode();
 
         virtual void ToggleHandTrackingMode();
+
+        virtual void ToggleLockHeightToBodyMode();
     };
 }  // namespace OstimVRPluginAPI
 extern OstimVRPluginAPI::OstimVRInterface001 g_interface001;
