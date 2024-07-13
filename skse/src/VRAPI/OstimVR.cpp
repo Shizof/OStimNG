@@ -226,6 +226,20 @@ namespace OStimVR
         }
     }
 
+    void FixStandingBug()
+    {
+        Sleep(2000);
+        // Fix for stand animation bug
+        OStim::ThreadManager* threadManager = OStim::ThreadManager::GetSingleton();
+
+        if (threadManager != nullptr && threadManager->playerThreadRunning()) {
+            auto playerThread = threadManager->getPlayerThread();
+            if (playerThread != nullptr) {
+                playerThread->SetSpeed(playerThread->getSpeed());
+            }
+        }
+    }
+
     void SetOstimVRSettings(bool firstPerson)
     {
         if (firstPerson) {
@@ -256,6 +270,7 @@ namespace OStimVR
         } else {
             MovePlayerInThirdPersonStart(firstPerson);
         }
+
         if (!firstPerson) {
             auto ini = RE::INISettingCollection::GetSingleton();
             if (ini) {
@@ -341,7 +356,10 @@ namespace OStimVR
             }*/
         }
 
-        
+        if (!firstPerson) {
+            std::thread t1(FixStandingBug);
+            t1.detach(); 
+        }       
     }
 
     void SetVRIKHandTracking()
