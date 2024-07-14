@@ -47,6 +47,7 @@ namespace UI {
             auto msgQ = RE::UIMessageQueue::GetSingleton();
             if (msgQ) {
                 msgQ->AddMessage(menuName, RE::UI_MESSAGE_TYPE::kShow, nullptr);
+                msgQ->AddMessage(menuName, RE::UI_MESSAGE_TYPE::kHide, nullptr); //Added to prevent menus appearing in VR Main Menu while game is loading.
             }
         }
     }
