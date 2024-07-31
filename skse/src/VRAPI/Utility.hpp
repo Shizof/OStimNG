@@ -556,11 +556,16 @@ static inline RE::NiPoint3 GetPointFromRatio(RE::NiPoint3 low, RE::NiPoint3 high
 	return low + ((high - low) * ratio);
 }
 
-static inline float distance2D(RE::NiPoint3 po1, RE::NiPoint3 po2)
-{
-	float x = po1.x - po2.x;
-	float y = po1.y - po2.y;
-	return sqrtf(x * x + y * y);
+static inline float distance2D(RE::NiPoint3 po1, RE::NiPoint3 po2) {
+    float x = po1.x - po2.x;
+    float y = po1.y - po2.y;
+    return sqrtf(x * x + y * y);
+}
+
+static inline float distance2DNoSqrt(RE::NiPoint3 po1, RE::NiPoint3 po2) {
+    float x = po1.x - po2.x;
+    float y = po1.y - po2.y;
+    return (x * x + y * y);
 }
 
 static inline float distanceNoSqrt(RE::NiPoint3 po1, RE::NiPoint3 po2)
