@@ -126,15 +126,26 @@ bool OstimVRPluginAPI::OstimVRInterface001::IsCameraFirstPerson()
 
 void OstimVRPluginAPI::OstimVRInterface001::EndSceneEarly() 
 {
-    OStim::ThreadManager* threadManager = OStim::ThreadManager::GetSingleton();
 
-    if (threadManager != nullptr && threadManager->playerThreadRunning()) {
-        auto playerThread = threadManager->getPlayerThread();
-        if (playerThread != nullptr) {
-            playerThread->setStopTimer(4000);
-            playerThread->setAutoModeToMainStage();
+    SKSE::GetTaskInterface()->AddTask([]() { 
+        
+        if (OStimVR::CurrentCameraFirstPerson==false && OStimVR::TooDistToRealBodyCheck()) {
+            //We switch to first person first to prevent bugs
+            OStimVR::CurrentCameraFirstPerson = true;
+            OStimVR::SetOstimVRSettings(true);
         }
-    }
+        
+        OStim::ThreadManager* threadManager = OStim::ThreadManager::GetSingleton();
+
+        if (threadManager != nullptr && threadManager->playerThreadRunning()) {
+            auto playerThread = threadManager->getPlayerThread();
+            if (playerThread != nullptr) {
+                playerThread->setStopTimer(4000);
+                playerThread->setAutoModeToMainStage();
+            }
+        }
+        
+        });    
 }
 
 bool OstimVRPluginAPI::OstimVRInterface001::InTransition() 

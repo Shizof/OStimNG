@@ -49,6 +49,8 @@ namespace OStimVR
     std::unordered_map<std::string, OstimVRAlignment> sceneAlignmentMap;
     OstimVRAlignment globalAlignments;
 
+    bool playerInScene = false;
+
     bool GetIsCameraFirstPerson()
     { 
         return CurrentCameraFirstPerson;
@@ -267,9 +269,7 @@ namespace OStimVR
                     *g_bDisablePlayerCollision = true;
                 }
             }
-        } else {
-            MovePlayerInThirdPersonStart(firstPerson);
-        }
+        } 
 
         if (!firstPerson) {
             auto ini = RE::INISettingCollection::GetSingleton();
@@ -292,7 +292,7 @@ namespace OStimVR
                     snapAmount->data.f = prevGamepadLookAngleSnapAmount;
                     *g_fGamepadLookAngleSnapAmount = prevGamepadLookAngleSnapAmount;
                 }
-            }
+            } 
         } 
                 
         ModifyAlignment();
@@ -357,6 +357,7 @@ namespace OStimVR
         }
 
         if (!firstPerson) {
+            MovePlayerInThirdPersonStart(firstPerson);
             std::thread t1(FixStandingBug);
             t1.detach(); 
         }       
@@ -383,31 +384,37 @@ namespace OStimVR
         }
     }
 
-    void CameraSwitchFunc(bool firstPerson)
+    bool TooDistToRealBodyCheck()
     {
-        if (firstPerson)
-        {
-            auto state = UI::UIState::GetSingleton();
-            if (state) {
-                if (state->currentThread) {
-                    auto center = state->currentThread->getCenter();
+        auto state = UI::UIState::GetSingleton();
+        if (state) {
+            if (state->currentThread) {
+                auto center = state->currentThread->getCenter();
 
-                    if (firstPerson) {
-                        auto player = RE::PlayerCharacter::GetSingleton();
-                        if (player != nullptr && player->AsReference()) {
-                            RE::NiPoint3 newPos = player->AsReference()->GetPosition();
-                            float distSqr = newPos.GetSquaredDistance(RE::NiPoint3(center.x, center.y, center.z));
-                            //logger::info("Dist: {}", distSqr);
-                            if (distSqr > 25000.0f)
-                            {
-                                RE::DebugNotification("You need to be closer to your real body.");
-                                return;
-                            }
-                        }
+                auto player = RE::PlayerCharacter::GetSingleton();
+                if (player != nullptr && player->AsReference()) {
+                    RE::NiPoint3 newPos = player->AsReference()->GetPosition();
+                    float distSqr = distance2DNoSqrt(newPos, RE::NiPoint3(center.x, center.y, center.z));
+                    logger::error("Dist: {}", distSqr);
+                    if (distSqr > 15000.0f) {                            
+                        return true;
                     }
                 }
             }
         }
+        return false;
+    }
+
+    void CameraSwitchFunc(bool firstPerson)
+    {
+        /*if (firstPerson)
+        {
+            if (TooDistToRealBodyCheck())
+            {
+                RE::DebugNotification("You need to be closer to your real body.");
+                return;
+            }
+        }*/
         //logger::info("Applying {} settings", firstPerson ? "First Person" : "Third Person");
 
         CurrentCameraFirstPerson = firstPerson;
@@ -417,6 +424,8 @@ namespace OStimVR
     
     void PlayerSceneStart() 
     { 
+        playerInScene = true;
+
         auto ini = RE::INISettingCollection::GetSingleton();
         if (ini) 
         {
@@ -516,6 +525,8 @@ namespace OStimVR
 
     void PlayerSceneEnd() 
     {
+        playerInScene = false;
+
         // Set VRIK settings back
         if (vrikInterface != nullptr) {
             vrikInterface->restoreSettings();
