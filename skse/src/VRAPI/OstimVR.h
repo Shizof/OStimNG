@@ -27,6 +27,9 @@ namespace OStimVR
     extern int disablePLANCKduringScenes;
     extern bool CurrentCameraFirstPerson;
 
+    extern bool playerInScene;
+
+
     void AddRagdollCollisionIgnoredActors();
     void RemoveRagdollCollisionIgnoredActors();
     void SetVRIKHandTracking();
@@ -51,6 +54,9 @@ namespace OStimVR
 
     void VRIKLockPositionAndRotation(float rotSin, float rotCos, float x, float y, float z, float r, float playerScale);
 
+    void SetOstimVRSettings(bool firstPerson);
+
+    bool TooDistToRealBodyCheck();
 
     struct OstimVRAlignment
     {

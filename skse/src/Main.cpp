@@ -60,12 +60,11 @@ namespace {
     }
 
     void OstimVRMessageHandler(SKSE::MessagingInterface::Message* a_msg) {
-        switch (a_msg->type) {            
-            case OstimVRPluginAPI::OstimVRMessage::kMessage_GetInterface: {
-                OstimVRPluginAPI::OstimVRMessage* ostimMessage = (OstimVRPluginAPI::OstimVRMessage*)a_msg->data;
-                ostimMessage->GetApiFunction = OstimVRPluginAPI::GetApi;
-                logger::info("Provided OstimVR plugin interface to {}", a_msg->sender);
-            } break;
+        if (a_msg->type == OstimVRPluginAPI::OstimVRMessage::kMessage_GetInterface) 
+        {    
+            OstimVRPluginAPI::OstimVRMessage* ostimMessage = (OstimVRPluginAPI::OstimVRMessage*)a_msg->data;
+            ostimMessage->GetApiFunction = OstimVRPluginAPI::GetApi;
+            logger::info("Provided OstimVR plugin interface to {}", a_msg->sender);
         }
     }
 
@@ -75,6 +74,7 @@ namespace {
                 auto message = SKSE::GetMessagingInterface();
                 if (message) {
                     message->RegisterListener(nullptr, OstimVRMessageHandler);
+                    logger::info("Registered OstimVR message handler");
                 }
 
                 SKSE::GetNiNodeUpdateEventSource()->AddEventSink(Events::EventListener::GetSingleton());
@@ -132,6 +132,13 @@ namespace {
                 Events::EventListener::handleGameLoad();
                 Core::newSession();
                 Core::sessionStarted();
+
+                if ((bool)(a_msg->data) == true) {
+                    if (OStimVR::playerInScene)
+                    {
+                        OStimVR::PlayerSceneEnd();
+                    }
+                }
             } break;
             case SKSE::MessagingInterface::kNewGame: {
                 Events::EventListener::handleGameLoad();
