@@ -5,7 +5,7 @@
 
 
 
-#define OSTIMVR_BUILD_NUMBER 100
+#define OSTIMVR_BUILD_NUMBER 103
 
 namespace OstimVRPluginAPI
 {
@@ -63,6 +63,8 @@ namespace OstimVRPluginAPI
         virtual void ToggleHandTrackingMode();
 
         virtual void ToggleLockHeightToBodyMode();
+
+        virtual void OStimWheelOpenCloseEvent(bool opened, bool leftWheel);
     };
 }  // namespace OstimVRPluginAPI
 extern OstimVRPluginAPI::OstimVRInterface001 g_interface001;
