@@ -1093,7 +1093,7 @@ static inline RE::NiPoint3 rotate(const RE::NiPoint3& v, const RE::NiPoint3& axi
 
 static inline float angleBetweenVectors(const RE::NiPoint3& v1, const RE::NiPoint3& v2)
 {
-	return std::acos(dot(v1, v2) / (magnitude(v1) * magnitude(v2))) * 57.295776f;
+    return std::acos(dot(v1, v2) / (magnitude(v1) * magnitude(v2))) * 57.2957795131f;
 }
 
 static inline float angleBetweenVectorsRad(const RE::NiPoint3& v1, const RE::NiPoint3& v2)
@@ -1279,12 +1279,12 @@ inline void logNode(int depth, RE::NiAVObject* node) {
     node->world.rotate.ToEulerAnglesXYZ(h6, a6, b6);
     float h6l, a6l, b6l;
     node->local.rotate.ToEulerAnglesXYZ(h6l, a6l, b6l);
-    h6 = h6 * 57.295776f;
-    a6 = a6 * 57.295776f;
-    b6 = b6 * 57.295776f;
-    h6l = h6l * 57.295776f;
-    a6l = a6l * 57.295776f;
-    b6l = b6l * 57.295776f;
+    h6 = h6 * 57.2957795131f;
+    a6 = a6 * 57.2957795131f;
+    b6 = b6 * 57.2957795131f;
+    h6l = h6l * 57.2957795131f;
+    a6l = a6l * 57.2957795131f;
+    b6l = b6l * 57.2957795131f;
     logger::info("{}: {} -Rot: {}|{}|{} - {}|{}|{}", depth, text.c_str(), h6, a6, b6, h6l, a6l, b6l);
 }
 

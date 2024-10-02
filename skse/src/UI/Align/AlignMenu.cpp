@@ -60,7 +60,13 @@ namespace UI::Align {
     }
 
     void AlignMenu::LoadCurrentAlignment() {
-        currentActorInfo = UI::UIState::GetSingleton()->currentThread->getActorAlignment(selectedSlot);
+        auto uiState = UI::UIState::GetSingleton();
+        if (uiState)
+        {
+            auto currentThread = uiState->currentThread;
+            if (currentThread)
+                currentActorInfo = UI::UIState::GetSingleton()->currentThread->getActorAlignment(selectedSlot);
+        }
     }
 
     void AlignMenu::Hide() {

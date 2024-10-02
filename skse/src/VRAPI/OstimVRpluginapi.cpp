@@ -264,10 +264,16 @@ void OstimVRPluginAPI::OstimVRInterface001::ToggleHandTrackingMode()
 {
     OStimVR::trackHands = OStimVR::trackHands == false;
     OStimVR::SetVRIKHandTracking();
+    OStimVR::ShowHideControllersFunc(true);
 }
 
 
 void OstimVRPluginAPI::OstimVRInterface001::ToggleLockHeightToBodyMode() {
     OStimVR::lockHeightToBody = OStimVR::lockHeightToBody == false;
     OStimVR::SetVRIKLockHeightToBody();
+}
+
+void OstimVRPluginAPI::OstimVRInterface001::OStimWheelOpenCloseEvent(bool opened, bool leftWheel)
+{
+    OStimVR::ShowHideControllersFunc(opened);
 }
