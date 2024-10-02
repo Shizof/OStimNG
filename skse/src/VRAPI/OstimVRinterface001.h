@@ -68,6 +68,8 @@ namespace OstimVRPluginAPI
         virtual void ToggleHandTrackingMode() = 0;
 
         virtual void ToggleLockHeightToBodyMode() = 0;
+
+        virtual void OStimWheelOpenCloseEvent(bool opened, bool leftWheel) = 0;
     };
 }  // namespace OstimVRPluginAPI
 

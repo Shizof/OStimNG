@@ -54,6 +54,8 @@ namespace OStimVR
 
     void VRIKLockPositionAndRotation(float rotSin, float rotCos, float x, float y, float z, float r, float playerScale);
 
+    void ShowHideControllersFunc(bool ostimwheelknowntobeopen);
+
     void SetOstimVRSettings(bool firstPerson);
 
     bool TooDistToRealBodyCheck();

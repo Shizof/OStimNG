@@ -13,15 +13,15 @@ namespace OStimVR
     float prevActivatePickRadius = 16.0f;
 
     float originalVRIKplayerHeight = -1.0f;
-        
-	REL::Relocation<float*> g_fActivatePickLength(REL::VariantID(0, 0, 0x1E95188));
+
+    REL::Relocation<float*> g_fActivatePickLength(REL::VariantID(0, 0, 0x1E95188));
     REL::Relocation<float*> g_fActivatePickRadius(REL::VariantID(0, 0, 0x1E95170));
     REL::Relocation<float*> g_fGamepadLookAngleSnapAmount(REL::VariantID(0, 0, 0x1E71688));
     REL::Relocation<bool*> g_bDisablePlayerCollision(REL::VariantID(0, 0, 0x1EAF210));
 
     REL::Relocation<EnablePlayerControls> EnablePlayerControlsFunc(REL::VariantID(0, 0, 0x9AC260));
     REL::Relocation<DisablePlayerControls> DisablePlayerControlsFunc(REL::VariantID(0, 0, 0x9AC190));
-       
+
     // OStimVR Settings 3rd person
     int lockHeightToBody = 1;
 
@@ -40,6 +40,15 @@ namespace OStimVR
 
     int disablePLANCKduringScenes = 0;
 
+    int ChangeHeadForwardDistance = 0;
+    float HeadForwardDistance = 0.0f;
+    float orgHeadForwardDistance = 10.0f;
+
+    int ChangeHeadAboveDistance = 0;
+    float HeadAboveDistance = 16.0f;
+    float orgHeadAboveDistance = 13.0f;
+
+    int showControllersInFirstPerson = 1;
     int showControllersInThirdPerson = 1;
 
     bool CurrentCameraFirstPerson = true;
@@ -51,10 +60,7 @@ namespace OStimVR
 
     bool playerInScene = false;
 
-    bool GetIsCameraFirstPerson()
-    { 
-        return CurrentCameraFirstPerson;
-    }
+    bool GetIsCameraFirstPerson() { return CurrentCameraFirstPerson; }
 
     float ostimAlignmentX = 0.0f;
     float ostimAlignmentY = 0.0f;
@@ -66,73 +72,71 @@ namespace OStimVR
 
     void MovePlayerInThirdPersonStart(bool firstPerson) 
     {
-        //SKSE::GetTaskInterface()->AddTask([firstPerson]() {
-            OstimVRAlignment sceneAlignment;
-            auto state = UI::UIState::GetSingleton();
-            if (state) {
-                if (state->currentThread) {
-                    auto center = state->currentThread->getCenter();
+        // SKSE::GetTaskInterface()->AddTask([firstPerson]() {
+        OstimVRAlignment sceneAlignment;
+        auto state = UI::UIState::GetSingleton();
+        if (state) {
+            if (state->currentThread) {
+                auto center = state->currentThread->getCenter();
 
-                    if (firstPerson) {
-                        auto player = RE::PlayerCharacter::GetSingleton();
-                        if (player != nullptr && player->AsReference()) {
-                            RE::NiPoint3 newPos = player->AsReference()->GetPosition();
-                            newPos.x = center.x;
-                            newPos.y = center.y;
-
-                            player->SetRotationZ(center.r);
-                            player->AsReference()->SetPosition(newPos);
-                        }
-                    } else {
-                        float sin = std::sin(center.r);
-                        float cos = std::cos(center.r);
-
-                        auto player = RE::PlayerCharacter::GetSingleton();
-                        if (player != nullptr && player->AsReference()) {
-                            RE::NiPoint3 newPos = player->AsReference()->GetPosition();
-
-                            // Forward displacement
-                             newPos.x = newPos.x + (sin * 25.0f);
-                             newPos.y = newPos.y + (cos * 25.0f);
-
-                            // Side displacement
-                            float sideDisplacement = 15.0f;
-                            newPos.x += (-cos * sideDisplacement);
-                            newPos.y += (sin * sideDisplacement);
-
-                            player->SetRotationZ(center.r + 1.571f);
-                            player->AsReference()->SetPosition(newPos);
-
-                            // player->AsReference()->SetPosition(RE::NiPoint3(center.x, center.y, center.z));
-                        }
-                    }
-                }
-            }
-        //});
-    }
-
-    void RotatePlayerInFirstPersonSwitch()
-    { 
-        //SKSE::GetTaskInterface()->AddTask([]() {
-            OstimVRAlignment sceneAlignment;
-            auto state = UI::UIState::GetSingleton();
-            if (state) {
-                if (state->currentThread) {
-                    auto center = state->currentThread->getCenter();
-
+                if (firstPerson) {
                     auto player = RE::PlayerCharacter::GetSingleton();
                     if (player != nullptr && player->AsReference()) {
-                        const RE::NiPoint3 newPos = player->AsReference()->GetPosition();
+                        RE::NiPoint3 newPos = player->AsReference()->GetPosition();
+                        newPos.x = center.x;
+                        newPos.y = center.y;
 
                         player->SetRotationZ(center.r);
                         player->AsReference()->SetPosition(newPos);
                     }
+                } else {
+                    float sin = std::sin(center.r);
+                    float cos = std::cos(center.r);
+
+                    auto player = RE::PlayerCharacter::GetSingleton();
+                    if (player != nullptr && player->AsReference()) {
+                        RE::NiPoint3 newPos = player->AsReference()->GetPosition();
+
+                        // Forward displacement
+                        newPos.x = newPos.x + (sin * 25.0f);
+                        newPos.y = newPos.y + (cos * 25.0f);
+
+                        // Side displacement
+                        float sideDisplacement = 15.0f;
+                        newPos.x += (-cos * sideDisplacement);
+                        newPos.y += (sin * sideDisplacement);
+
+                        player->SetRotationZ(center.r + 1.571f);
+                        player->AsReference()->SetPosition(newPos);
+
+                        // player->AsReference()->SetPosition(RE::NiPoint3(center.x, center.y, center.z));
+                    }
                 }
             }
-        //});        
+        }
+        //});
     }
 
-    void ModifyAlignment()
+    /*void RotatePlayerInFirstPersonSwitch(float r)
+    {
+        SKSE::GetTaskInterface()->AddTask([r]() {
+            OstimVRAlignment sceneAlignment;
+            auto state = UI::UIState::GetSingleton();
+            if (state) {
+                if (state->currentThread) {
+                    auto player = RE::PlayerCharacter::GetSingleton();
+                    if (player != nullptr && player->AsReference()) {
+                        const RE::NiPoint3 newPos = player->AsReference()->GetPosition();
+
+                        player->SetRotationZ(r);
+                        player->AsReference()->SetPosition(newPos);
+                    }
+                }
+            }
+        });
+    }*/
+
+    void ModifyAlignment() 
     {
         OstimVRAlignment sceneAlignment;
         auto state = UI::UIState::GetSingleton();
@@ -148,9 +152,16 @@ namespace OStimVR
                 float sin = std::sin(state->currentThread->getCenter().r);
                 float cos = std::cos(state->currentThread->getCenter().r);
 
-                vrikInterface->setSettingDouble("lockRotationAngle", ostimAlignmentR * 57.295776f +
-                                                                         globalAlignments.angleOffsetDegrees +
-                                                                         sceneAlignment.angleOffsetDegrees);
+                float rotAngle = ostimAlignmentR * 57.2957795131f + globalAlignments.angleOffsetDegrees + sceneAlignment.angleOffsetDegrees;
+                while (rotAngle > 360.0f) {
+                    rotAngle -= 360.0f;
+                }
+                while (rotAngle < 0.0f) {
+                    rotAngle += 360.0f;
+                }
+
+                vrikInterface->setSettingDouble("lockRotationAngle", rotAngle);
+
                 /*if (CurrentCameraFirstPerson) {
                     vrikInterface->setSettingDouble("rotateHmdToBodySeconds", 2.0);
                 }*/
@@ -175,6 +186,7 @@ namespace OStimVR
                     for (int i = 0; i < gameActors.size(); i++) {
                         if (gameActors[i].isPlayer()) {
                             const float playerScale = gameActors[i].getScale();
+                            //logger::critical("Playerscale is: {}", playerScale);
                             vrikInterface->setSettingDouble("bodySize", playerScale);
                             vrikInterface->setSettingDouble("armSize", playerScale);
                             vrikInterface->setSettingDouble("armLength", 1.0f);
@@ -187,13 +199,12 @@ namespace OStimVR
         }
     }
 
-    void VRIKLockPositionAndRotation(float rotSin, float rotCos, float x, float y, float z, float r, float playerScale)
-    {
+    void VRIKLockPositionAndRotation(float rotSin, float rotCos, float x, float y, float z, float r, float playerScale) {
         ostimAlignmentX = x;
         ostimAlignmentY = y;
         ostimAlignmentZ = z;
         ostimAlignmentR = r;
-        
+
         OstimVRAlignment sceneAlignment;
         auto state = UI::UIState::GetSingleton();
         if (state) {
@@ -205,10 +216,18 @@ namespace OStimVR
             }
         }
 
-        vrikInterface->setSettingDouble("lockRotationAngle", r * 57.295776f + globalAlignments.angleOffsetDegrees + sceneAlignment.angleOffsetDegrees);        
+        float rotAngle = r * 57.2957795131f + globalAlignments.angleOffsetDegrees + sceneAlignment.angleOffsetDegrees;
+        while (rotAngle > 360.0f) {
+            rotAngle -= 360.0f;
+        }
+        while (rotAngle < 0.0f) {
+            rotAngle += 360.0f;
+        }
+
+        vrikInterface->setSettingDouble("lockRotationAngle", rotAngle);
         /*if (CurrentCameraFirstPerson)
         {
-            vrikInterface->setSettingDouble("rotateHmdToBodySeconds", 2.0); 
+            vrikInterface->setSettingDouble("rotateHmdToBodySeconds", 2.0);
         }*/
         vrikInterface->setSettingDouble("lockRotation", 1);
 
@@ -218,18 +237,37 @@ namespace OStimVR
         vrikInterface->setSettingDouble("lockPosition", 2.0); //Yes, this needs to be 2.0, which means specific X,Y,Z coordinates. 1.0 would be offsets.
         /*if (CurrentCameraFirstPerson)
         {
-            vrikInterface->setSettingDouble("lockHmdToBody", 1);        
-        } */  
+            vrikInterface->setSettingDouble("lockHmdToBody", 1);
+        } */
         if (enableVRIKScaling) 
         {
+            //logger::critical("Playerscale is: {}", playerScale);
             vrikInterface->setSettingDouble("bodySize", playerScale);
             vrikInterface->setSettingDouble("armSize", playerScale);
             vrikInterface->setSettingDouble("armLength", 1.0f);
         }
+
+        /*if (CurrentCameraFirstPerson) {
+            SKSE::GetTaskInterface()->AddTask([r]() {
+                auto player = RE::PlayerCharacter::GetSingleton();
+                if (player != nullptr && player->AsReference()) {
+                    auto vrnodes = player->GetVRNodeData();
+                    if (vrnodes && vrnodes->GamepadNode && vrnodes->GamepadNode.get())
+                    {
+                        float x, y, z;
+                        vrnodes->GamepadNode.get()->world.rotate.ToEulerAnglesXYZ(x,y,z);
+                        logger::critical("player hmd rotation was {} - {} --- r:{} - {}", z, z * 57.2957795131f, r, r
+        * 57.2957795131f); vrnodes->GamepadNode.get()->world.rotate.SetEulerAnglesXYZ(x, y, 0.0f);
+                    }
+                }
+            });
+        }*/
+
+        /*player->SetRotationZ(0.0f);
+        player->SetPosition(player->AsReference()->GetPosition(), true);*/
     }
 
-    void FixStandingBug()
-    {
+    void FixStandingBug() {
         Sleep(2000);
         // Fix for stand animation bug
         OStim::ThreadManager* threadManager = OStim::ThreadManager::GetSingleton();
@@ -242,11 +280,38 @@ namespace OStimVR
         }
     }
 
-    void SetOstimVRSettings(bool firstPerson)
-    {
+    int controllersShown = -1;
+
+    void ShowHideControllersFunc(bool ostimwheelknowntobeopen) {
+        if (controllerFixInterface != nullptr) {
+            if (showControllersInFirstPerson && CurrentCameraFirstPerson && !trackHands && playerInScene &&
+                spellWheelInterface) {
+                if (ostimwheelknowntobeopen || spellWheelInterface->IsSecondaryWheelOpen() ||
+                    spellWheelInterface->IsMainWheelOpen()) {
+                    if (controllersShown != 1) {
+                        controllerFixInterface->ForceShowControllers(true);
+                        controllersShown = 1;
+                    }
+                } else if (!spellWheelInterface->IsSecondaryWheelOpen() && !spellWheelInterface->IsMainWheelOpen()) {
+                    if (controllersShown != 0) {
+                        controllerFixInterface->ForceShowControllers(false);
+                        controllersShown = 0;
+                    }
+                }
+            } else if (showControllersInThirdPerson && !CurrentCameraFirstPerson && playerInScene) {
+                if (controllersShown != 1) {
+                    controllerFixInterface->ForceShowControllers(true);
+                    controllersShown = 1;
+                }
+            } else if (controllersShown != 0) {
+                controllerFixInterface->ForceShowControllers(false);
+                controllersShown = 0;
+            }
+        }
+    }
+
+    void SetOstimVRSettings(bool firstPerson) {
         if (firstPerson) {
-            MovePlayerInThirdPersonStart(firstPerson);
-            //RotatePlayerInFirstPersonSwitch();
 
             EnablePlayerControlsFunc(VM::GetSingleton(), 0, 0, true, false, false, true, false, true, false, true, 0);
             DisablePlayerControlsFunc(VM::GetSingleton(), 0, 0, false, true, true, false, true, false, true, false, 0);
@@ -269,7 +334,7 @@ namespace OStimVR
                     *g_bDisablePlayerCollision = true;
                 }
             }
-        } 
+        }
 
         if (!firstPerson) {
             auto ini = RE::INISettingCollection::GetSingleton();
@@ -292,9 +357,9 @@ namespace OStimVR
                     snapAmount->data.f = prevGamepadLookAngleSnapAmount;
                     *g_fGamepadLookAngleSnapAmount = prevGamepadLookAngleSnapAmount;
                 }
-            } 
-        } 
-                
+            }
+        }
+
         ModifyAlignment();
 
         if (vrikInterface != nullptr) {
@@ -310,6 +375,15 @@ namespace OStimVR
                 vrikInterface->setSettingDouble("enableRightArm", 0);
             }
 
+            if (ChangeHeadAboveDistance) {
+                vrikInterface->setSettingDouble("headAboveDistance",
+                                                firstPerson ? HeadAboveDistance : orgHeadAboveDistance);
+            }
+            if (ChangeHeadAboveDistance) {
+                vrikInterface->setSettingDouble("headInFrontDistance",
+                                                firstPerson ? HeadForwardDistance : orgHeadForwardDistance);
+            }
+
             // Shows head in third person mode and hides it in first person mode.
             vrikInterface->setSettingDouble("enableHead", firstPerson ? 0 : 1);
             vrikInterface->setSettingDouble("hidePlayerHeadDistance", firstPerson ? 0.0 : 12.0f);
@@ -319,51 +393,21 @@ namespace OStimVR
             vrikInterface->setSettingDouble("lockHmdMaxThreshold", firstPerson ? lockHmdMaxThreshold : 500.0f);
             vrikInterface->setSettingDouble("lockHmdSpeed", firstPerson ? lockHmdSpeed : 20.0f);
 
-
             //?
             vrikInterface->setSettingDouble("rotateHmdToBodySeconds", firstPerson ? 2.0 : 0);
             vrikInterface->setSettingDouble("lockHmdToBody", firstPerson ? 1 : 0);
         }
 
-        if (showControllersInThirdPerson) 
-        {
-            if (controllerFixInterface != nullptr)
-            {
-                controllerFixInterface->ForceShowControllers(!firstPerson);
-            } 
-            /*else 
-            {
-                RE::BSOpenVR* openVR = RE::BSOpenVR::GetSingleton();
-                if (openVR && openVR->unk388[0].get() && openVR->unk388[1].get()) {
-                    auto player = RE::PlayerCharacter::GetSingleton();
-                    if (player != nullptr) {
-                        auto nodeData = player->GetVRNodeData();
-                        if (nodeData) {
-                            if (firstPerson) {
-                                if (nodeData->LeftWandNode)
-                                    nodeData->LeftWandNode->DetachChild(openVR->unk388[0].get());
-                                if (nodeData->RightWandNode)
-                                    nodeData->RightWandNode->DetachChild(openVR->unk388[1].get());
-                            } else {
-                                if (nodeData->LeftWandNode)
-                                    nodeData->LeftWandNode->AttachChild(openVR->unk388[0].get());
-                                if (nodeData->RightWandNode)
-                                    nodeData->RightWandNode->AttachChild(openVR->unk388[1].get());
-                            }
-                        }
-                    }
-                }
-            }*/
-        }
+        ShowHideControllersFunc(false);
 
+        MovePlayerInThirdPersonStart(firstPerson);
         if (!firstPerson) {
-            MovePlayerInThirdPersonStart(firstPerson);
             std::thread t1(FixStandingBug);
-            t1.detach(); 
-        }       
+            t1.detach();
+        }
     }
 
-    void SetVRIKHandTracking()
+    void SetVRIKHandTracking() 
     {
         if (vrikInterface != nullptr) {
             if (CurrentCameraFirstPerson && trackHands) {
@@ -384,7 +428,7 @@ namespace OStimVR
         }
     }
 
-    bool TooDistToRealBodyCheck()
+    bool TooDistToRealBodyCheck() 
     {
         auto state = UI::UIState::GetSingleton();
         if (state) {
@@ -396,7 +440,7 @@ namespace OStimVR
                     RE::NiPoint3 newPos = player->AsReference()->GetPosition();
                     float distSqr = distance2DNoSqrt(newPos, RE::NiPoint3(center.x, center.y, center.z));
                     logger::error("Dist: {}", distSqr);
-                    if (distSqr > 15000.0f) {                            
+                    if (distSqr > 15000.0f) {
                         return true;
                     }
                 }
@@ -405,7 +449,7 @@ namespace OStimVR
         return false;
     }
 
-    void CameraSwitchFunc(bool firstPerson)
+    void CameraSwitchFunc(bool firstPerson) 
     {
         /*if (firstPerson)
         {
@@ -415,16 +459,18 @@ namespace OStimVR
                 return;
             }
         }*/
-        //logger::info("Applying {} settings", firstPerson ? "First Person" : "Third Person");
+        // logger::info("Applying {} settings", firstPerson ? "First Person" : "Third Person");
 
         CurrentCameraFirstPerson = firstPerson;
 
         SKSE::GetTaskInterface()->AddTask([firstPerson]() { SetOstimVRSettings(firstPerson); });
     }
-    
+
     void PlayerSceneStart() 
-    { 
+    {
         playerInScene = true;
+
+        controllersShown = -1;
 
         auto ini = RE::INISettingCollection::GetSingleton();
         if (ini) 
@@ -449,10 +495,10 @@ namespace OStimVR
             prevGamepadLookAngleSnapAmount = snapAmount->data.f;
             snapAmount->data.f = 0.0f;
             *g_fGamepadLookAngleSnapAmount = 0.0f;
-        } 
+        }
 
         RE::UI* ui = RE::UI::GetSingleton();
-        if (ui!=nullptr && ui->IsMenuOpen("WSActivateRollover"))
+        if (ui != nullptr && ui->IsMenuOpen("WSActivateRollover")) 
         {
             auto msgQ = RE::UIMessageQueue::GetSingleton();
             if (msgQ != nullptr) 
@@ -460,11 +506,14 @@ namespace OStimVR
                 msgQ->AddMessage("WSActivateRollover", RE::UI_MESSAGE_TYPE::kHide, nullptr);
             }
         }
-        
+
         // Main VRIK Settings.
         if (vrikInterface != nullptr) {
             originalVRIKplayerHeight = vrikInterface->getSettingDouble("playerHeight");
-            
+
+            orgHeadAboveDistance = vrikInterface->getSettingDouble("headAboveDistance");
+            orgHeadForwardDistance = vrikInterface->getSettingDouble("headInFrontDistance");
+
             vrikInterface->setSettingDouble("selfieModeEnabled", 0);
             vrikInterface->setSettingDouble("cameraOffsetting", 0);
             vrikInterface->setSettingDouble("enablePosture", 0);
@@ -473,7 +522,7 @@ namespace OStimVR
             vrikInterface->setSettingDouble("displayHolsters", 0);
             vrikInterface->setSettingDouble("nearClipDistance", nearDistance);
         }
-        
+
         CameraSwitchFunc(!defaultThirdPerson);
 
         if (planckInterface != nullptr) {
@@ -489,8 +538,8 @@ namespace OStimVR
                         }
                     }
                 }
-            }  
-            if (disablePLANCKduringScenes)
+            }
+            if (disablePLANCKduringScenes) 
             {
                 planckInterface->GetSettingDouble("activeRagdollStartDistance", activeRagdollStartDistanceOrgValue);
                 planckInterface->GetSettingDouble("activeRagdollEndDistance", activeRagdollEndDistanceOrgValue);
@@ -501,8 +550,8 @@ namespace OStimVR
         }
     }
 
-    void AddRagdollCollisionIgnoredActors()
-    {        
+    void AddRagdollCollisionIgnoredActors() 
+    {
         if (disablePLANCKduringScenes) {
             planckInterface->GetSettingDouble("activeRagdollStartDistance", activeRagdollStartDistanceOrgValue);
             planckInterface->GetSettingDouble("activeRagdollEndDistance", activeRagdollEndDistanceOrgValue);
@@ -512,7 +561,7 @@ namespace OStimVR
         }
     }
 
-    void RemoveRagdollCollisionIgnoredActors()
+    void RemoveRagdollCollisionIgnoredActors() 
     {
         if (planckInterface != nullptr) {
             planckInterface->GetSettingDouble("activeRagdollStartDistance", activeRagdollStartDistanceOrgValue);
@@ -548,8 +597,8 @@ namespace OStimVR
             snapAmount->data.f = prevGamepadLookAngleSnapAmount;
             *g_fGamepadLookAngleSnapAmount = prevGamepadLookAngleSnapAmount;
         }
-   
-        auto ini = RE::INISettingCollection::GetSingleton();    
+
+        auto ini = RE::INISettingCollection::GetSingleton();
         if (ini) 
         {
             RE::Setting* pickLength = ini->GetSetting("fActivatePickLength:Interface");
@@ -580,27 +629,9 @@ namespace OStimVR
         if (spellWheelInterface && spellWheelInterface->getBuildNumber() >= 10413)
             spellWheelInterface->CloseOstimWheels();
 
-        if (showControllersInThirdPerson) {
-            if (controllerFixInterface != nullptr) {
-                controllerFixInterface->ForceShowControllers(false);
-            } 
-            /*else 
-            {
-                RE::BSOpenVR* openVR = RE::BSOpenVR::GetSingleton();
-                if (openVR && openVR->unk388[0].get() && openVR->unk388[1].get()) {
-                    auto player = RE::PlayerCharacter::GetSingleton();
-                    if (player != nullptr) {
-                        auto nodeData = player->GetVRNodeData();
-                        if (nodeData) {                            
-                            if (nodeData->LeftWandNode)
-                                nodeData->LeftWandNode->DetachChild(openVR->unk388[0].get());
-                            if (nodeData->RightWandNode)
-                                nodeData->RightWandNode->DetachChild(openVR->unk388[1].get());                            
-                        }
-                    }
-                }
-            }*/
-        }
+        ShowHideControllersFunc(false);
+
+        controllersShown = -1;
 
         CurrentCameraFirstPerson = !defaultThirdPerson;
     }
@@ -632,10 +663,18 @@ namespace OStimVR
         output << "\n";
         output << "NearDistance = 3.0            #Sets VRIK Neardistance value to this value automatically in Ostim VR scenes. Default is 3.0.\n";
         output << "\n";
+        output << "ChangeHeadForwardDistance = 0 #Enables/Disables modification of head forward distance during 1st person mode.\n";
+        output << "HeadForwardDistance = 0.0   #Sets VRIK headInFrontDistance to this value during 1st person mode.\n";
+        output << "\n";
+        output << "ChangeHeadAboveDistance = 0 #Enables/Disables modification of head above distance during 1st person mode.\n";
+        output << "HeadAboveDistance = 16.0   #Sets VRIK headAboveDistance to this value during 1st person mode.\n";
+        output << "\n";
+        output << "\n";
         output << "LockHmdMaxThreshold = 20.0    #Lock HMD in place max threshold. May cause nausea at 0. You can "
                   "tighten it to prevent going off place. Default is 20.0.\n";
         output << "LockHmdMinThreshold = 2.0     #Lock HMD in place min threshold. May cause nausea at 0. Default is 2.0.\n";
-        output << "LockHmdSpeed = 50.0           #Lock HMD in place speed. May cause nausea at high values if used with low min-max threshold values. You can increase it to make it faster to snap in place. Default is 50.0.\n";
+        output << "LockHmdSpeed = 50.0           #Lock HMD in place speed. May cause nausea at high values if used with low min-max threshold values. You can increase it to make it faster to snap in place. Default "
+                  "is 50.0.\n";
         output << "\n";
         output << "# OStimVR Settings General\n";
         output << "EnableVRIKScaling = 1         #Apply Ostim scaling settings to VRIK body.\n";
@@ -645,7 +684,9 @@ namespace OStimVR
         output << "HeightAdjustSpeed = 1.0       #Snapback speed for viewpoint. Higher speeds may cause nausea. "
                   "Default is 1.0.\n";
         output << "\n";
-        output << "ShowControllersInThirdPerson = 1 #Shows openvr controllers while in third person mode.\n ";
+        output << "ShowControllersInThirdPerson = 1 #Shows openvr controllers while in third person mode. Requires ControllerFixVR mod.\n ";
+        output << "\n";
+        output << "ShowControllersInFirstPerson = 1 #Shows openvr controllers while in first person mode if a wheel is open and hand tracking is off. Requires ControllerFixVR mod.\n ";
         output << "\n";
         output << "DefaultThirdPerson = 0        #If set to 1, scenes will start in third person camera. You can always switch during scenes using Ostim Wheel.\n";
         output << "\n";
@@ -689,6 +730,18 @@ namespace OStimVR
                             else if (variableName == "NearDistance") {
                                 nearDistance = std::strtof(variableValue.c_str(), 0);
                             } 
+                            else if (variableName == "ChangeHeadForwardDistance") {
+                                ChangeHeadForwardDistance = std::stoi(variableValue);
+                            } 
+                            else if (variableName == "ChangeHeadAboveDistance") {
+                                ChangeHeadAboveDistance = std::stoi(variableValue);
+                            } 
+                            else if (variableName == "HeadForwardDistance") {
+                                HeadForwardDistance = std::strtof(variableValue.c_str(), 0);
+                            } 
+                            else if (variableName == "HeadAboveDistance") {
+                                HeadAboveDistance = std::strtof(variableValue.c_str(), 0);
+                            } 
                             else if (variableName == "LockHmdMaxThreshold") {
                                 lockHmdMaxThreshold = std::strtof(variableValue.c_str(), 0);
                             } 
@@ -706,14 +759,17 @@ namespace OStimVR
                             } 
                             else if (variableName == "ShowControllersInThirdPerson") {
                                 showControllersInThirdPerson = std::stoi(variableValue);
-                            }  
+                            } 
+                            else if (variableName == "ShowControllersInFirstPerson") {
+                                showControllersInFirstPerson = std::stoi(variableValue);
+                            } 
                             else if (variableName == "DefaultThirdPerson") {
                                 defaultThirdPerson = std::stoi(variableValue);
 
                                 CurrentCameraFirstPerson = !defaultThirdPerson;
                             } else if (variableName == "DisablePLANCKduringScenes") {
                                 disablePLANCKduringScenes = std::stoi(variableValue);
-                            } 
+                            }
                         }
                     }
                 }
@@ -725,7 +781,7 @@ namespace OStimVR
         }
     }
 
-    void GetGlobalOffsets(float& offsetX, float& offsetY, float& offsetZ, float& rotationOffset)
+    void GetGlobalOffsets(float& offsetX, float& offsetY, float& offsetZ, float& rotationOffset) 
     {
         offsetX = globalAlignments.bodyOffsetX;
         offsetY = globalAlignments.bodyOffsetY;
@@ -736,7 +792,7 @@ namespace OStimVR
     void GetSceneOffsets(float& offsetX, float& offsetY, float& offsetZ, float& rotationOffset) 
     {
         auto state = UI::UIState::GetSingleton();
-        if (state)
+        if (state) 
         {
             auto currentNode = state->currentNode;
             if (currentNode && currentNode->isTransition == false) 
@@ -752,7 +808,7 @@ namespace OStimVR
         }
     }
 
-    void ModifyOffsetsOnNode(float& offsetX, float& offsetY, float& offsetZ, float& rotationOffset, Graph::Node* node)
+    void ModifyOffsetsOnNode(float& offsetX, float& offsetY, float& offsetZ, float& rotationOffset, Graph::Node* node) 
     {
         if (node && node->isTransition == false) {
             if (sceneAlignmentMap.find(node->scene_id) != sceneAlignmentMap.end()) {
@@ -773,14 +829,14 @@ namespace OStimVR
 
     void ModifyOffsets(float offsetX, float offsetY, float offsetZ, float rotationOffset, bool global) 
     {
-        if (global)
+        if (global) 
         {
             globalAlignments.bodyOffsetX = offsetX;
             globalAlignments.bodyOffsetY = offsetY;
             globalAlignments.bodyOffsetZ = offsetZ;
             globalAlignments.angleOffsetDegrees = rotationOffset;
-        }
-        else
+        } 
+        else 
         {
             auto state = UI::UIState::GetSingleton();
             if (state) 
@@ -816,7 +872,7 @@ namespace OStimVR
                         // newsetting
                         currentSetting = line;
                     } else {
-                        
+
                         std::string variableName;
                         std::string variableValue = GetConfigSettingsValue(line, variableName);
 
@@ -832,7 +888,7 @@ namespace OStimVR
                     }
                 }
             }
-        }
+        } 
         else //Regenerate new file
         {
             saveGlobalAlignmentConfig();
@@ -866,7 +922,7 @@ namespace OStimVR
         output << "BodyOffsetY = " << floatToStr(globalAlignments.bodyOffsetY, 2) << " #Forward offset for player in scenes. Positive values are forwards.\n";
         output << "\n";
         output << "BodyOffsetZ = " << floatToStr(globalAlignments.bodyOffsetZ, 2) << " #Vertical offset for player in scenes. Positive values are upwards.\n";
-        output << "\n";        
+        output << "\n";
 
         output.close();
 
@@ -901,7 +957,7 @@ namespace OStimVR
                         std::string variableName;
                         std::string variableValue = GetConfigSettingsValue(line, variableName);
 
-						std::vector<std::string> splitted = splitTrimmed(variableValue, '|');
+                        std::vector<std::string> splitted = splitTrimmed(variableValue, '|');
 
                         OstimVRAlignment sceneAlignment;
                         sceneAlignment.bodyOffsetX = splitted.size() >= 1 ? std::strtof(splitted[0].c_str(), 0) : 0.0f;
@@ -939,13 +995,13 @@ namespace OStimVR
         output << "#\n";
         output << "################################################################################################\n";
         output << "\n";
-        for (auto& alignment : sceneAlignmentMap)
+        for (auto& alignment : sceneAlignmentMap) 
         {
             output << alignment.first.c_str() << " = " 
-                   << floatToStr(alignment.second.bodyOffsetX, 2) << "|"
-                   << floatToStr(alignment.second.bodyOffsetY, 2) << "|"
-                   << floatToStr(alignment.second.bodyOffsetZ, 2) << "|"
-                   << floatToStr(alignment.second.angleOffsetDegrees, 2) << "\n";
+                    << floatToStr(alignment.second.bodyOffsetX, 2) << "|"
+                    << floatToStr(alignment.second.bodyOffsetY, 2) << "|" 
+                    << floatToStr(alignment.second.bodyOffsetZ, 2) << "|" 
+                    << floatToStr(alignment.second.angleOffsetDegrees, 2) << "\n";
             output << "\n";
         }
 
@@ -955,18 +1011,19 @@ namespace OStimVR
     }
 
     void PrintNodesTree(int depth, std::vector<Graph::Node*>& visitedList, Graph::Node* node) 
-    { 
+    {
         if (node) 
         {
             auto text = std::string(depth, '.');
-            logger::info("{}{} - {} - {} - transition:{} - navs:{}", text, node->scene_id, node->scene_name, node->modpack, node->isTransition, node->navigations.size());
+            logger::info("{}{} - {} - {} - transition:{} - navs:{}", text, node->scene_id, node->scene_name,
+                         node->modpack, node->isTransition, node->navigations.size());
             for (Graph::Navigation nav : node->navigations) {
                 std::vector<std::string> nodeNames;
                 for (Graph::Node* navNode : nav.nodes) {
                     nodeNames.emplace_back(navNode->scene_id);
                 }
                 logger::info("Navigation:{} - transition:{} - nodesCount:{} - nodes:{}", nav.description,
-                             nav.isTransition, nav.nodes.size(), nav.nodes.size() > 0 ? join(nodeNames, ",") : "null");                
+                             nav.isTransition, nav.nodes.size(), nav.nodes.size() > 0 ? join(nodeNames, ",") : "null");
             }
             for (Graph::Navigation nav : node->navigations) 
             {
@@ -990,9 +1047,9 @@ namespace OStimVR
             }
             for (Graph::Navigation nav : node->navigations) 
             {
-                for (Graph::Node* navNode : nav.nodes) {
-                    if (navNode &&
-                        std::find(visitedList.begin(), visitedList.end(), navNode) == visitedList.end() &&
+                for (Graph::Node* navNode : nav.nodes) 
+                {
+                    if (navNode && std::find(visitedList.begin(), visitedList.end(), navNode) == visitedList.end() &&
                         navNode->modpack == node->modpack) {
                         visitedList.emplace_back(navNode);
                         GetSameSetNodes(visitedList, nodesList, navNode, nodeId);
@@ -1003,14 +1060,14 @@ namespace OStimVR
     }
 
     void saveSceneAlignmentsForAllSetConfig() 
-    { 
+    {
         /*
         //Code to print nodes
         auto state = UI::UIState::GetSingleton();
         if (state) {
             auto currentNode = state->currentNode;
-            if (currentNode && currentNode->isTransition == false) 
-            {                
+            if (currentNode && currentNode->isTransition == false)
+            {
                 logger::info("..NodesTree..");
                 /// find all nodes from the same set and print to log
                 std::vector<Graph::Node*> visitedNodesList;
@@ -1038,14 +1095,14 @@ namespace OStimVR
                     visitedNodesList.emplace_back(currentNode);
                     std::vector<Graph::Node*> nodesList;
                     GetSameSetNodes(visitedNodesList, nodesList, currentNode, removeDigits(currentNode->scene_id));
-                    for (auto node : nodesList)
+                    for (auto node : nodesList) 
                     {
                         ModifyOffsetsOnNode(offsetX, offsetY, offsetZ, rotationOffset, node);
                     }
                 }
             }
         }
-        
+
         saveSceneAlignmentsConfig();
     }
 
