@@ -270,7 +270,7 @@ namespace OStimVR
     void FixStandingBug() {
         Sleep(2000);
         // Fix for stand animation bug
-        OStim::ThreadManager* threadManager = OStim::ThreadManager::GetSingleton();
+        Threading::ThreadManager* threadManager = Threading::ThreadManager::GetSingleton();
 
         if (threadManager != nullptr && threadManager->playerThreadRunning()) {
             auto playerThread = threadManager->getPlayerThread();
