@@ -26,7 +26,7 @@ unsigned int OstimVRPluginAPI::OstimVRInterface001::getBuildNumber() {
 
 bool OstimVRPluginAPI::OstimVRInterface001::IsPlayerOstimScenePlaying() 
 { 
-    OStim::ThreadManager* threadManager = OStim::ThreadManager::GetSingleton();
+    Threading::ThreadManager* threadManager = Threading::ThreadManager::GetSingleton();
 
     return threadManager !=nullptr && threadManager->playerThreadRunning();
 }
@@ -135,7 +135,7 @@ void OstimVRPluginAPI::OstimVRInterface001::EndSceneEarly()
             OStimVR::SetOstimVRSettings(true);
         }
         
-        OStim::ThreadManager* threadManager = OStim::ThreadManager::GetSingleton();
+        Threading::ThreadManager* threadManager = Threading::ThreadManager::GetSingleton();
 
         if (threadManager != nullptr && threadManager->playerThreadRunning()) {
             auto playerThread = threadManager->getPlayerThread();
@@ -167,7 +167,7 @@ bool OstimVRPluginAPI::OstimVRInterface001::InSequence() {
     auto state = UI::UIState::GetSingleton();
         
     return (state && state->currentThread && (state->currentThread->isInSequence() ||
-            ((state->currentThread && state->currentThread->getThreadFlags() & OStim::ThreadFlag::NO_PLAYER_CONTROL))));
+            ((state->currentThread && state->currentThread->getThreadFlags() & Threading::ThreadFlag::NO_PLAYER_CONTROL))));
         //}
 }
 
@@ -200,7 +200,7 @@ void OstimVRPluginAPI::OstimVRInterface001::SaveSceneOffsetsForAllSet()
 
 void OstimVRPluginAPI::OstimVRInterface001::GetExcitements(float& domRatio, float& subRatio, float& thirdRatio,
                                                            bool& domEnabled, bool& subEnabled, bool& thirdEnabled) {
-    OStim::ThreadManager* threadManager = OStim::ThreadManager::GetSingleton();
+    Threading::ThreadManager* threadManager = Threading::ThreadManager::GetSingleton();
 
     if (threadManager != nullptr && threadManager->playerThreadRunning()) 
     {
