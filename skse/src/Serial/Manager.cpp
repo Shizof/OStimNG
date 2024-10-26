@@ -245,7 +245,7 @@ namespace Serialization {
 
             RE::TESForm* form = RE::TESForm::LookupByID(formID);
             if (form) {
-                json["actorData"][stringID]["file"] = form->GetFile(0)->GetFilename();
+                json["actorData"][stringID]["file"] = form->GetFile()->GetFilename();
             }
 
             if (!data.equipObjects.empty()) {
