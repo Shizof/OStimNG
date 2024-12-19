@@ -189,7 +189,7 @@ namespace OStimVR
                             //logger::critical("Playerscale is: {}", playerScale);
                             vrikInterface->setSettingDouble("bodySize", playerScale);
                             vrikInterface->setSettingDouble("armSize", playerScale);
-                            vrikInterface->setSettingDouble("armLength", 1.0f);
+                            //vrikInterface->setSettingDouble("armLength", 1.0f);
 
                             break;
                         }
@@ -244,7 +244,7 @@ namespace OStimVR
             //logger::critical("Playerscale is: {}", playerScale);
             vrikInterface->setSettingDouble("bodySize", playerScale);
             vrikInterface->setSettingDouble("armSize", playerScale);
-            vrikInterface->setSettingDouble("armLength", 1.0f);
+            //vrikInterface->setSettingDouble("armLength", 1.0f);
         }
 
         /*if (CurrentCameraFirstPerson) {
