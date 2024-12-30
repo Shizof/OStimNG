@@ -53,6 +53,8 @@ namespace OStimVR
 
     bool CurrentCameraFirstPerson = true;
 
+    int hideVRIKCompass = 1;
+
     std::vector<RE::Actor*> ignoredActorsForAggressionList;
 
     std::unordered_map<std::string, OstimVRAlignment> sceneAlignmentMap;
@@ -521,6 +523,9 @@ namespace OStimVR
             vrikInterface->setSettingDouble("enableJumping", 0);
             vrikInterface->setSettingDouble("displayHolsters", 0);
             vrikInterface->setSettingDouble("nearClipDistance", nearDistance);
+
+            if (hideVRIKCompass)
+                vrikInterface->setSettingDouble("hideCompass", 1);
         }
 
         CameraSwitchFunc(!defaultThirdPerson);
@@ -681,6 +686,8 @@ namespace OStimVR
         output << "\n";
         output << "DisablePLANCKduringScenes = 0   #Disable PLANCK collision during scenes.\n";
         output << "\n";
+        output << "HideVRIKCompass = 1   #Disable compass during scenes.\n";
+        output << "\n";
         output << "HeightAdjustSpeed = 1.0       #Snapback speed for viewpoint. Higher speeds may cause nausea. "
                   "Default is 1.0.\n";
         output << "\n";
@@ -767,9 +774,14 @@ namespace OStimVR
                                 defaultThirdPerson = std::stoi(variableValue);
 
                                 CurrentCameraFirstPerson = !defaultThirdPerson;
-                            } else if (variableName == "DisablePLANCKduringScenes") {
+                            } 
+                            else if (variableName == "DisablePLANCKduringScenes") {
                                 disablePLANCKduringScenes = std::stoi(variableValue);
+                            } 
+                            else if (variableName == "HideVRIKCompass") {
+                                hideVRIKCompass = std::stoi(variableValue);
                             }
+                            
                         }
                     }
                 }
