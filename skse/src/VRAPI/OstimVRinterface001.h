@@ -70,6 +70,10 @@ namespace OstimVRPluginAPI
         virtual void ToggleLockHeightToBodyMode() = 0;
 
         virtual void OStimWheelOpenCloseEvent(bool opened, bool leftWheel) = 0;
+
+        virtual bool IsInAutoMode() = 0;
+
+        virtual void StartStopAutoMode(bool start) = 0;
     };
 }  // namespace OstimVRPluginAPI
 
