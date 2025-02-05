@@ -18,39 +18,11 @@ namespace Sound {
                 return;
             }
 
-            auto& target = json["target"];
-            if (!target.contains("mod")) {
-                logger::warn("voice set {} does not have field 'target.mod' defined", path);
+            GameAPI::GameRecordIdentifier recordID;
+            if (!recordID.readJson(json["target"], path)) {
                 return;
             }
-            if (!target["mod"].is_string()) {
-                logger::warn("field 'target.mod' of voice set {} is not a string", path);
-                return;
-            }
-            if (!target.contains("formid")) {
-                logger::warn("voice set {} does not have field 'target.formid' defined", path);
-                return;
-            }
-            if (!target["formid"].is_string()) {
-                logger::warn("field 'target.formid' of voice set {} is not a string", path);
-                return;
-            }
-
-            RE::TESDataHandler* dataHandler = RE::TESDataHandler::GetSingleton();
-
-            std::string stringID = target["formid"];
-            uint32_t formID = std::stoi(stringID, nullptr, 16);
-            std::string file = target["mod"];
-            if (const RE::TESFile* mod = dataHandler->LookupLoadedModByName(file)) {
-                formID += mod->GetCompileIndex() << 24;
-            } else if (const RE::TESFile* mod = dataHandler->LookupLoadedLightModByName(file)) {
-                formID += mod->GetPartialIndex() << 12;
-            } else {
-                logger::warn("file {} links to unknown mod {}", path, file);
-                return;
-            }
-
-
+            
             VoiceSet voiceSet;
 
             JsonUtil::loadTranslatedString(json, voiceSet.name, "name", filename, "voice set", false);
@@ -60,7 +32,8 @@ namespace Sound {
 
             JsonUtil::loadGameRecord(json, voiceSet.voice, "voice", filename, "voice set", path, false);
             if (!voiceSet.voice) {
-                RE::TESForm* targetForm = RE::TESDataHandler::GetSingleton()->LookupForm(std::stoi(stringID, nullptr, 16), target["mod"]);
+                // TODO: GameAPI??
+                RE::TESForm* targetForm = RE::TESForm::LookupByID<RE::TESForm>(recordID.formID);
                 if (targetForm) {
                     if (targetForm->Is(RE::BGSVoiceType::FORMTYPE)) {
                         voiceSet.voice = targetForm->As<RE::BGSVoiceType>();
@@ -89,46 +62,78 @@ namespace Sound {
                 JsonUtil::loadGameRecord(json, voiceSet.postSceneDialogue, "postSceneDialogue", filename, "voice set", path, false);
             }
 
-            //TODO event reactions
+            logger::info("registering voice set {} with ID {:x}", filename, recordID.formID);
+            voiceSets[recordID] = voiceSet;
+            if (json.contains("aliases")) {
+                if (json["aliases"].is_array()) {
+                    for (nlohmann::json& alias : json["aliases"]) {
+                        GameAPI::GameRecordIdentifier aliasID;
+                        if (!aliasID.readJson(alias, path)) {
+                            continue;
+                        }
 
-            voiceSets[formID] = voiceSet;
+                        aliases[aliasID] = recordID;
+                    }
+                } else {
+                    logger::warn("field 'aliases' of voice set '{}' is not an array", filename);
+                }
+            }
         });
     }
 
+    VoiceSet* SoundTable::getVoiceSet(GameAPI::GameRecordIdentifier recordID) {
+        auto iter = voiceSets.find(recordID);
+        if (iter != voiceSets.end()) {
+            return &iter->second;
+        }
+        auto aliasIter = aliases.find(recordID);
+        if (aliasIter == aliases.end()) {
+            return nullptr;
+        }
+        iter = voiceSets.find(aliasIter->second);
+        if (iter != voiceSets.end()) {
+            return &iter->second;
+        }
+        return nullptr;
+    }
+
     VoiceSet SoundTable::getVoiceSet(GameAPI::GameActor actor) {
-        RE::FormID selection = Serialization::getVoiceSet(actor.getBaseFormID());
-        if (selection != 0) {
-            auto iter = voiceSets.find(selection);
-            if (iter != voiceSets.end()) {
-                logger::info("voice set found for actor {} by user selection", actor.getName());
-                return iter->second;
+        // TODO how to handle serialization with gameAPI?
+        RE::FormID skID = Serialization::getVoiceSet(actor.getBaseFormID().formID);
+        GameAPI::GameRecordIdentifier selection{skID};
+        VoiceSet* voiceSet = nullptr;
+        if (selection) {
+            voiceSet = getVoiceSet(selection);
+            if (voiceSet) {
+                logger::info("voice set {} found for actor {} by user selection", voiceSet->name, actor.getName());
+                return *voiceSet;
             }
         }
 
-        auto iter = voiceSets.find(actor.getBaseFormID());
-        if (iter != voiceSets.end()) {
-            logger::info("voice set found for actor {} by actor base", actor.getName());
-            return iter->second;
+        voiceSet = getVoiceSet(actor.getBaseFormID());
+        if (voiceSet) {
+            logger::info("voice set {} found for actor {} by actor base", voiceSet->name, actor.getName());
+            return *voiceSet;
         }
 
         GameAPI::GameVoice voice = actor.getVoice();
         if (voice) {
-            iter = voiceSets.find(voice.getFormID());
-            if (iter != voiceSets.end()) {
-                logger::info("voice set found for actor {} by voice type", actor.getName());
-                return iter->second;
+            voiceSet = getVoiceSet(voice.getIdentifier());
+            if (voiceSet) {
+                logger::info("voice set {} found for actor {} by voice type", voiceSet->name, actor.getName());
+                return *voiceSet;
             }
         }
-
-        iter = voiceSets.find(actor.getRace().getFormID());
-        if (iter != voiceSets.end()) {
-            logger::info("voice set found for actor {} by race", actor.getName());
-            return iter->second;
+        
+        voiceSet = getVoiceSet(actor.getRace().getIdentifier());
+        if (voiceSet) {
+            logger::info("voice set {} found for actor {} by race", voiceSet->name, actor.getName());
+            return *voiceSet;
         }
 
         if (actor.isHuman()) {
-            logger::info("no voice set found for actor {}, using default", actor.getName());
-            iter = voiceSets.find(actor.isSex(GameAPI::GameSex::FEMALE) ? 1 : 0);
+            logger::info("no voice set found for actor {}, using default", actor.getName());            
+            auto iter = voiceSets.find(actor.isSex(GameAPI::GameSex::FEMALE) ? GameAPI::GameRecordIdentifiers::DEFAULT_FEMALE : GameAPI::GameRecordIdentifiers::DEFAULT_MALE);
             if (iter != voiceSets.end()) {
                 return iter->second;
             }
@@ -145,33 +150,38 @@ namespace Sound {
         ret.push_back("0");
         ret.push_back("$ostim_generic_default");
 
-        std::vector<std::pair<std::string, RE::FormID>> voices;
+        std::vector<std::pair<std::string, GameAPI::GameRecordIdentifier>> voices;
 
         for (auto& [id, voiceSet] : voiceSets) {
-            if (id > 1) {
+            // TODO: use GameAPI
+            if (id.formID > 1) {
                 voices.push_back({voiceSet.name, id});
             }
         }
 
         std::sort(voices.begin(), voices.end(), [&](std::pair<std::string, RE::FormID> pairA, std::pair<std::string, RE::FormID> pairB) {
-            return pairA.first.compare(pairB.first);
+            return pairB.first.compare(pairA.first);
         });
 
         for (auto& [name, id] : voices) {
-            ret.push_back(std::to_string(MathUtil::uintToInt(id)));
+            // TODO: use GameAPI
+            ret.push_back(std::to_string(MathUtil::uintToInt(id.formID)));
             ret.push_back(name);
         }
 
         return ret;
     }
 
-    std::string SoundTable::getVoiceSetName(RE::FormID formID) {
-        RE::FormID voiceID = Serialization::getVoiceSet(formID);
+    std::string SoundTable::getVoiceSetName(GameAPI::GameRecordIdentifier recordID) {
+        // TODO how to handle serialization with gameAPI?
+        RE::FormID skID = Serialization::getVoiceSet(recordID.formID);
 
-        if (voiceID == 0) {
+        if (skID == 0) {
             // for voice sets 0 is default male, but for serialization it is just default
             return "$ostim_generic_default";
         }
+
+        GameAPI::GameRecordIdentifier voiceID{skID};
 
         auto iter = voiceSets.find(voiceID);
         if (iter != voiceSets.end()) {
@@ -181,9 +191,9 @@ namespace Sound {
         return "$ostim_generic_default";
     }
 
-    void SoundTable::setVoiceSet(RE::FormID formID, std::string voice) {
+    void SoundTable::setVoiceSet(GameAPI::GameRecordIdentifier recordID, std::string voice) {
         RE::FormID voiceID = MathUtil::intToUint(std::stoi(voice));
-        Serialization::setVoiceSet(formID, voiceID);
+        Serialization::setVoiceSet(recordID.formID, voiceID);
     }
 
 
