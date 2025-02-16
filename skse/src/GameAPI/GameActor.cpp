@@ -12,7 +12,7 @@ namespace GameAPI {
         for (RE::Actor* actor : actors) {
             ret.push_back(actor);
         }
-
+        
         return ret;
     }
 
@@ -43,7 +43,7 @@ namespace GameAPI {
                 stopMovement(form);
             }
         }
-
+        
         RE::Actor* actor = form;
         SKSE::GetTaskInterface()->AddTask([actor]() {
             actor->SetGraphVariableBool("bHumanoidFootIKDisable", true);
@@ -75,7 +75,16 @@ namespace GameAPI {
             actor->SetGraphVariableBool("bHeadTrackSpine", true);
             actor->SetGraphVariableBool("bHeadTracking", true);
             actor->SetGraphVariableBool("tdmHeadtrackingBehavior", true);
-            actor->NotifyAnimationGraph("IdleForceDefaultState");
+            if (actor->HasKeyword(GameLogic::GameTable::getNPCKeyword())) {
+                actor->NotifyAnimationGraph("IdleForceDefaultState");
+            } else {
+                actor->NotifyAnimationGraph("Reset");
+                actor->NotifyAnimationGraph("ReturnToDefault");
+                actor->NotifyAnimationGraph("FNISDefault");
+                actor->NotifyAnimationGraph("IdleReturnToDefault");
+                actor->NotifyAnimationGraph("ForceFurnExit");
+                actor->NotifyAnimationGraph("ReturnDefaultState");
+            }
         });
     }
 

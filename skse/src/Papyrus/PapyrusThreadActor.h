@@ -95,6 +95,9 @@ namespace PapyrusThreadActor {
         return 0;
     }
 
+    void SetExpressionsEnabled(RE::StaticFunctionTag*, RE::Actor* actor, bool enabled, bool allowOverride) {
+        ScriptAPI::Actor::setExpressionsEnabled(actor, enabled, allowOverride);
+    }
 
     float PlayExpression(RE::StaticFunctionTag*, RE::Actor* actor, std::string expression) {
         StringUtil::toLower(&expression);
@@ -320,6 +323,7 @@ namespace PapyrusThreadActor {
         BIND(Climax);
         BIND(GetTimesClimaxed);
 
+        BIND(SetExpressionsEnabled);
         BIND(PlayExpression);
         BIND(ClearExpression);
         BIND(HasExpressionOverride);

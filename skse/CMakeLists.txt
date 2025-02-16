@@ -7,7 +7,7 @@ message("Using toolchain file ${CMAKE_TOOLCHAIN_FILE}.")
 ########################################################################################################################
 project(
         OStim
-        VERSION 7.3.4.3
+        VERSION 7.3.4.4
         DESCRIPTION ""
         LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 23)
@@ -129,6 +129,7 @@ set(sources
 	src/ScriptAPI/JsonScript.cpp
 	src/ScriptAPI/LibraryScript.cpp
 	src/ScriptAPI/MetadataScript.cpp
+	src/ScriptAPI/PlayerThreadScript.cpp
 	src/ScriptAPI/SettingsScript.cpp
 	src/ScriptAPI/ThreadScript.cpp
 	src/Serial/Manager.cpp

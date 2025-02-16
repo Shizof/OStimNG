@@ -41,13 +41,10 @@ namespace Threading {
     void handleFurniture(ThreadStartParams params) {
         if (!params.noFurniture && !params.furniture && MCM::MCMTable::useFurniture()) {
             if (!params.startingNodes.empty()) {
-                GameAPI::GameObject bed = Furniture::findFurniture(Furniture::FurnitureTable::getFurnitureType("bed"), params.actors[0].form,
-                                             MCM::MCMTable::furnitureSearchDistance(), 96.0f);
+                GameAPI::GameObject bed = Furniture::findFurniture(Furniture::FurnitureTable::getFurnitureType("bed"), params.actors[0].form, MCM::MCMTable::furnitureSearchDistance(), 96.0f);
                 if (bed) {
                     if (MCM::MCMTable::selectFurniture()) {
-                        GameAPI::Game::showMessageBox("$ostim_message_use_bed",
-                                                      {"$ostim_message_yes", "$ostim_message_no"},
-                                                      [params, bed](unsigned int result) {
+                        GameAPI::Game::showMessageBox("$ostim_message_use_bed", {"$ostim_message_yes", "$ostim_message_no"}, [params, bed](unsigned int result) {
                             if (result == 0) {
                                 addFurniture(params, bed);
                             } else {
@@ -61,13 +58,11 @@ namespace Threading {
                     handleActorAdding(params);
                 }
             } else {
-                Furniture::selectFurniture(params.actors.size(), params.actors[0].getPosition(),
-                                           MCM::MCMTable::furnitureSearchDistance(), 96.0f, false,
-                                           [params](GameAPI::GameObject furniture) {
+                Furniture::selectFurniture(params.actors.size(), params.actors[0].getPosition(), MCM::MCMTable::furnitureSearchDistance(), 96.0f, false, [params](GameAPI::GameObject furniture) {
                     if (furniture) {
-                    addFurniture(params, furniture);
+                        addFurniture(params, furniture);
                     } else {
-                    handleActorAdding(params);                       
+                        handleActorAdding(params);                       
                     }
                 });
             }

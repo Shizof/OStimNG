@@ -20,9 +20,7 @@ namespace GameAPI {
         inline GameActor() {}
         inline GameActor(RE::Actor* actor) { form = actor; }
 
-        inline GameAPI::GameRecordIdentifier getBaseFormID() const {
-            return GameAPI::GameRecordIdentifier{form->GetActorBase()->formID};
-        }
+        inline GameAPI::GameRecordIdentifier getBaseFormID() const { return GameAPI::GameRecordIdentifier{form->GetActorBase()->formID}; }
 
         void update3D() const;
         inline bool isLoaded() const { return form->Is3DLoaded(); }

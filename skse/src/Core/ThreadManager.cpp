@@ -143,6 +143,7 @@ namespace Threading {
                 return thread;
             }
         }
+
         return nullptr;
     }
 

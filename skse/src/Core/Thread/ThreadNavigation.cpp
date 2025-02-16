@@ -123,10 +123,12 @@ namespace Threading {
             inSequence = true;
             return;
         }
+
         if (!nodeQueue.empty() && nodeQueue.back().node == node) {
             nodeQueue.back().duration += duration;
             return;
         }
+
         nodeQueue.push({duration, node});
     }
 

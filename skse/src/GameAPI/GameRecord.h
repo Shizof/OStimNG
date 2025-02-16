@@ -17,7 +17,7 @@ namespace GameAPI {
 
         inline void* toABIPointer() { return form; }
 
-        void loadIdentifier(GameRecordIdentifier& identifier) { 
+        void loadIdentifier(GameRecordIdentifier& identifier) {
             form = RE::TESForm::LookupByID<T>(identifier.formID);
         }
 
@@ -28,13 +28,14 @@ namespace GameAPI {
 
             return {form->formID};
         }
+
         std::string getMod() {
             if (!form) {
                 return "";
             }
 
             uint8_t fullIndex = form->formID >> 24;
-            
+
             const RE::TESFile* file = nullptr;
             if (fullIndex == 0xFE) {
                 uint16_t lightIndex = (form->formID & 0xFFFFFF) >> 12;
@@ -79,12 +80,17 @@ namespace GameAPI {
             }
         }
 
-        json toJson() { 
+        json toJson() {
             return getIdentifier().toJson();
         }
 
         void loadFile(std::string mod, uint32_t formID) {
-            form = RE::TESDataHandler::GetSingleton()->LookupForm<T>(formID, mod);
+            //If mod not specified, indicates likely a runtime generated form. 
+            if (mod.empty()) {
+                form = RE::TESForm::LookupByID<T>(formID | (0xFF >> 24));
+            } else {
+                form = RE::TESDataHandler::GetSingleton()->LookupForm<T>(formID, mod);
+            }
         }
 
         void loadSerial(GameSerializationInterface serial) {
