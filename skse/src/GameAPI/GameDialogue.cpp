@@ -100,10 +100,7 @@ namespace GameAPI {
             questID + "_" +
             std::string(info->parentTopic->GetFormEditorID()).substr(0, topicCharacters) + "_" +
             std::format("{:08x}", info->formID & (mod->IsLight() ? 0xFFF : 0xFFFFFF)) + "_1.fuz";
-
-        logger::info("path is: {}", path);
-
-        
+                        
         SKSE::GetTaskInterface()->AddTask([actor, path] {
             actor->PauseCurrentDialogue();
             // the SpeakSound console command usually only works on the player if you're in third person and looking at the players face
@@ -117,7 +114,6 @@ namespace GameAPI {
                 GameUtil::CompileAndRun(script, actor);
                 delete script;
             }
-        });
-        
+        });        
     }
 }

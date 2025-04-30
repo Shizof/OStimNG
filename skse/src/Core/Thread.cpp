@@ -37,6 +37,9 @@ namespace Threading {
         }
 
         threadFlags = params.threadFlags;
+        for (std::string data : params.metadata) {
+            metadata.addMetadata(data);
+        }
 
         this->center = furniture ? furniture.getPosition() : (playerThread ? GameAPI::GameActor::getPlayer().getPosition() : params.actors.front().getPosition());
 
@@ -874,6 +877,8 @@ namespace Threading {
         if (playerThread) {
             GameAPI::GameCamera::startSceneMode(MCM::MCMTable::useFreeCam());
         }
+
+        GameAPI::GameEvents::sendFurnitureChangedEvent(m_threadId, this->furniture);
     }
 
 

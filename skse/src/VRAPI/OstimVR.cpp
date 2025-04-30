@@ -72,6 +72,8 @@ namespace OStimVR
     double activeRagdollStartDistanceOrgValue = 50.0;
     double activeRagdollEndDistanceOrgValue = 60.0;
 
+    bool originalbDirectMovementWithWands = true;
+
     void MovePlayerInThirdPersonStart(bool firstPerson) 
     {
         // SKSE::GetTaskInterface()->AddTask([firstPerson]() {
@@ -499,6 +501,16 @@ namespace OStimVR
             *g_fGamepadLookAngleSnapAmount = 0.0f;
         }
 
+        RE::Setting* bDirectMovementWithWandsSetting = RE::GetINISetting("bDirectMovementWithWands:VRInput");
+        if (bDirectMovementWithWandsSetting) 
+        {
+            originalbDirectMovementWithWands = bDirectMovementWithWandsSetting->data.b;  
+            if (originalbDirectMovementWithWands == false)
+            {
+                bDirectMovementWithWandsSetting->data.b = true;
+            }
+        }
+
         RE::UI* ui = RE::UI::GetSingleton();
         if (ui != nullptr && ui->IsMenuOpen("WSActivateRollover")) 
         {
@@ -513,7 +525,7 @@ namespace OStimVR
         if (vrikInterface != nullptr) {
             originalVRIKplayerHeight = vrikInterface->getSettingDouble("playerHeight");
 
-            orgHeadAboveDistance = vrikInterface->getSettingDouble("headAboveDistance");
+            orgHeadAboveDistance = vrikInterface->getSettingDouble("headAboveDistance"); 
             orgHeadForwardDistance = vrikInterface->getSettingDouble("headInFrontDistance");
 
             vrikInterface->setSettingDouble("selfieModeEnabled", 0);
@@ -595,6 +607,13 @@ namespace OStimVR
             }
             ignoredActorsForAggressionList.clear();
             RemoveRagdollCollisionIgnoredActors();
+        }
+
+        if (originalbDirectMovementWithWands == false) {
+            RE::Setting* bDirectMovementWithWandsSetting = RE::GetINISetting("bDirectMovementWithWands:VRInput");
+            if (bDirectMovementWithWandsSetting) {
+                bDirectMovementWithWandsSetting->data.b = false;                
+            }
         }
 
         RE::Setting* snapAmount = RE::GetINISetting("fGamepadLookAngleSnapAmount:VRInput");

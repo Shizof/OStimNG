@@ -7,7 +7,7 @@ message("Using toolchain file ${CMAKE_TOOLCHAIN_FILE}.")
 ########################################################################################################################
 project(
         OStim
-        VERSION 7.3.4.5
+        VERSION 7.3.5.0
         DESCRIPTION ""
         LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 23)
@@ -63,7 +63,8 @@ set(sources
     src/Core/ThreadActor/ThreadActorEquipObjects.cpp
     src/Core/ThreadActor/ThreadActorExcitement.cpp
     src/Core/ThreadActor/ThreadActorExpression.cpp
-    src/Core/ThreadActor/ThreadActorSound.cpp
+    src/Core/ThreadActor/ThreadActorSound.cpp    
+    src/Core/ThreadStarter/DebugNPCThreadStarter.cpp
     src/Core/ThreadStarter/NPCThreadStarter.cpp
     src/Core/ThreadStarter/PlayerThreadStarter.cpp
     src/Core/ThreadStarter/ThreadStarter.cpp

@@ -115,15 +115,17 @@ namespace GameAPI {
 
     void GameCamera::toggleFlyCamInner() {
         if (REL::Module::IsVR()) {
-            return; // TODO: TFC crashes in VR, we may still want some version of it?
+            return; // TFC crashes in VR. We handled it with VRIK api.
         }
-        const auto scriptFactory = RE::IFormFactory::GetConcreteFormFactoryByType<RE::Script>();
-        const auto script = scriptFactory ? scriptFactory->Create() : nullptr;
-        if (script) {
-            script->SetCommand("tfc");
-            GameUtil::CompileAndRun(script, RE::PlayerCharacter::GetSingleton());
-            delete script;
-        }
+        SKSE::GetTaskInterface()->AddTask([] {
+            const auto scriptFactory = RE::IFormFactory::GetConcreteFormFactoryByType<RE::Script>();
+            const auto script = scriptFactory ? scriptFactory->Create() : nullptr;
+            if (script) {
+                script->SetCommand("tfc");
+                GameUtil::CompileAndRun(script, RE::PlayerCharacter::GetSingleton());
+                delete script;
+            }
+        });
     }
 
 

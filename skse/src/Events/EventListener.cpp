@@ -1,5 +1,6 @@
 #include "EventListener.h"
 
+#include "Core/ThreadStarter/DebugNPCThreadStarter.h"
 #include "Core/ThreadStarter/ThreadBuilder.h"
 #include "Core/ThreadStarter/ThreadStarter.h"
 #include "Core/Core.h"
@@ -93,12 +94,26 @@ namespace Events {
                             Threading::startThread(params);
                         }
                     } else if (bEvent->IsUp() && bEvent->HeldDuration() >= 2.0) {
-                        if (!Threading::ThreadManager::GetSingleton()->playerThreadRunning()) {
-                            Threading::ThreadStartParams params = {.actors = {GameAPI::GameActor::getPlayer()}};
-                            Threading::startThread(params);
-                        }
+                        Threading::ThreadStartParams params = {.actors = {GameAPI::GameActor::getPlayer()}};
+                        Threading::startThread(params);
                     }
                 }
+                continue;
+            } else if (keyCode == MCM::MCMTable::keyNpcSceneStart()) {
+                if (bEvent->IsDown()) {
+                    if (Threading::ThreadManager::GetSingleton()->playerThreadRunning()) {
+                        continue;
+                    }
+
+                    GameAPI::GameActor target = GameAPI::Game::getCrosshairActor();
+                    if (!target) {
+                        continue;
+                    }
+
+                    Threading::ThreadStartParams params = {.actors = {target}};
+                    Threading::startDebugNPCThread(params);
+                }
+                continue;
             }
 
             if (!bEvent->IsDown()) {
