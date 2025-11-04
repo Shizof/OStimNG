@@ -18,6 +18,7 @@ namespace Trait {
         GameAPI::GameSex sex = GameAPI::GameSex::AGENDER;
         std::set<std::string> requirements;
 
+        bool fulfills(std::set<std::string>& requirements);
         bool fulfills(ActorCondition conditions);
 
     private:

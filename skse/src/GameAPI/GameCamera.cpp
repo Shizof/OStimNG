@@ -39,14 +39,7 @@ namespace GameAPI {
         } else {
             if (GameLogic::GameTable::improvedCamSupport()) {
                 camera->ForceFirstPerson();
-                if (REL::Module::get().version().patch() < 1130) {
-                    RE::ControlMap::GetSingleton()->GetRuntimeData().enabledControls.reset(RE::UserEvents::USER_EVENT_FLAG::kPOVSwitch);
-                } else {
-                    // bandaid fix until CLib-NG is updated
-                    auto ptr = &RE::ControlMap::GetSingleton()->GetRuntimeData().enabledControls;
-                    ptr += 8;
-                    (*ptr).reset(RE::UserEvents::USER_EVENT_FLAG::kPOVSwitch);
-                }
+                RE::ControlMap::GetSingleton()->GetRuntimeData().enabledControls.reset(RE::UserEvents::USER_EVENT_FLAG::kPOVSwitch);
                 camera->ForceThirdPerson();
             }
         }
@@ -59,14 +52,7 @@ namespace GameAPI {
                 toggleFlyCamInner(); 
                 });
         } else if (GameLogic::GameTable::improvedCamSupport()) {
-            if (REL::Module::get().version().patch() < 1130) {
-                RE::ControlMap::GetSingleton()->GetRuntimeData().enabledControls.set(RE::UserEvents::USER_EVENT_FLAG::kPOVSwitch);
-            } else {
-                // bandaid fix until CLib-NG is updated
-                auto ptr = &RE::ControlMap::GetSingleton()->GetRuntimeData().enabledControls;
-                ptr += 8;
-                (*ptr).set(RE::UserEvents::USER_EVENT_FLAG::kPOVSwitch);
-            }
+            RE::ControlMap::GetSingleton()->GetRuntimeData().enabledControls.set(RE::UserEvents::USER_EVENT_FLAG::kPOVSwitch);
         }
         if (firstPerson) {
             SKSE::GetTaskInterface()->AddTask([] {
@@ -80,59 +66,14 @@ namespace GameAPI {
     }
 
     void GameCamera::toggleFreeCam() {
-        auto camera = RE::PlayerCamera::GetSingleton();
-
-        if (!GameLogic::GameTable::improvedCamSupport()) {
-            if (camera->IsInFirstPerson()) {
-                camera->ForceThirdPerson();
-            }
-
-            SKSE::GetTaskInterface()->AddTask([] { 
-                toggleFlyCamInner(); 
-                });
-            return;
-        }
-
-        if (camera->IsInFreeCameraMode()) {
-            SKSE::GetTaskInterface()->AddTask([] {
-                toggleFlyCamInner();
-                auto camera = RE::PlayerCamera::GetSingleton();
-                camera->ForceFirstPerson();
-                if (REL::Module::get().version().patch() < 1130) {
-                    RE::ControlMap::GetSingleton()->enabledControls.reset(RE::UserEvents::USER_EVENT_FLAG::kPOVSwitch);
-                } else {
-                    // bandaid fix until CLib-NG is updated
-                    auto ptr = &RE::ControlMap::GetSingleton()->enabledControls;
-                    ptr += 8;
-                    (*ptr).reset(RE::UserEvents::USER_EVENT_FLAG::kPOVSwitch);
-                }
-                camera->ForceThirdPerson();
-            });
-        } else {
-            if (REL::Module::get().version().patch() < 1130) {
-                RE::ControlMap::GetSingleton()->GetRuntimeData().enabledControls.set(RE::UserEvents::USER_EVENT_FLAG::kPOVSwitch);
-            } else {
-                // bandaid fix until CLib-NG is updated
-                auto ptr = &RE::ControlMap::GetSingleton()->GetRuntimeData().enabledControls;
-                ptr += 8;
-                (*ptr).set(RE::UserEvents::USER_EVENT_FLAG::kPOVSwitch);
-            }
-            SKSE::GetTaskInterface()->AddTask([] {
-                toggleFlyCamInner();
-            });
+        if (REL::Module::IsVR()) {
+            return;  // TFC crashes in VR. We handled it with VRIK api.
         }
     }
 
     void GameCamera::toggleFlyCamInner() {
         if (REL::Module::IsVR()) {
             return; // TFC crashes in VR. We handled it with VRIK api.
-        }
-        const auto scriptFactory = RE::IFormFactory::GetConcreteFormFactoryByType<RE::Script>();
-        const auto script = scriptFactory ? scriptFactory->Create() : nullptr;
-        if (script) {
-            script->SetCommand("tfc");
-            GameUtil::CompileAndRun(script, RE::PlayerCharacter::GetSingleton());
-            delete script;
         }
     }
 

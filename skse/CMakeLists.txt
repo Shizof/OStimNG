@@ -7,9 +7,10 @@ message("Using toolchain file ${CMAKE_TOOLCHAIN_FILE}.")
 ########################################################################################################################
 project(
         OStim
-        VERSION 7.3.5.2
+        VERSION 7.3.5.3
         DESCRIPTION ""
         LANGUAGES CXX)
+
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_INTERPROCEDURAL_OPTIMIZATION ON)
@@ -26,7 +27,7 @@ set(CommonLibPath "extern/CommonLibSSE-NG")
 set(CommonLibName "CommonLibSSE")
 set(GameVersion "Skyrim")
 
-if (DEFINED CommonLibPath AND NOT ${CommonLibPath} STREQUAL "" AND IS_DIRECTORY ${CommonLibPath})
+if (DEFINED CommonLibPath AND NOT ${CommonLibPath} STREQUAL "")
         add_subdirectory(${CommonLibPath} ${CommonLibName} EXCLUDE_FROM_ALL)
 else ()
         message(
@@ -56,6 +57,7 @@ set(sources
     src/Core/Singleton.h
     src/Core/Thread/ThreadAutoControl.cpp
     src/Core/Thread/ThreadClimax.cpp
+    src/Core/Thread/ThreadFurniture.cpp
     src/Core/Thread/ThreadNavigation.cpp
     src/Core/Thread/ThreadSound.cpp
     src/Core/ThreadActor/ThreadActorAnimation.cpp
@@ -126,6 +128,7 @@ set(sources
     src/PluginInterfaceImplementation/SexToys/SexToyInterfaceImpl.cpp
     src/PluginInterfaceImplementation/Threading/ThreadInterfaceImpl.cpp
     src/PluginInterfaceImplementation/InterfaceMapImpl.cpp
+	src/ScriptAPI/ActionDataScript.cpp
 	src/ScriptAPI/ActorScript.cpp
 	src/ScriptAPI/JsonScript.cpp
 	src/ScriptAPI/LibraryScript.cpp

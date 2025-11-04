@@ -90,7 +90,7 @@ namespace OStimVR
                         newPos.x = center.x;
                         newPos.y = center.y;
 
-                        player->SetRotationZ(center.r);
+                        player->SetHeading(center.r);
                         player->AsReference()->SetPosition(newPos);
                     }
                 } else {
@@ -110,7 +110,7 @@ namespace OStimVR
                         newPos.x += (-cos * sideDisplacement);
                         newPos.y += (sin * sideDisplacement);
 
-                        player->SetRotationZ(center.r + 1.571f);
+                        player->SetHeading(center.r + 1.571f);
                         player->AsReference()->SetPosition(newPos);
 
                         // player->AsReference()->SetPosition(RE::NiPoint3(center.x, center.y, center.z));
@@ -190,7 +190,7 @@ namespace OStimVR
                     for (int i = 0; i < gameActors.size(); i++) {
                         if (gameActors[i].isPlayer()) {
                             const float playerScale = gameActors[i].getScale();
-                            //logger::critical("Playerscale is: {}", playerScale);
+                            logger::critical("Playerscale is: {}", playerScale);
                             vrikInterface->setSettingDouble("bodySize", playerScale);
                             vrikInterface->setSettingDouble("armSize", playerScale);
                             //vrikInterface->setSettingDouble("armLength", 1.0f);
@@ -245,7 +245,7 @@ namespace OStimVR
         } */
         if (enableVRIKScaling) 
         {
-            //logger::critical("Playerscale is: {}", playerScale);
+            logger::critical("Playerscale is: {}", playerScale);
             vrikInterface->setSettingDouble("bodySize", playerScale);
             vrikInterface->setSettingDouble("armSize", playerScale);
             //vrikInterface->setSettingDouble("armLength", 1.0f);

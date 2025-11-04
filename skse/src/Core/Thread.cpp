@@ -66,6 +66,10 @@ namespace Threading {
             addActorInner(i, params.actors[i].form);
         }
 
+        if (furniture) {
+            addActorsToFurnitureFactions();
+        }
+
         // TODO game API?
         bool inWater = params.actors[0].form->GetWaterHeight() > center.z - 40;
         for (auto& [index, actor] : m_actors) {
@@ -667,6 +671,8 @@ namespace Threading {
                 // TODO properly use GameObject
                 Furniture::resetClutter(furniture.form, MCM::MCMTable::resetClutterRadius() * 100);
             }
+
+            removeActorsFromFurnitureFactions();
         }
 
         logger::info("closed thread {}", m_threadId);
@@ -805,82 +811,6 @@ namespace Threading {
     void Thread::sendPeak(actionIndex action) {
         EventUtil::invokeListeners(peakListeners, action);
     }
-
-
-    void Thread::changeFurniture(GameAPI::GameObject furniture, Graph::Node* node) {
-        if (!furniture || this->furniture == furniture) {
-            return;
-        }
- 
-        if (playerThread && MCM::MCMTable::useFades()) {
-            std::thread fadeThread = std::thread([furniture, node] {
-                GameAPI::GameCamera::fadeToBlack(1);
-                std::this_thread::sleep_for(std::chrono::milliseconds(700));
-                Thread* thread = ThreadManager::GetSingleton()->getPlayerThread();
-                if (thread) {
-                    thread->changeFurnitureInner(furniture, node);
-                }
-                std::this_thread::sleep_for(std::chrono::milliseconds(550));
-                GameAPI::GameCamera::fadeFromBlack(1);
-            });
-            fadeThread.detach();
-        } else {
-            changeFurnitureInner(furniture, node);
-        }
-    }
-
-    void Thread::changeFurnitureInner(GameAPI::GameObject furniture, Graph::Node* node) {
-        if (playerThread) {
-            GameAPI::GameCamera::endSceneMode(MCM::MCMTable::firstPersonAfterScene());
-        }
-
-        if (this->furniture) {
-            this->furniture.enableUse();
-            this->furniture.setOwner(furnitureOwner);
-            if (MCM::MCMTable::resetClutter()) {
-                // TODO properly use GameObject
-                Furniture::resetClutter(this->furniture.form, MCM::MCMTable::resetClutterRadius() * 100);
-            }
-        }
-
-
-        center = furniture.getPosition();
-        this->furniture = furniture;
-        furnitureType = Furniture::FurnitureTable::getFurnitureType(furniture, false);
-        furnitureOwner = furniture.getOwner();
-        furniture.disableUse();
-        furniture.setPrivate();
-
-        Furniture::FurnitureOffset offset = Furniture::getOffset(furniture);
-        float angle = furniture.getRotation();
-        float sin = std::sin(angle);
-        float cos = std::cos(angle);
-        center.r += offset.rotation;
-        center.x += cos * offset.x + sin * offset.y;
-        center.y += -sin * offset.x + cos * offset.y;
-        center.z += offset.z;
-        furnitureScaleMult = offset.scale;
-
-
-        if (!node) {
-            std::string nodeTag = MCM::MCMTable::useIntroScenes() ? "intro" : "idle";
-            std::string furnitureTypeID = furnitureType->getListType()->id;
-            if (furnitureTypeID == "bed") {
-                node = Graph::GraphTable::getRandomNode(furnitureType, getActorConditions(), [&nodeTag](Graph::Node* node) { return node->hasTag(nodeTag) && !node->hasActorTagOnAny("standing"); });
-            } else {
-                node = Graph::GraphTable::getRandomNode(furnitureType, getActorConditions(), [&nodeTag](Graph::Node* node) { return node->hasTag(nodeTag); });
-            }
-        }
-
-        ChangeNode(node);
-
-        if (playerThread) {
-            GameAPI::GameCamera::startSceneMode(MCM::MCMTable::useFreeCam());
-        }
-
-        GameAPI::GameEvents::sendFurnitureChangedEvent(m_threadId, this->furniture);
-    }
-
 
     int32_t Thread::getThreadID() {
         return m_threadId;

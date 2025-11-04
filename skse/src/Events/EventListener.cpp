@@ -62,7 +62,7 @@ namespace Events {
 
             uint32_t keyCode;
             RE::INPUT_DEVICE deviceType = bEvent->GetDevice();
-            uint32_t keyMask = bEvent->idCode;
+            uint32_t keyMask = bEvent->GetIDCode();
 
             if (deviceType == RE::INPUT_DEVICE::kMouse) {
                 keyCode = 256 + keyMask;
@@ -171,7 +171,9 @@ namespace Events {
                     }
                 }
             } else if (keyCode == MCM::MCMTable::keyFreeCam()) {
-                GameAPI::GameCamera::toggleFreeCam();
+                if (REL::Module::IsVR() == false) {
+                    GameAPI::GameCamera::toggleFreeCam();
+                }
             } else if (keyCode == MCM::MCMTable::keyAlignment()) {
                 UI::UIState::GetSingleton()->ToggleActiveMenu(UI::kAlignMenu);
             } else if (keyCode == MCM::MCMTable::keySearch()) {
