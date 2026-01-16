@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project>
+  <PropertyGroup>
+    <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
+    <EnableModules>false</EnableModules>
+    <BuildStlModules>false</BuildStlModules>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
+      <BuildStlModules>false</BuildStlModules>
+    </ClCompile>
+  </ItemDefinitionGroup>
+</Project>

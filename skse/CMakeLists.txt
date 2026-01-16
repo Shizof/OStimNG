@@ -1,6 +1,11 @@
 cmake_minimum_required(VERSION 3.21)
 message("Using toolchain file ${CMAKE_TOOLCHAIN_FILE}.")
 
+if(POLICY CMP0155)
+    cmake_policy(SET CMP0155 OLD)
+endif()
+set(CMAKE_CXX_SCAN_FOR_MODULES OFF)
+set(CMAKE_CXX_MODULE_STD OFF)
 
 ########################################################################################################################
 ## Define project
@@ -14,6 +19,8 @@ set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_INTERPROCEDURAL_OPTIMIZATION ON)
 
+set(CMAKE_CXX_SCAN_FOR_MODULES OFF)
+
 macro(set_from_environment VARIABLE)
         if (NOT DEFINED ${VARIABLE} AND DEFINED ENV{${VARIABLE}})
                 set(${VARIABLE} $ENV{${VARIABLE}})
@@ -26,7 +33,7 @@ set(CommonLibPath "extern/CommonLibSSE-NG")
 set(CommonLibName "CommonLibSSE")
 set(GameVersion "Skyrim")
 
-if (DEFINED CommonLibPath AND NOT ${CommonLibPath} STREQUAL "" AND IS_DIRECTORY ${CommonLibPath})
+if (DEFINED CommonLibPath AND NOT ${CommonLibPath} STREQUAL "")
         add_subdirectory(${CommonLibPath} ${CommonLibName} EXCLUDE_FROM_ALL)
 else ()
         message(
@@ -271,6 +278,12 @@ add_library(
         ${sources}
 )
 
+configure_file(
+    ${CMAKE_CURRENT_SOURCE_DIR}/Directory.Build.props
+    ${CMAKE_CURRENT_BINARY_DIR}/Directory.Build.props
+    COPYONLY
+)
+
 target_include_directories(${PROJECT_NAME}
         PRIVATE
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src>
@@ -329,3 +342,4 @@ if(DEFINED OUTPUT_FOLDER)
         VERBATIM
     )
 endif()
+

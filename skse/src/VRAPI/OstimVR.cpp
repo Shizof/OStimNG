@@ -53,6 +53,8 @@ namespace OStimVR
 
     bool CurrentCameraFirstPerson = true;
 
+    int hideVRIKCompass = 1;
+
     std::vector<RE::Actor*> ignoredActorsForAggressionList;
 
     std::unordered_map<std::string, OstimVRAlignment> sceneAlignmentMap;
@@ -70,6 +72,8 @@ namespace OStimVR
     double activeRagdollStartDistanceOrgValue = 50.0;
     double activeRagdollEndDistanceOrgValue = 60.0;
 
+    bool originalbDirectMovementWithWands = true;
+
     void MovePlayerInThirdPersonStart(bool firstPerson) 
     {
         // SKSE::GetTaskInterface()->AddTask([firstPerson]() {
@@ -86,7 +90,7 @@ namespace OStimVR
                         newPos.x = center.x;
                         newPos.y = center.y;
 
-                        player->SetRotationZ(center.r);
+                        player->SetHeading(center.r);
                         player->AsReference()->SetPosition(newPos);
                     }
                 } else {
@@ -106,7 +110,7 @@ namespace OStimVR
                         newPos.x += (-cos * sideDisplacement);
                         newPos.y += (sin * sideDisplacement);
 
-                        player->SetRotationZ(center.r + 1.571f);
+                        player->SetHeading(center.r + 1.571f);
                         player->AsReference()->SetPosition(newPos);
 
                         // player->AsReference()->SetPosition(RE::NiPoint3(center.x, center.y, center.z));
@@ -186,10 +190,10 @@ namespace OStimVR
                     for (int i = 0; i < gameActors.size(); i++) {
                         if (gameActors[i].isPlayer()) {
                             const float playerScale = gameActors[i].getScale();
-                            //logger::critical("Playerscale is: {}", playerScale);
+                            logger::critical("Playerscale is: {}", playerScale);
                             vrikInterface->setSettingDouble("bodySize", playerScale);
                             vrikInterface->setSettingDouble("armSize", playerScale);
-                            vrikInterface->setSettingDouble("armLength", 1.0f);
+                            //vrikInterface->setSettingDouble("armLength", 1.0f);
 
                             break;
                         }
@@ -241,10 +245,10 @@ namespace OStimVR
         } */
         if (enableVRIKScaling) 
         {
-            //logger::critical("Playerscale is: {}", playerScale);
+            logger::critical("Playerscale is: {}", playerScale);
             vrikInterface->setSettingDouble("bodySize", playerScale);
             vrikInterface->setSettingDouble("armSize", playerScale);
-            vrikInterface->setSettingDouble("armLength", 1.0f);
+            //vrikInterface->setSettingDouble("armLength", 1.0f);
         }
 
         /*if (CurrentCameraFirstPerson) {
@@ -497,6 +501,15 @@ namespace OStimVR
             *g_fGamepadLookAngleSnapAmount = 0.0f;
         }
 
+        RE::Setting* bDirectMovementWithWandsSetting = RE::GetINISetting("bDirectMovementWithWands:VRInput");
+        if (bDirectMovementWithWandsSetting) 
+        {
+            originalbDirectMovementWithWands = bDirectMovementWithWandsSetting->data.b;  
+            if (originalbDirectMovementWithWands == false)
+            {
+                bDirectMovementWithWandsSetting->data.b = true;
+            }
+        }
         RE::UI* ui = RE::UI::GetSingleton();
         if (ui != nullptr && ui->IsMenuOpen("WSActivateRollover")) 
         {
@@ -521,6 +534,9 @@ namespace OStimVR
             vrikInterface->setSettingDouble("enableJumping", 0);
             vrikInterface->setSettingDouble("displayHolsters", 0);
             vrikInterface->setSettingDouble("nearClipDistance", nearDistance);
+
+            if (hideVRIKCompass)
+                vrikInterface->setSettingDouble("hideCompass", 1);
         }
 
         CameraSwitchFunc(!defaultThirdPerson);
@@ -590,6 +606,13 @@ namespace OStimVR
             }
             ignoredActorsForAggressionList.clear();
             RemoveRagdollCollisionIgnoredActors();
+        }
+
+        if (originalbDirectMovementWithWands == false) {
+            RE::Setting* bDirectMovementWithWandsSetting = RE::GetINISetting("bDirectMovementWithWands:VRInput");
+            if (bDirectMovementWithWandsSetting) {
+                bDirectMovementWithWandsSetting->data.b = false;                
+            }
         }
 
         RE::Setting* snapAmount = RE::GetINISetting("fGamepadLookAngleSnapAmount:VRInput");
@@ -681,6 +704,8 @@ namespace OStimVR
         output << "\n";
         output << "DisablePLANCKduringScenes = 0   #Disable PLANCK collision during scenes.\n";
         output << "\n";
+        output << "HideVRIKCompass = 1   #Disable compass during scenes.\n";
+        output << "\n";
         output << "HeightAdjustSpeed = 1.0       #Snapback speed for viewpoint. Higher speeds may cause nausea. "
                   "Default is 1.0.\n";
         output << "\n";
@@ -767,9 +792,14 @@ namespace OStimVR
                                 defaultThirdPerson = std::stoi(variableValue);
 
                                 CurrentCameraFirstPerson = !defaultThirdPerson;
-                            } else if (variableName == "DisablePLANCKduringScenes") {
+                            } 
+                            else if (variableName == "DisablePLANCKduringScenes") {
                                 disablePLANCKduringScenes = std::stoi(variableValue);
+                            } 
+                            else if (variableName == "HideVRIKCompass") {
+                                hideVRIKCompass = std::stoi(variableValue);
                             }
+                            
                         }
                     }
                 }

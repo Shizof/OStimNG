@@ -132,7 +132,7 @@ namespace GameAPI {
             GameUtil::CompileAndRun(script, RE::PlayerCharacter::GetSingleton());
             delete script;
         }
-        */
+        
 
         static RE::PlayerCamera* camera = RE::PlayerCamera::GetSingleton();
         if (camera) {

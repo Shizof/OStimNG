@@ -277,3 +277,38 @@ void OstimVRPluginAPI::OstimVRInterface001::OStimWheelOpenCloseEvent(bool opened
 {
     OStimVR::ShowHideControllersFunc(opened);
 }
+
+bool OstimVRPluginAPI::OstimVRInterface001::IsInAutoMode() {
+    Threading::ThreadManager* threadManager = Threading::ThreadManager::GetSingleton();
+
+    if (threadManager != nullptr && threadManager->playerThreadRunning()) {
+        auto playerThread = threadManager->getPlayerThread();
+        if (playerThread != nullptr) {
+            return playerThread->isInAutoMode();
+        }
+    }
+    return false;
+}
+
+void OstimVRPluginAPI::OstimVRInterface001::StartStopAutoMode(bool start)
+{
+    Threading::ThreadManager* threadManager = Threading::ThreadManager::GetSingleton();
+
+    if (threadManager != nullptr && threadManager->playerThreadRunning()) 
+    {
+        auto playerThread = threadManager->getPlayerThread();
+        if (playerThread != nullptr) 
+        {
+            if (start)
+            {
+                if (playerThread->isInAutoMode() == false)
+                    playerThread->startAutoMode();
+            }
+            else 
+            {
+                if (playerThread->isInAutoMode())
+                    playerThread->stopAutoMode();
+            }
+        }
+    }
+}
