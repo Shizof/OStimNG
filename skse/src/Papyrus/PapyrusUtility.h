@@ -6,15 +6,17 @@
 namespace PapyrusUtility {
 	using VM = RE::BSScript::IVirtualMachine;
 
-    std::string Translate(RE::StaticFunctionTag*, std::string text) {
+	std::string Translate(RE::StaticFunctionTag*, std::string text) {
         return LocaleManager::GetSingleton()->GetLocalization(text);
-    }
+	}
 
-    std::vector<RE::TESForm*> ShuffleFormArray(RE::StaticFunctionTag*, std::vector<RE::TESForm*> array) {
+
+	std::vector<RE::TESForm*> ShuffleFormArray(RE::StaticFunctionTag*, std::vector<RE::TESForm*> array) {
         std::shuffle(array.begin(), array.end(), RNGUtil::RNG);
         return array;
-    } 
- 
+	}
+
+
 	std::vector<RE::TESQuest*> GetQuestsWithGlobal(RE::StaticFunctionTag*, RE::TESGlobal* tag) {
         std::vector<RE::TESQuest*> quests;
 
@@ -30,9 +32,9 @@ namespace PapyrusUtility {
 	bool Bind(VM* a_vm) {
 		const auto obj = "OUtility"sv;
 
-        BIND(Translate);
+		BIND(Translate);
 
-        BIND(ShuffleFormArray);
+		BIND(ShuffleFormArray);
 
 		BIND(GetQuestsWithGlobal);
 

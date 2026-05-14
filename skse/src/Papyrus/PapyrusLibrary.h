@@ -128,8 +128,8 @@ namespace PapyrusLibrary {
     // start of papyrus bound functions
     // *********************************************************
 
-    std::vector<std::string> GetAllScenes(RE::StaticFunctionTag*) { 
-        return ScriptAPI::Library::getAllNodes(); 
+    std::vector<std::string> GetAllScenes(RE::StaticFunctionTag*) {
+        return ScriptAPI::Library::getAllNodes();
     }
 
     std::vector<std::string> GetScenesInRange(RE::StaticFunctionTag*, std::string id, std::vector<RE::Actor*> actors, int distance) {

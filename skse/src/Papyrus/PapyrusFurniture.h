@@ -22,7 +22,7 @@ namespace PapyrusFurniture {
         if (!centerRef) {
             return {};
         }
-
+        
         std::vector<std::pair<Furniture::FurnitureType*, GameAPI::GameObject>> furniture = Furniture::findFurniture(actorCount, {centerRef->GetPosition(), 0}, radius, sameFloor);
         std::vector<RE::TESObjectREFR*> ret;
         for (auto& [type, object] : furniture) {

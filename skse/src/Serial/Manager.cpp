@@ -103,6 +103,11 @@ namespace Serialization {
         return std::numeric_limits<float>::quiet_NaN();
     }
 
+    void setActionMaxStimulation(Graph::Role role, RE::FormID formID, std::string action, float maxStimulation) {
+        StringUtil::toLower(action);
+        actorData.insert({formID, {}}).first->second.actionMaxStimulations.get(role)->emplace(action, maxStimulation).first->second = maxStimulation;
+    }
+
     void unsetActionMaxStimulation(Graph::Role role, GameAPI::GameRecordIdentifier formID, std::string action) {
         StringUtil::toLower(action);
 
@@ -112,11 +117,6 @@ namespace Serialization {
         }
 
         iter->second.actionMaxStimulations.get(role)->erase(action);
-    }
-
-    void setActionMaxStimulation(Graph::Role role, RE::FormID formID, std::string action, float maxStimulation) {
-        StringUtil::toLower(action);
-        actorData.insert({formID, {}}).first->second.actionMaxStimulations.get(role)->emplace(action, maxStimulation).first->second = maxStimulation;
     }
 
 
@@ -134,6 +134,11 @@ namespace Serialization {
         return std::numeric_limits<float>::quiet_NaN();
     }
 
+    void setEventStimulation(Graph::Role role, RE::FormID formID, std::string evt, float stimulation) {
+        StringUtil::toLower(evt);
+        actorData.insert({formID, {}}).first->second.eventStimulations.get(role)->emplace(evt, stimulation).first->second = stimulation;
+    }
+
     void unsetEventStimulation(Graph::Role role, GameAPI::GameRecordIdentifier formID, std::string evt) {
         StringUtil::toLower(evt);
 
@@ -143,11 +148,6 @@ namespace Serialization {
         }
 
         iter->second.eventStimulations.get(role)->erase(evt);
-    }
-
-    void setEventStimulation(Graph::Role role, RE::FormID formID, std::string evt, float stimulation) {
-        StringUtil::toLower(evt);
-        actorData.insert({formID, {}}).first->second.eventStimulations.get(role)->emplace(evt, stimulation).first->second = stimulation;
     }
 
     float getEventMaxStimulation(Graph::Role role, RE::FormID formID, std::string evt) {
@@ -164,6 +164,11 @@ namespace Serialization {
         return std::numeric_limits<float>::quiet_NaN();
     }
 
+    void setEventMaxStimulation(Graph::Role role, RE::FormID formID, std::string evt, float maxStimulation) {
+        StringUtil::toLower(evt);
+        actorData.insert({formID, {}}).first->second.eventMaxStimulations.get(role)->emplace(evt, maxStimulation).first->second = maxStimulation;
+    }
+
     void unsetEventMaxStimulation(Graph::Role role, GameAPI::GameRecordIdentifier formID, std::string evt) {
         StringUtil::toLower(evt);
 
@@ -173,11 +178,6 @@ namespace Serialization {
         }
 
         iter->second.eventMaxStimulations.get(role)->erase(evt);
-    }
-
-    void setEventMaxStimulation(Graph::Role role, RE::FormID formID, std::string evt, float maxStimulation) {
-        StringUtil::toLower(evt);
-        actorData.insert({formID, {}}).first->second.eventMaxStimulations.get(role)->emplace(evt, maxStimulation).first->second = maxStimulation;
     }
 
 

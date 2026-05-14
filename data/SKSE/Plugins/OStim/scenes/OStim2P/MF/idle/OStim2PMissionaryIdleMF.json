@@ -1,0 +1,59 @@
+{
+	"name": "$OStim2PMissionaryIdleMF",
+	"modpack": "OStim",
+	"length": 2.0,
+	"speeds":[
+		{
+			"animation": "OStim2PMissionaryIdleMF"
+		}
+	],
+	"navigations":[
+		{
+			"destination": "OStim2PSittingMaleInMF",
+			"description": "$ostim_nav_sit_down",
+			"icon": "OStim/symbols/return",
+			"priority": -1000
+		},
+		{
+			"destination": "OStim2PMissionaryToSidewaysIdleMF",
+			"description": "$ostim_nav_lie_side_a{1}",
+			"icon": "OStim/positional/lyingside_f",
+			"priority": 0
+		},
+		{
+			"destination": "OStim2PLyingCunnilingusMF",
+			"description": "$ostim_nav_cunnilingus_t{1}",
+			"icon": "OStim/sexual/cunnilingus_mf",
+			"priority": 3000
+		},
+		{
+			"destination": "OStim2PMissionaryMF",
+			"description": "$ostim_nav_missionary_t{1}",
+			"icon": "OStim/sexual/vaginalsex_mf",
+			"priority": 3000
+		}
+	],
+	"tags":[
+		"idle"
+	],
+	"actors":[
+		{
+			"intendedSex": "male",
+			"sosBend": 7,
+			"scale": 1.03,
+			"tags": [
+				"kneeling",
+				"ontop"
+			],
+			"feetOnGround": false
+		},
+		{
+			"intendedSex": "female",
+			"tags": [
+				"lyingback",
+				"onbottom"
+			],
+			"feetOnGround": false
+		}
+	]
+}

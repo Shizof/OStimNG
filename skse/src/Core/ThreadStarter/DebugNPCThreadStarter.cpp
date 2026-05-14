@@ -9,7 +9,7 @@
 #include "Util/VectorUtil.h"
 
 namespace Threading {
-    void startDebugNPCThread(ThreadStartParams params) { 
+    void startDebugNPCThread(ThreadStartParams params) {
         handleActorAddingDebug(params);
     }
 
@@ -21,8 +21,8 @@ namespace Threading {
             }
 
             std::vector<GameAPI::GameActor> actors = GameAPI::GameActor::getPlayer().getNearbyActors(2000, [&params](GameAPI::GameActor actor) {
-                    return !VectorUtil::contains(params.actors, actor) && Threading::isEligible(actor);
-                });
+                return !VectorUtil::contains(params.actors, actor) && Threading::isEligible(actor);
+            });
 
             if (actors.empty()) {
                 startThread(params);

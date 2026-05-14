@@ -9,24 +9,28 @@
 	],
 	"navigations":[
 		{
-			"destination": "OStim2PStandingApartMF",
-			"description": "$ostim_nav_stand_up",
-			"icon": "OStim/positional/standup_m"
-		},
-		{
-			"destination": "OStim2PSittingMF",
+			"destination": "OStim2PSittingMaleInMF",
 			"description": "$ostim_nav_sit_down",
-			"icon": "OStim/positional/squatting_f"
+			"icon": "OStim/symbols/return",
+			"priority": -1000
 		},
 		{
-			"destination": "OStim2PLyingOnTopMF",
-			"description": "ostim_nav_lie_on_t{1}",
-			"icon": "OStim/positional/lyingback_f"
+			"destination": "OStim2PSidewaysIdleMF",
+			"description": "$ostim_nav_lie_side_a{1}",
+			"icon": "OStim/positional/lyingside_f",
+			"priority": 0
 		},
 		{
-			"destination": "OStim2PBothLyingMF",
-			"description": "$ostim_nav_lie_down",
-			"icon": "OStim/positional/lyingback_m"
+			"destination": "OStim2PDoggyStyleMF",
+			"description": "$ostim_nav_doggy_t{1}",
+			"icon": "OStim/sexual/doggystyle_mf",
+			"priority": 3000
+		},
+		{
+			"destination": "OStim2PProneMF",
+			"description": "$ostim_nav_prone_t{1}",
+			"icon": "OStim/sexual/prone_mf",
+			"priority": 3000
 		}
 	],
 	"tags":[

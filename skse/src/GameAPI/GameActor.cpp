@@ -66,9 +66,11 @@ namespace GameAPI {
             }
         }
 
+
         RE::Actor* actor = form;
         SKSE::GetTaskInterface()->AddTask([actor]() {
             StopTranslation(nullptr, 0, actor);
+
             actor->SetGraphVariableFloat("OStimSpeed", 1.0);
             actor->SetGraphVariableBool("bHumanoidFootIKDisable", false);
             actor->SetGraphVariableBool("bHeadTrackSpine", true);
@@ -142,17 +144,24 @@ namespace GameAPI {
             form->SetHeading(rotation);
         } else {
             form->SetAngle(RE::NiPoint3{0, 0, rotation});
-            // SetAngle(nullptr, 0, form, 0, 0, MathUtil::toDegrees(rotation));
+            //SetAngle(nullptr, 0, form, 0, 0, MathUtil::toDegrees(rotation));
         }
     }
 
     void GameActor::setPosition(GamePosition position) const {
-        setRotation(position.r);
-        SetPosition(form, position.x, position.y, position.z);
+        //setRotation(position.r);
+        //SetPosition(form, position.x, position.y, position.z);
+        if (!form->Is3DLoaded()) {
+            return;
+        }
+        TranslateTo(nullptr, 0, form, position.x, position.y, position.z, 0, 0, MathUtil::toDegrees(position.r), 1000000, 1000000);
     }
 
     void GameActor::lockAtPosition(float x, float y, float z, float r) const {
         SKSE::GetTaskInterface()->AddTask([this, x, y, z, r] {
+            if (!form->Is3DLoaded()) {
+                return;
+            }
             StopTranslation(nullptr, 0, form);
             setRotation(r);
             TranslateTo(nullptr, 0, form, x, y, z, 0, 0, MathUtil::toDegrees(r) + 1, 1000000, 0.0001);

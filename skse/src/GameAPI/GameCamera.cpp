@@ -32,7 +32,7 @@ namespace GameAPI {
                     std::this_thread::sleep_for(std::chrono::milliseconds(250));
                     SKSE::GetTaskInterface()->AddTask([] { 
                         toggleFlyCamInner(); 
-                        });
+                    });
                 });
                 camThread.detach();
             }
@@ -50,7 +50,7 @@ namespace GameAPI {
         if (camera->IsInFreeCameraMode()) {
             SKSE::GetTaskInterface()->AddTask([] { 
                 toggleFlyCamInner(); 
-                });
+            });
         } else if (GameLogic::GameTable::improvedCamSupport()) {
             RE::ControlMap::GetSingleton()->GetRuntimeData().enabledControls.set(RE::UserEvents::USER_EVENT_FLAG::kPOVSwitch);
         }

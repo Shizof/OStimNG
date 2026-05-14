@@ -22,7 +22,7 @@ namespace Sound {
             if (!recordID.readJson(json["target"], path)) {
                 return;
             }
-            
+
             VoiceSet voiceSet;
 
             JsonUtil::loadTranslatedString(json, voiceSet.name, "name", filename, "voice set", false);
@@ -64,6 +64,7 @@ namespace Sound {
 
             logger::info("registering voice set {} with ID {:x}", filename, recordID.formID);
             voiceSets[recordID] = voiceSet;
+
             if (json.contains("aliases")) {
                 if (json["aliases"].is_array()) {
                     for (nlohmann::json& alias : json["aliases"]) {
@@ -86,14 +87,17 @@ namespace Sound {
         if (iter != voiceSets.end()) {
             return &iter->second;
         }
+
         auto aliasIter = aliases.find(recordID);
         if (aliasIter == aliases.end()) {
             return nullptr;
         }
+
         iter = voiceSets.find(aliasIter->second);
         if (iter != voiceSets.end()) {
             return &iter->second;
         }
+
         return nullptr;
     }
 
@@ -102,6 +106,7 @@ namespace Sound {
         RE::FormID skID = Serialization::getVoiceSet(actor.getBaseFormID().formID);
         GameAPI::GameRecordIdentifier selection{skID};
         VoiceSet* voiceSet = nullptr;
+
         if (selection) {
             voiceSet = getVoiceSet(selection);
             if (voiceSet) {
@@ -124,7 +129,7 @@ namespace Sound {
                 return *voiceSet;
             }
         }
-        
+
         voiceSet = getVoiceSet(actor.getRace().getIdentifier());
         if (voiceSet) {
             logger::info("voice set {} found for actor {} by race", voiceSet->name, actor.getName());
@@ -132,7 +137,7 @@ namespace Sound {
         }
 
         if (actor.isHuman()) {
-            logger::info("no voice set found for actor {}, using default", actor.getName());            
+            logger::info("no voice set found for actor {}, using default", actor.getName());
             auto iter = voiceSets.find(actor.isSex(GameAPI::GameSex::FEMALE) ? GameAPI::GameRecordIdentifiers::DEFAULT_FEMALE : GameAPI::GameRecordIdentifiers::DEFAULT_MALE);
             if (iter != voiceSets.end()) {
                 return iter->second;
@@ -175,7 +180,7 @@ namespace Sound {
     std::string SoundTable::getVoiceSetName(GameAPI::GameRecordIdentifier recordID) {
         // TODO how to handle serialization with gameAPI?
         RE::FormID skID = Serialization::getVoiceSet(recordID.formID);
-
+        
         if (skID == 0) {
             // for voice sets 0 is default male, but for serialization it is just default
             return "$ostim_generic_default";

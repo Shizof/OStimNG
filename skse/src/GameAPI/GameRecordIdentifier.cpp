@@ -3,7 +3,7 @@
 #include "Util/StringUtil.h"
 
 namespace GameAPI {
-    std::string GameRecordIdentifier::toString() {        
+    std::string GameRecordIdentifier::toString() {
         uint8_t fullIndex = formID >> 24;
         RE::FormID formID = this->formID & 0xFFFFFF;
 
@@ -108,4 +108,4 @@ namespace GameAPI {
     void GameRecordIdentifier::writeSerial(GameSerializationInterface serial) {
         serial.write<RE::FormID>(formID);
     }
-}  // namespace GameAPI
+}

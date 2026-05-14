@@ -42,7 +42,7 @@ namespace Papyrus {
             papyrus->Register(PapyrusObject::Bind);
             papyrus->Register(PapyrusUtil::Bind);
 
-            // new stuff 
+            // new stuff
             papyrus->Register(PapyrusActionData::Bind);
             papyrus->Register(PapyrusActorUtil::Bind);
             papyrus->Register(PapyrusData::Bind);

@@ -1,7 +1,5 @@
 #pragma once
 
-#include "GameAPI/GameActor.h"
-
 namespace ScriptAPI {
     namespace Metadata {
         std::string getName(std::string id);

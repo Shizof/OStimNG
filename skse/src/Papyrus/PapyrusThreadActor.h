@@ -90,10 +90,11 @@ namespace PapyrusThreadActor {
     int GetTimesClimaxed(RE::StaticFunctionTag*, RE::Actor* actor) {
         Threading::ThreadActor* threadActor = Threading::ThreadManager::GetSingleton()->findActor(actor);
         if (threadActor) {
-            return threadActor->getTimexClimaxed();
+            return threadActor->getTimesClimaxed();
         }
         return 0;
     }
+
 
     void SetExpressionsEnabled(RE::StaticFunctionTag*, RE::Actor* actor, bool enabled, bool allowOverride) {
         ScriptAPI::Actor::setExpressionsEnabled(actor, enabled, allowOverride);

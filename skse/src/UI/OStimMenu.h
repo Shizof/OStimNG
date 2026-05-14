@@ -3,6 +3,7 @@
 
 namespace UI {
 	class OStimMenu : public RE::IMenu {
+	
 	public:
 		OStimMenu(std::string menuName);
 		static void Register(std::string menuName, RE::UI::Create_t* createFn);
@@ -28,6 +29,7 @@ namespace UI {
 
 	public:
 		std::string menuName;
+
 	private:
 		class Logger : public RE::GFxLog {
 		public:

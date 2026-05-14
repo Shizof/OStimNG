@@ -14,7 +14,6 @@ namespace Threading {
     std::vector<std::string> positions{"Dom", "Sub", "Third", "Fourth", "Fifth", "Sixth", "Seventh", "Eigth", "Ninth"};
 
     void startPlayerThread(ThreadStartParams params) {
-
         std::thread startThread = std::thread([params] {
             bool inDialogue = getInDialogue(params.actors);
             while (inDialogue) {

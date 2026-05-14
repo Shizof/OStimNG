@@ -28,6 +28,7 @@ namespace Furniture{
         return false;
     }
 
+
     std::vector<GameAPI::GameFaction> FurnitureType::getFactions() {
         if (!supertype) {
             return factions;

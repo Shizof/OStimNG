@@ -7,7 +7,7 @@ namespace ScriptAPI {
     namespace Metadata {
         std::string getName(std::string id) {
             Graph::Node* node = Graph::GraphTable::getNodeById(id);
-                        
+
             return node ? node->scene_name : "";
         }
 

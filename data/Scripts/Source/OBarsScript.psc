@@ -19,11 +19,11 @@ OSexBar Property SubBar Auto
 OSexBar Property ThirdBar Auto
 ;---------
 
-Int Blue
-Int Pink
-Int Gray
-Int Yellow
-Int White
+Int Blue = 0xADD8E6
+Int Pink = 0xFFB6C1
+Int Purple = 0xB19CD9
+Int Gray = 0xB0B0B0
+Int White = 0xFFFFFF
 
 bool Orgasming
 
@@ -31,12 +31,6 @@ Float LastSmackTime
 Int LastSpeed
 
 Event OnInit()
-	Blue = 0xADD8E6
-	Pink = 0xFFB6C1
-	Yellow = 0xE6E0AD
-	Gray = 0xB0B0B0
-	White = 0xFFFFFF
-
 	InititializeAllBars()
 
 	OnGameLoad()
@@ -66,7 +60,7 @@ Function InitBar(OSexBar Bar, Int ID)
 		Bar.SetColors(gray, pink, white)
 	ElseIf (ID == 2)
 		Bar.Y = 602
-		Bar.SetColors(gray, yellow, white)
+		Bar.SetColors(gray, purple, white)
 	EndIf
 
 	SetBarVisible(Bar, False)
@@ -82,12 +76,14 @@ Function SetBarVisible(OSexBar Bar, Bool Visible)
 	EndIf
 EndFunction
 
-Function ColorBar(OSexBar Bar, Bool Female = True, Int ColorZ = -1)
+Function ColorBar(OSexBar Bar, Bool Female = True, Bool Schlong = True, Int ColorZ = -1)
 	Int Color
 	If (!Female)
 		Color = Blue
-	Else
+	ElseIf (!Schlong)
 		Color = Pink
+	Else
+		Color = Purple
 	EndIf
 
 	If (ColorZ > 0)
@@ -121,13 +117,13 @@ Event OstimStart(String eventName, String strArg, Float numArg, Form sender)
 	Orgasming = false
 
 	if OStim.MatchBarColorToGender
-		ColorBar(DomBar, OStim.AppearsFemale(OStim.GetDomActor()))
-		ColorBar(SubBar, OStim.AppearsFemale(OStim.GetSubActor()))
-		ColorBar(ThirdBar, OStim.AppearsFemale(OStim.GetThirdActor()))
+		ColorBar(DomBar, OStim.AppearsFemale(OStim.GetDomActor()), !OStim.IsFemale(OStim.GetDomActor()))
+		ColorBar(SubBar, OStim.AppearsFemale(OStim.GetSubActor()), !OStim.IsFemale(OStim.GetSubActor()))
+		ColorBar(ThirdBar, OStim.AppearsFemale(OStim.GetThirdActor()), !OStim.IsFemale(OStim.GetThirdActor()))
 	else
 		ColorBar(DomBar, ColorZ = Blue)
 		ColorBar(SubBar, ColorZ = Pink)
-		ColorBar(ThirdBar, ColorZ = Yellow)
+		ColorBar(ThirdBar, ColorZ = Purple)
 	endif
 
 	If IsBarEnabled(OStim.GetDomActor())

@@ -502,8 +502,7 @@ namespace Threading {
                 }
 
                 if (first) {
-                    GameAPI::GameActor target =
-                        thread->isPlayerThread() ? GameAPI::GameActor::getPlayer() : primaryPartner;
+                    GameAPI::GameActor target = thread->isPlayerThread() ? GameAPI::GameActor::getPlayer() : primaryPartner;
                     if (actor == target) {
                         for (auto& [index, threadActor] : thread->getActors()) {
                             if (threadActor.getActor() != actor) {
@@ -517,14 +516,69 @@ namespace Threading {
                     auto vm = skyrimVM ? skyrimVM->impl : nullptr;
                     if (vm) {
                         RE::BSTSmartPointer<RE::BSScript::IStackCallbackFunctor> callback;
-                        auto args = RE::MakeFunctionArguments(std::move(actor.form), std::move(target.form),
-                                                              std::move(voiceSet.postSceneDialogue.form),
-                                                              std::move(RNGUtil::uniformFloat(1.0f, 2.0f)));
+                        auto args = RE::MakeFunctionArguments(std::move(actor.form), std::move(target.form), std::move(voiceSet.postSceneDialogue.form), std::move(RNGUtil::uniformFloat(1.0f, 2.0f)));
                         vm->DispatchStaticCall("OSKSE", "SayPostDialogue", args, callback);
                     }
                 }
             }
         }
+    }
+
+    void ThreadActor::freeFast() {
+        logger::info("freeing actor {}-{} FAST (no animations): {}", thread->m_threadId, index, actor.getName());
+
+        // Remove factions
+        if (this->graphActor) {
+            for (GameAPI::GameFaction faction : this->graphActor->factions) {
+                faction.remove(actor);
+            }
+        }
+
+        // Remove equip objects
+        for (auto& [type, object] : equipObjects) {
+            object.unequip(actor);
+            object.removeItems(actor);
+        }
+
+        // FORCE SYNCHRONOUS redressing - bypass Papyrus
+        // Use undressedItems (not undressedMask) because the Papyrus undressing path never sets undressedMask
+        if (!undressedItems.empty()) {
+            for (GameAPI::GameArmor item : undressedItems) {
+                actor.equip(item);
+            }
+            undressedItems.clear();
+            undressedMask.clear();
+            undressed = false;
+        }
+
+        // FORCE SYNCHRONOUS weapon re-equipping
+        if (weaponsRemoved) {
+            actor.equipWeaponry(weaponry);
+            weaponsRemoved = false;
+        }
+
+        // Reset appearance
+        applyHeelOffset(false);
+        actor.setScale(scaleBefore);
+        
+        // Unlock actor
+        freeActor(actor, false);
+
+        // Reset position SYNCHRONOUSLY - no AddTask delays
+        if (MCM::MCMTable::resetPosition()) {
+            actor.setPosition(positionBefore);
+        }
+
+        // Reset face
+        auto faceData = actor.form->GetFaceGenAnimationData();
+        if (faceData) {
+            faceData->ClearExpressionOverride();
+            faceData->Reset(0.0, true, true, true, false);
+        }
+
+        // NO post-scene dialogue for fast cleanup
+
+        logger::info("freed actor {}-{} FAST: complete", thread->m_threadId, index, actor.getName());
     }
 
     void ThreadActor::papyrusUndressCallback(std::vector<GameAPI::GameArmor> items) {
@@ -571,7 +625,7 @@ namespace Threading {
         oldThreadActor.factions = graphActor->factions;
 
         if (Furniture::FurnitureType* furnitureType = thread->getFurnitureType()) {
-            for (GameAPI::GameFaction faction : furnitureType->factions) {
+            for (GameAPI::GameFaction faction : furnitureType->getFactions()) {
                 oldThreadActor.factions.push_back(faction);
             }
         }

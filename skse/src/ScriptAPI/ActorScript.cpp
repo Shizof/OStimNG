@@ -9,6 +9,7 @@ namespace ScriptAPI {
             if (!threadActor) {
                 return;
             }
+
             if (enabled) {
                 threadActor->unflag(Threading::ThreadActorFlag::NO_UNDERLYING_EXPRESSION);
                 threadActor->unflag(Threading::ThreadActorFlag::NO_OVERRIDE_EXPRESSION);
@@ -19,6 +20,7 @@ namespace ScriptAPI {
                 }
             }
         }
+
 
         bool hasMetadata(GameAPI::GameActor actor, std::string metadata) {
             Threading::ThreadActor* threadActor = Threading::ThreadManager::GetSingleton()->findActor(actor);

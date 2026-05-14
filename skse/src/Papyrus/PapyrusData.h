@@ -112,8 +112,7 @@ namespace PapyrusData {
     }
 
     float GetActionDefaultStimulation(RE::StaticFunctionTag*, int role, std::string action) {
-        Graph::Action::ActionAttributes* attributes =
-            Graph::GraphTable::GetActionAttributesByType(action);
+        Graph::Action::ActionAttributes* attributes = Graph::GraphTable::GetActionAttributesByType(action);
         if (!attributes) {
             return 0.0f;
         }
@@ -122,8 +121,7 @@ namespace PapyrusData {
     }
 
     void ResetActionStimulation(RE::StaticFunctionTag*, int role, int formID, std::string action) {
-        Serialization::unsetActionStimulation(static_cast<Graph::Role>(role),
-                                              GameAPI::GameRecordIdentifier{MathUtil::intToUint(formID)}, action);
+        Serialization::unsetActionStimulation(static_cast<Graph::Role>(role), GameAPI::GameRecordIdentifier{MathUtil::intToUint(formID)}, action);
     }
 
     float GetActionDefaultMaxStimulation(RE::StaticFunctionTag*, int role, std::string action) {
@@ -136,8 +134,7 @@ namespace PapyrusData {
     }
 
     void ResetActionMaxStimulation(RE::StaticFunctionTag*, int role, int formID, std::string action) {
-        Serialization::unsetActionMaxStimulation(static_cast<Graph::Role>(role),
-                                                 GameAPI::GameRecordIdentifier{MathUtil::intToUint(formID)}, action);
+        Serialization::unsetActionMaxStimulation(static_cast<Graph::Role>(role), GameAPI::GameRecordIdentifier{MathUtil::intToUint(formID)}, action);
     }
 #pragma endregion
 
@@ -194,8 +191,7 @@ namespace PapyrusData {
     }
 
     void ResetEventStimulation(RE::StaticFunctionTag*, int role, int formID, std::string evt) {
-        Serialization::unsetEventStimulation(static_cast<Graph::Role>(role),
-                                             GameAPI::GameRecordIdentifier{MathUtil::intToUint(formID)}, evt);
+        Serialization::unsetEventStimulation(static_cast<Graph::Role>(role), GameAPI::GameRecordIdentifier{MathUtil::intToUint(formID)}, evt);
     }
 
     float GetEventDefaultMaxStimulation(RE::StaticFunctionTag*, int role, std::string evt) {
@@ -208,8 +204,7 @@ namespace PapyrusData {
     }
 
     void ResetEventMaxStimulation(RE::StaticFunctionTag*, int role, int formID, std::string evt) {
-        Serialization::unsetEventMaxStimulation(static_cast<Graph::Role>(role),
-                                                GameAPI::GameRecordIdentifier{MathUtil::intToUint(formID)}, evt);
+        Serialization::unsetEventMaxStimulation(static_cast<Graph::Role>(role), GameAPI::GameRecordIdentifier{MathUtil::intToUint(formID)}, evt);
     }
 #pragma endregion
 #pragma endregion
@@ -226,6 +221,11 @@ namespace PapyrusData {
 		MCM::MCMTable::importSettings();
 	}
 
+
+    std::string ToLocalizedString(RE::StaticFunctionTag*, std::string text) {
+        StringUtil::toLower(&text);
+        return "$" + text;
+    }
 
     std::string Localize(RE::StaticFunctionTag*, std::string text) {
         StringUtil::toLower(&text);
@@ -276,6 +276,7 @@ namespace PapyrusData {
         BIND(ExportSettings);
         BIND(ImportSettings);
 
+        BIND(ToLocalizedString);
         BIND(Localize);
 
         return true;

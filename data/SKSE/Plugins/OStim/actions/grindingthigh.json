@@ -27,6 +27,8 @@
 	},
 	"target":{
 		"info": "the one with the thigh",
+		"stimulation":0.2,
+		"maxStimulation":75,
 		"moan": true,
 		"talk":true,
 		"strippingSlots":[

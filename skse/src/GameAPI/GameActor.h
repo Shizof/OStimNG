@@ -19,6 +19,7 @@ namespace GameAPI {
 
         inline GameActor() {}
         inline GameActor(RE::Actor* actor) { form = actor; }
+        inline GameActor(void* actor) { form = (RE::Actor*)actor; }
 
         inline GameAPI::GameRecordIdentifier getBaseFormID() const { return GameAPI::GameRecordIdentifier{form->GetActorBase()->formID}; }
 
@@ -56,7 +57,7 @@ namespace GameAPI {
         void setPosition(GamePosition position) const;
 
         inline float getActorValue(GameActorValue actorValue) const { return form->AsActorValueOwner()->GetBaseActorValue(actorValue.actorValue); }
-        inline void damageActorValue(GameActorValue actorValue, float value) const { form->AsActorValueOwner()->DamageActorValue(actorValue.actorValue, value); }
+        inline void damageActorValue(GameActorValue actorValue, float value) const { form->AsActorValueOwner()->DamageActorValue(actorValue.actorValue, value);}
 
         inline bool hasKeyword(GameKeyword keyword) const { return form->HasKeyword(keyword.form); }
         inline bool hasKeyword(std::string keyword) const { return form->HasKeywordString(keyword); }

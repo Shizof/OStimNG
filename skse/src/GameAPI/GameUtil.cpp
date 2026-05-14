@@ -97,12 +97,7 @@ namespace GameAPI {
                 // something else in there still doesn't work
                 // don't get it, don't care, we don't actually need that part anyways
                 /*
-                RE::TESWorldSpace** ptr = &TES->worldSpace;
-                if (REL::Module::get().version().patch() >= 1130) {
-                    // this is where the bandaid fix is happening
-                    ptr += 8;
-                }
-                RE::TESWorldSpace* worldSpace = *ptr;
+                RE::TESWorldSpace* worldSpace = &TES->worldSpace;
                 if (const auto skyCell = worldSpace ? worldSpace->GetSkyCell() : nullptr; skyCell) {
                     skyCell->ForEachReferenceInRange(originPos, a_radius, [&](RE::TESObjectREFR& a_ref) { return a_callback(a_ref); });
                 }

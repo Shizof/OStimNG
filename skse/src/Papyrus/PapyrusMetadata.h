@@ -52,9 +52,8 @@ namespace PapyrusMetadata {
     // *********************************************************
 
 #pragma region general
-    std::string GetName(RE::StaticFunctionTag*, std::string id) { 
-        return ScriptAPI::Metadata::getName(id); 
-    }
+    std::string GetName(RE::StaticFunctionTag*, std::string id) {
+        return ScriptAPI::Metadata::getName(id); }
 
     std::vector<std::string> ScenesToNames(RE::StaticFunctionTag*, std::vector<std::string> ids) {
         return ScriptAPI::Metadata::nodesToNames(ids);

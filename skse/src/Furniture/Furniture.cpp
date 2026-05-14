@@ -14,7 +14,7 @@
 namespace Furniture {
    std::vector<std::pair<FurnitureType*, GameAPI::GameObject>> findFurniture(int actorCount, GameAPI::GamePosition center, float radius, float sameFloor) {
         std::unordered_map<FurnitureType*, GameAPI::GameObject> furniture;
-        
+
         RE::NiPoint3 centerPos = {center.x, center.y, center.z};
         util::iterate_attached_cells(centerPos, radius, [&](RE::TESObjectREFR* ref) {
             GameAPI::GameObject object = ref;

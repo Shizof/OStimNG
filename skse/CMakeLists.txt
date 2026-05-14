@@ -7,7 +7,7 @@ message("Using toolchain file ${CMAKE_TOOLCHAIN_FILE}.")
 ########################################################################################################################
 project(
         OStim
-        VERSION 7.3.5.3
+        VERSION 7.4.0.3
         DESCRIPTION ""
         LANGUAGES CXX)
 
@@ -51,6 +51,7 @@ set(sources
     src/Alignment/ActorKey.cpp
     src/Alignment/Alignments.cpp
     src/Alignment/ThreadKey.cpp
+    src/Config/Config.cpp
     src/Core/Core.cpp
     src/Core/EquipObjectHandler.cpp
     src/Core/ExpressionUpdater.cpp
@@ -70,6 +71,7 @@ set(sources
     src/Core/ThreadStarter/NPCThreadStarter.cpp
     src/Core/ThreadStarter/PlayerThreadStarter.cpp
     src/Core/ThreadStarter/ThreadStarter.cpp
+    src/Core/ThreadStarter/ThreadStartParams.cpp
     src/Core/Thread.cpp
     src/Core/ThreadActor.cpp
     src/Core/ThreadInterface.cpp
@@ -126,6 +128,7 @@ set(sources
 	src/Papyrus/Script.h
     src/PluginInterfaceImplementation/Settings/SettingInterfaceImpl.cpp
     src/PluginInterfaceImplementation/SexToys/SexToyInterfaceImpl.cpp
+    src/PluginInterfaceImplementation/Threading/ThreadBuilderImpl.cpp
     src/PluginInterfaceImplementation/Threading/ThreadInterfaceImpl.cpp
     src/PluginInterfaceImplementation/InterfaceMapImpl.cpp
 	src/ScriptAPI/ActionDataScript.cpp
@@ -231,7 +234,9 @@ set(sources
         src/ModAPI/OstimNG-API-Main.cpp 
         src/ModAPI/OstimNG-API-Main.h
         src/ModAPI/OstimNG-API-Scene.h 
-        src/ModAPI/OstimNG-API-Scene.cpp
+        src/ModAPI/OstimNG-API-Scene.cpp	
+        src/ModAPI/OstimNG-API-Thread.h
+        src/ModAPI/OstimNG-API-Thread.cpp
 	src/VRAPI/OstimVRinterface001.h
 	src/VRAPI/OstimVRinterface001.cpp
 	src/VRAPI/OstimVRpluginapi.h

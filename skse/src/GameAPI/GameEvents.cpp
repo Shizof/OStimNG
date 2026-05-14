@@ -5,7 +5,7 @@
 #include "Core/Thread.h"
 #include "Furniture/FurnitureTable.h"
 #include "GameLogic/GameTable.h"
-
+#include "Graph/GraphTable.h"
 #include "VRAPI/OstimVR.h"
 
 namespace GameAPI {
@@ -40,7 +40,7 @@ namespace GameAPI {
             GameUtil::sendModEvent(GameLogic::GameTable::getMainQuest(), "ostim_thread_speedchanged", std::to_string(speed), threadID);
         }
 
-        void sendEndEvent(int threadID, Threading::Thread* thread, std::vector<GameActor> actors) {
+        void sendEndEvent(int threadID, Threading::Thread* thread, std::vector<GameActor> actors, const std::string& originator) {
             json json = json::object();
             json["scene"] = thread ? thread->getCurrentNode()->getNodeID() : "";
             json["actors"] = json::array();
@@ -53,6 +53,7 @@ namespace GameAPI {
                     json["metadata"].push_back(metadata);
                 }
             }
+            json["originator"] = originator.empty() ? "normal" : originator;
 
             std::string jsonString = json.dump();
 
@@ -78,15 +79,17 @@ namespace GameAPI {
         }
 
         void sendFurnitureChangedEvent(int threadID, GameAPI::GameObject furniture) {
-            GameUtil::sendModEvent(furniture.form, "ostim_furniturechanged",
-                                   Furniture::FurnitureTable::getFurnitureType(furniture, false)->id, threadID);
+            GameUtil::sendModEvent(furniture.form, "ostim_furniturechanged", Furniture::FurnitureTable::getFurnitureType(furniture, false)->id, threadID);
         }
 
-        void sendOStimEvent(int threadID, std::string type, Graph::RoleMap<GameActor> actors) {
+        void sendOStimEvent(int threadID, Graph::Event* graphEvent, Graph::RoleMap<GameActor> actors) {
             // legacy mod event
-            if (threadID == 0 && type == "spank") {
+            Graph::Event* spank = Graph::GraphTable::getEvent("spank");
+            if (spank && threadID == 0 && graphEvent->isChildOf(spank)) {
                 GameUtil::sendModEvent(actors.target.form, "ostim_spank", "", 0);
             }
+
+            std::string type = graphEvent->id;
 
             const auto skyrimVM = RE::SkyrimVM::GetSingleton();
             auto vm = skyrimVM ? skyrimVM->impl : nullptr;

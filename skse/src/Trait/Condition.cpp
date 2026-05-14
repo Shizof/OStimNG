@@ -67,7 +67,7 @@ namespace Trait {
     bool ActorCondition::fulfills(std::set<std::string>& requirements) {
         for (const std::string& requirement : requirements) {
             if (!this->requirements.contains(requirement)) {
-            return false;
+                return false;
             }
         }
 
@@ -83,17 +83,16 @@ namespace Trait {
             return true;
         }
 
-        if (MCM::MCMTable::intendedSexOnly() && sex != GameAPI::GameSex::AGENDER &&
-            other.sex != GameAPI::GameSex::AGENDER && sex != other.sex) {
+        if (MCM::MCMTable::intendedSexOnly() && sex != GameAPI::GameSex::AGENDER && other.sex != GameAPI::GameSex::AGENDER && sex != other.sex) {
             return false;
         }
 
         for (const std::string& requirement : other.requirements) {
             if (!requirements.contains(requirement)) {
-            return false;
+                return false;
             }
         }
-
+        
         return true;
     }
 }

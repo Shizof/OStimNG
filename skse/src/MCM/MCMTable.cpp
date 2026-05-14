@@ -75,7 +75,7 @@ namespace MCM {
 
         auto ostimPath = util::ostim_path();
         std::filesystem::create_directory(*ostimPath);
- 
+
         const auto settings_path = util::settings_path();
         std::ofstream file(*settings_path);
         file << std::setw(2) << json << std::endl;
