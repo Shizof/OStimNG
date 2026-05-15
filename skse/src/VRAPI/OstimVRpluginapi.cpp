@@ -68,9 +68,10 @@ void OstimVRPluginAPI::OstimVRInterface001::GetMenuData(char ** outStr, int & ou
         }
     }
 
-    outStrLength = std::min((int)options.length(), 65536);
+    outStrLength = std::min(static_cast<int>(options.length()), 65536);
     if (outStrLength > 0 && *outStr!=nullptr) {
-        strcpy(*outStr, options.c_str());
+        std::memcpy(*outStr, options.c_str(), outStrLength);
+        (*outStr)[outStrLength] = '\0';
     }
 }
 

@@ -26,6 +26,9 @@ add_compile_definitions(SKYRIM)
 set(CommonLibPath "extern/CommonLibSSE-NG")
 set(CommonLibName "CommonLibSSE")
 set(GameVersion "Skyrim")
+set(ENABLE_SKYRIM_SE OFF CACHE BOOL "Disable Skyrim SE support for the VR-only build" FORCE)
+set(ENABLE_SKYRIM_AE OFF CACHE BOOL "Disable Skyrim AE support for the VR-only build" FORCE)
+set(ENABLE_SKYRIM_VR ON CACHE BOOL "Enable Skyrim VR support for the VR-only build" FORCE)
 
 if (DEFINED CommonLibPath AND NOT ${CommonLibPath} STREQUAL "")
         add_subdirectory(${CommonLibPath} ${CommonLibName} EXCLUDE_FROM_ALL)
@@ -252,6 +255,8 @@ set(sources
     src/VRAPI/Utility.hpp
 	src/VRAPI/planckinterface001.h
 	src/VRAPI/planckinterface001.cpp
+	src/VRAPI/higgsinterface001.h
+	src/VRAPI/higgsinterface001.cpp
 
         ${CMAKE_CURRENT_BINARY_DIR}/version.rc)
 

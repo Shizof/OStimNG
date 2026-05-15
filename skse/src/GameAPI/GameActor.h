@@ -64,7 +64,14 @@ namespace GameAPI {
 
         int getRelationshipRank(GameActor other) const;
         inline bool isInCombat() const { return form->IsInCombat(); }
-        inline bool isDead() const { return form->IsDead(); }
+        inline RE::ACTOR_LIFE_STATE getLifeState() const { return form->AsActorState()->GetLifeState(); }
+        inline bool isDead() const {
+            const auto lifeState = getLifeState();
+            return lifeState == RE::ACTOR_LIFE_STATE::kDying ||
+                   lifeState == RE::ACTOR_LIFE_STATE::kDead ||
+                   lifeState == RE::ACTOR_LIFE_STATE::kRecycle;
+        }
+        inline float getCurrentHealth() const { return form->AsActorValueOwner()->GetActorValue(RE::ActorValue::kHealth); }
         inline bool isInSameCell(GameActor other) const {return form->parentCell == other.form->parentCell;}
 
         inline int getItemCount(GameItem item) const { return GetItemCount(nullptr, 0, form, item.form); }

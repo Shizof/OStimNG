@@ -31,6 +31,43 @@ namespace Threading {
     }
 
     bool isEligible(GameAPI::GameActor actor) {
-        return !actor.isDisabled() && !actor.isDeleted() && !actor.isChild() && !actor.isDead() && ActorProperties::ActorPropertyTable::getActorType(actor) != "" && !ThreadManager::GetSingleton()->findActor(actor);
+        if (!actor) {
+            logger::warn("actor eligibility failed: null actor");
+            return false;
+        }
+
+        const auto name = actor.getName();
+        if (actor.isDisabled()) {
+            logger::warn("actor eligibility failed for {}: disabled", name);
+            return false;
+        }
+        if (actor.isDeleted()) {
+            logger::warn("actor eligibility failed for {}: deleted", name);
+            return false;
+        }
+        if (actor.isChild()) {
+            logger::warn("actor eligibility failed for {}: child actor", name);
+            return false;
+        }
+        if (actor.isDead()) {
+            logger::warn(
+                "actor eligibility failed for {} ({:08X}): dead; lifeState={}, health={}",
+                name,
+                actor.form->formID,
+                static_cast<std::uint32_t>(actor.getLifeState()),
+                actor.getCurrentHealth());
+            return false;
+        }
+        const auto actorType = ActorProperties::ActorPropertyTable::getActorType(actor);
+        if (actorType.empty()) {
+            logger::warn("actor eligibility failed for {}: no OStim actor type matched", name);
+            return false;
+        }
+        if (ThreadManager::GetSingleton()->findActor(actor)) {
+            logger::warn("actor eligibility failed for {}: already in an OStim thread", name);
+            return false;
+        }
+
+        return true;
     }
 }

@@ -72,9 +72,11 @@ namespace UI {
     void UIState::SetThread(Threading::Thread* thread) {
         currentThread = thread;
         currentNode = thread->getCurrentNodeInternal();
-        //UI::Align::AlignMenu::GetMenu()->ThreadChanged();
-        //UI::Scene::SceneMenu::GetMenu()->BuildOptionsData();
-        //UI::Scene::SceneMenu::GetMenu()->UpdateMenuData();
+#ifndef ENABLE_SKYRIM_VR
+        UI::Align::AlignMenu::GetMenu()->ThreadChanged();
+        UI::Scene::SceneMenu::GetMenu()->BuildOptionsData();
+        UI::Scene::SceneMenu::GetMenu()->UpdateMenuData();
+#endif
     }
 
     void UIState::NodeChanged(Threading::Thread* thread, Graph::Node* node) {
@@ -84,7 +86,9 @@ namespace UI {
         currentNode = node;
         SKSE::GetTaskInterface()->AddTask([node]() {
             UI::Align::AlignMenu::GetMenu()->NodeChanged();
-            //UI::Scene::SceneMenu::GetMenu()->UpdateMenuData();
+#ifndef ENABLE_SKYRIM_VR
+            UI::Scene::SceneMenu::GetMenu()->UpdateMenuData();
+#endif
             UI::Scene::SceneMenu::GetMenu()->UpdateSpeed();
         });        
     }

@@ -20,6 +20,13 @@
 #include "pugixml.hpp"
 #include "nlohmann/json.hpp"
 
+template <>
+struct fmt::formatter<nlohmann::json> : fmt::formatter<std::string> {
+    auto format(const nlohmann::json& j, fmt::format_context& ctx) const {
+        return fmt::formatter<std::string>::format(j.dump(), ctx);
+    }
+};
+
 #define DLLEXPORT __declspec(dllexport)
 
 using namespace std::literals;

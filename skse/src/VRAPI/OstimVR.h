@@ -2,6 +2,7 @@
 #include <PCH.h>
 #include "vrikinterface001.h"
 #include "planckinterface001.h"
+#include "higgsinterface001.h"
 #include "spellwheelinterface001.h"
 #include "ControllerFixinterface001.h"
 #include "Utility.hpp"
@@ -19,6 +20,7 @@ namespace OStimVR
 
     extern vrikPluginApi::IVrikInterface001* vrikInterface;
     extern PlanckPluginAPI::IPlanckInterface001* planckInterface;
+    extern HiggsPluginAPI::IHiggsInterface001* higgsInterface;
     extern spellwheelPluginApi::ISpellWheelInterface001* spellWheelInterface;
     extern ControllerFixPluginApi::IControllerFixInterface001* controllerFixInterface;
 

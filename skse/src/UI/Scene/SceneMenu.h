@@ -45,7 +45,7 @@ namespace UI::Scene {
 			optionsOpen = isOpen;
 		}
 		void BuildOptionsData();
-        void BuildMenuData(MenuData& menudata);
+		void BuildMenuData(MenuData& menudata);
 
 	private:
 		void SendControl(int32_t control);
@@ -59,31 +59,31 @@ namespace UI::Scene {
 	class doSelectOption : public RE::GFxFunctionHandler {
 	public:
 		void Call(Params& args) override {
-			/*auto sceneMenu = UI::Scene::SceneMenu::GetMenu();
+			auto sceneMenu = UI::Scene::SceneMenu::GetMenu();
 			if (sceneMenu->IsOptionsOpen()) {
 				sceneMenu->HandleOption(args.args[0].GetString());
 			}
 			else {
 				sceneMenu->ChangeAnimation(args.args[0].GetString());
-			}*/
+			}
 		}
 	};
 
 	class doChangeSpeed : public RE::GFxFunctionHandler {
 		public :
 			void Call(Params& args) override {
-				/*logger::info("change speed");
-				UI::Scene::SceneMenu::GetMenu()->ChangeSpeed(args.args[0].GetBool());*/
+				logger::info("change speed");
+				UI::Scene::SceneMenu::GetMenu()->ChangeSpeed(args.args[0].GetBool());
 			}
 	};
 
 	class doShowOptions : public RE::GFxFunctionHandler {
 	public:
 		void Call(Params& args) override {
-            /*logger::info("show options");
+			logger::info("show options");
 			auto sceneMenu = UI::Scene::SceneMenu::GetMenu();
 			sceneMenu->SetOptionsOpen(true);			
-			sceneMenu->UpdateMenuData();*/
+			sceneMenu->UpdateMenuData();
 		}
 	};
 }

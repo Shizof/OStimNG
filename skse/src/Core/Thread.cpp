@@ -385,20 +385,17 @@ namespace Threading {
         float z = alignment.offsetZ + offset.z;
         float r = alignment.rotation + offset.r;
 
-        if (REL::Module::IsVR() && threadActor->getActor().isPlayer()) 
-        {
+        threadActor->setScaleMult(alignment.scale * furnitureScaleMult);
+        threadActor->setSoSBend(alignment.sosBend);        
+
+        if (REL::Module::IsVR() && threadActor->getActor().isPlayer()) {
             OStimVR::VRIKLockPositionAndRotation(sin, cos, center.x + cos * x + sin * y, center.y - sin * x + cos * y,
                                                  center.z + z, center.r + MathUtil::toRadians(r),
                                                  threadActor->getActor().getScale());
-        } 
-        else 
-        {
+        } else {
             threadActor->getActor().lockAtPosition(center.x + cos * x + sin * y, center.y - sin * x + cos * y,
                                                    center.z + z, center.r + MathUtil::toRadians(r));
         }
-
-        threadActor->setScaleMult(alignment.scale * furnitureScaleMult);
-        threadActor->setSoSBend(alignment.sosBend);
     }
 
     void Thread::updateActorAlignment(int index, Alignment::ActorAlignment alignment) {

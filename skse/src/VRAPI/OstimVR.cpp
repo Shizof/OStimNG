@@ -4,6 +4,7 @@ namespace OStimVR
 {
     vrikPluginApi::IVrikInterface001* vrikInterface;
     PlanckPluginAPI::IPlanckInterface001* planckInterface;
+    HiggsPluginAPI::IHiggsInterface001* higgsInterface;
     spellwheelPluginApi::ISpellWheelInterface001* spellWheelInterface;
     ControllerFixPluginApi::IControllerFixInterface001* controllerFixInterface;
 
@@ -74,6 +75,10 @@ namespace OStimVR
 
     bool originalbDirectMovementWithWands = true;
 
+    double higgsFarCastDistanceOrgValue = 5.0;
+
+    int disableGravityGloves = 0;
+
     void MovePlayerInThirdPersonStart(bool firstPerson) 
     {
         // SKSE::GetTaskInterface()->AddTask([firstPerson]() {
@@ -90,7 +95,7 @@ namespace OStimVR
                         newPos.x = center.x;
                         newPos.y = center.y;
 
-                        player->SetHeading(center.r);
+                        player->AsReference()->SetAngle(RE::NiPoint3{0.0f, 0.0f, center.r});
                         player->AsReference()->SetPosition(newPos);
                     }
                 } else {
@@ -110,7 +115,7 @@ namespace OStimVR
                         newPos.x += (-cos * sideDisplacement);
                         newPos.y += (sin * sideDisplacement);
 
-                        player->SetHeading(center.r + 1.571f);
+                        player->AsReference()->SetAngle(RE::NiPoint3{0.0f, 0.0f, center.r + 1.571f});
                         player->AsReference()->SetPosition(newPos);
 
                         // player->AsReference()->SetPosition(RE::NiPoint3(center.x, center.y, center.z));
@@ -132,7 +137,7 @@ namespace OStimVR
                     if (player != nullptr && player->AsReference()) {
                         const RE::NiPoint3 newPos = player->AsReference()->GetPosition();
 
-                        player->SetRotationZ(r);
+                        player->AsReference()->SetAngle(RE::NiPoint3{0.0f, 0.0f, r});
                         player->AsReference()->SetPosition(newPos);
                     }
                 }
@@ -245,7 +250,7 @@ namespace OStimVR
         } */
         if (enableVRIKScaling) 
         {
-            logger::critical("Playerscale is: {}", playerScale);
+            //logger::critical("Playerscale is: {}", playerScale);
             vrikInterface->setSettingDouble("bodySize", playerScale);
             vrikInterface->setSettingDouble("armSize", playerScale);
             //vrikInterface->setSettingDouble("armLength", 1.0f);
@@ -459,7 +464,7 @@ namespace OStimVR
         {
             if (TooDistToRealBodyCheck())
             {
-                RE::DebugNotification("You need to be closer to your real body.");
+            RE::SendHUDMessage::ShowHUDMessage("You need to be closer to your real body.");
                 return;
             }
         }*/
@@ -565,6 +570,15 @@ namespace OStimVR
                 planckInterface->SetSettingDouble("activeRagdollEndDistance", abs(activeRagdollEndDistanceOrgValue) * -1);
             }
         }
+
+        if (higgsInterface != nullptr) 
+        {
+            if (disableGravityGloves == 1) {
+                higgsInterface->GetSettingDouble("FarCastDistance", higgsFarCastDistanceOrgValue);
+
+                higgsInterface->SetSettingDouble("FarCastDistance", 0.0);
+            }
+        }
     }
 
     void AddRagdollCollisionIgnoredActors() 
@@ -607,6 +621,13 @@ namespace OStimVR
             }
             ignoredActorsForAggressionList.clear();
             RemoveRagdollCollisionIgnoredActors();
+        }
+
+        if (higgsInterface != nullptr)
+        {
+            if (disableGravityGloves == 1) {
+                higgsInterface->SetSettingDouble("FarCastDistance", higgsFarCastDistanceOrgValue);
+            }
         }
 
         if (originalbDirectMovementWithWands == false) {
@@ -705,6 +726,8 @@ namespace OStimVR
         output << "\n";
         output << "DisablePLANCKduringScenes = 0   #Disable PLANCK collision during scenes.\n";
         output << "\n";
+        output << "DisableGravityGloves = 1   #Disable HIGGS gravity gloves during scenes.\n";
+        output << "\n";
         output << "HideVRIKCompass = 1   #Disable compass during scenes.\n";
         output << "\n";
         output << "HeightAdjustSpeed = 1.0       #Snapback speed for viewpoint. Higher speeds may cause nausea. "
@@ -797,6 +820,9 @@ namespace OStimVR
                             else if (variableName == "DisablePLANCKduringScenes") {
                                 disablePLANCKduringScenes = std::stoi(variableValue);
                             } 
+                            else if (variableName == "DisableGravityGloves") {
+                                disableGravityGloves = std::stoi(variableValue);
+                            }  
                             else if (variableName == "HideVRIKCompass") {
                                 hideVRIKCompass = std::stoi(variableValue);
                             }
@@ -957,7 +983,7 @@ namespace OStimVR
 
         output.close();
 
-        RE::DebugNotification("Global alignments saved.");
+        RE::SendHUDMessage::ShowHUDMessage("Global alignments saved.");
     }
 
     void loadSceneAlignmentsConfig() 
@@ -1038,7 +1064,7 @@ namespace OStimVR
 
         output.close();
 
-        RE::DebugNotification("Scene alignments saved.");
+        RE::SendHUDMessage::ShowHUDMessage("Scene alignments saved.");
     }
 
     void PrintNodesTree(int depth, std::vector<Graph::Node*>& visitedList, Graph::Node* node) 

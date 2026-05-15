@@ -79,7 +79,7 @@ namespace UI {
     void OStimMenu::AdvanceMovie(float a_interval, std::uint32_t a_currentTime) {
         Update();
         if (_isOpen) {
-            //RE::IMenu::AdvanceMovie(a_interval, a_currentTime);
+            //RE::IMenu::AdvanceMovie(a_interval, a_currentTime); // VR menus are driven explicitly; advancing the base movie here can surface hidden menus during loading.
         }
     }
 

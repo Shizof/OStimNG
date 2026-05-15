@@ -16,6 +16,9 @@ namespace UI::Align {
     }
 
     void AlignMenu::Show() {
+        if (UI::UIState::IsExternalUIEnabled()) {
+            return; // External UI (e.g., OStim Prism) is handling the UI
+        }
         OStimMenu::Show();
         auto uiState = UI::UIState::GetSingleton();
         if (uiState && uiState->currentThread != nullptr) {
@@ -25,12 +28,14 @@ namespace UI::Align {
         UI::Settings::LoadSettings();
         ApplyPositions();
 
-        /*QueueUITask([this]() {
+#ifndef ENABLE_SKYRIM_VR
+        QueueUITask([this]() {
             Locker locker(_lock);
             RE::GFxValue alignmentInfo;
             GetAlignmentInfo(alignmentInfo);
             alignmentInfo.Invoke("Show");
-        });*/
+        });
+#endif
     }
 
     void AlignMenu::PostRegister() {
@@ -61,11 +66,11 @@ namespace UI::Align {
 
     void AlignMenu::LoadCurrentAlignment() {
         auto uiState = UI::UIState::GetSingleton();
-        if (uiState)
-        {
+        if (uiState) {
             auto currentThread = uiState->currentThread;
-            if (currentThread)
-                currentActorInfo = UI::UIState::GetSingleton()->currentThread->getActorAlignment(selectedSlot);
+            if (currentThread) {
+                currentActorInfo = currentThread->getActorAlignment(selectedSlot);
+            }
         }
     }
 
@@ -136,7 +141,11 @@ namespace UI::Align {
     }
 
     void AlignMenu::Handle(UI::Controls control) {
-        /*switch (control) {
+#ifdef ENABLE_SKYRIM_VR
+        (void)control;
+#else
+        using enum Controls;
+        switch (control) {
             case Up: {
                 ScrollSelectedField(-1);
             } break;
@@ -155,7 +164,8 @@ namespace UI::Align {
             case No: {
                 CycleIncrement();
             } break;
-        }*/
+        }
+#endif
     }
 
     void AlignMenu::ApplyPositions() {

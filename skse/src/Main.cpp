@@ -71,16 +71,16 @@ namespace {
     void MessageHandler(SKSE::MessagingInterface::Message* a_msg) {        
         switch (a_msg->type) {
             case SKSE::MessagingInterface::kPostLoad: {
+                SKSE::GetNiNodeUpdateEventSource()->AddEventSink(Events::EventListener::GetSingleton());
+                SKSE::GetCrosshairRefEventSource()->AddEventSink(Events::EventListener::GetSingleton());
+
+                Core::postLoad();    
+                
                 auto message = SKSE::GetMessagingInterface();
                 if (message) {
                     message->RegisterListener(nullptr, OstimVRMessageHandler);
                     logger::info("Registered OstimVR message handler");
                 }
-
-                SKSE::GetNiNodeUpdateEventSource()->AddEventSink(Events::EventListener::GetSingleton());
-                SKSE::GetCrosshairRefEventSource()->AddEventSink(Events::EventListener::GetSingleton());
-
-                Core::postLoad();                
             } break;
             case SKSE::MessagingInterface::kPostPostLoad: {
                 OStimVR::vrikInterface = vrikPluginApi::getVrikInterface001();
@@ -94,6 +94,12 @@ namespace {
                     logger::info("Got PLANCK interface");
                 } else {
                     logger::info("Did not get PLANCK interface");
+                }
+                OStimVR::higgsInterface = HiggsPluginAPI::GetHiggsInterface001();
+                if (OStimVR::higgsInterface) {
+                    logger::info("Got HIGGS interface");
+                } else {
+                    logger::info("Did not get HIGGS interface");
                 }
                 OStimVR::spellWheelInterface = spellwheelPluginApi::getSpellWheelInterface001();
                 if (OStimVR::spellWheelInterface) {

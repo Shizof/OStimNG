@@ -42,17 +42,25 @@ namespace UI::Search {
 
     void SearchMenu::SendControl(int32_t control) {
 
-        /*QueueUITask([this, control]() {
+#ifdef ENABLE_SKYRIM_VR
+        (void)control;
+#else
+        QueueUITask([this, control]() {
             Locker locker(_lock);
             RE::GFxValue optionBoxes;
             GetControlHandler(optionBoxes);
             const RE::GFxValue val{ control };
             optionBoxes.Invoke("HandleKeyboardInput", nullptr, &val, 1);
-        });*/
+        });
+#endif
     }
 
     void SearchMenu::Handle(UI::Controls control) {
-        /*switch (control) {
+#ifdef ENABLE_SKYRIM_VR
+        (void)control;
+#else
+        using enum Controls;
+        switch (control) {
             case Up: {
                 SendControl(0);
             } break;
@@ -65,48 +73,36 @@ namespace UI::Search {
             case No: {
                 SendControl(5);
             } break;
-        }*/
+        }
+#endif
     }
 
     void SearchMenu::Show() {
+        if (UI::UIState::IsExternalUIEnabled()) {
+            return; // External UI (e.g., OStim Prism) is handling the UI
+        }
         OStimMenu::Show();
         ApplyPositions();
 
         auto controlMap = RE::ControlMap::GetSingleton();
-        if (REL::Module::get().version().patch() < 1130) {
-            controlMap->AllowTextInput(true);
-        } else {
-            // bandaid fix until CLib-NG is updated
-            int8_t* ptr = &controlMap->GetRuntimeData().textEntryCount;
-            ptr += 8;
-            if (*ptr != -1) {
-                ++(*ptr);
-            }
-        }
+        controlMap->AllowTextInput(true);
         
-        /*QueueUITask([this]() {
+#ifndef ENABLE_SKYRIM_VR
+        QueueUITask([this]() {
             Locker locker(_lock);
             RE::GFxValue optionBoxes;
             GetControlHandler(optionBoxes);
             const RE::GFxValue arg{ true };
             optionBoxes.Invoke("SetIsOpen", nullptr, &arg, 1);           
-        });*/ 
+        }); 
+#endif
     }
 
     void SearchMenu::Hide() {
         OStimMenu::Hide();
 
         auto controlMap = RE::ControlMap::GetSingleton();
-        if (REL::Module::get().version().patch() < 1130) {
-            controlMap->AllowTextInput(false);
-        } else {
-            // bandaid fix until CLib-NG is updated
-            int8_t* ptr = &controlMap->GetRuntimeData().textEntryCount;
-            ptr += 8;
-            if (*ptr != 0) {
-                --(*ptr);
-            }
-        }
+        controlMap->AllowTextInput(false);
         
 
         QueueUITask([this]() {
