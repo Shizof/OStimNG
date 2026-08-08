@@ -10,9 +10,9 @@
 	"navigations":[
 		{
 			"destination": "OStim2PSittingMF",
-			"description": "$ostim_nav_sit_back_a{0}",
-			"icon": "OStim/detail/grab_m_end"
-		},
+			"description": "$ostim_nav_return",
+			"icon": "OStim/symbols/return"
+			},
 		{
 			"destination": "OStim2PStandingApartMF",
 			"description": "$ostim_nav_stand_up",

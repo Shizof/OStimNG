@@ -11,7 +11,27 @@
 			52,
 			53,
 			54
-		]
+		],
+		"faction":{
+			"info": "OStimCumOnChestActorFaction",
+			"mod": "OStim.esp",
+			"formid": "0x864"
+		},
+		"climaxStatFaction":{
+			"info": "OStimCumOnChestActorClimaxCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x8EC"
+		},
+		"playerClimaxStatFaction":{
+			"info": "OStimCumOnChestWithPlayerActorClimaxCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x8EE"
+		},
+		"playerClimaxStatList":{
+			"info": "OStimCumOnChestWithPlayerActorClimaxList",
+			"mod": "OStim.esp",
+			"formid": "0x8F0"
+		}
 	},
 	"target":{
 		"info": "the one with the chest",
@@ -21,6 +41,26 @@
 			46,
 			56
 		],
+		"faction":{
+			"info": "OStimCumOnChestTargetFaction",
+			"mod": "OStim.esp",
+			"formid": "0x865"
+		},
+		"partnerClimaxStatFaction":{
+			"info": "OStimCumOnChestTargetPartnerClimaxCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x8ED"
+		},
+		"playerPartnerClimaxStatFaction":{
+			"info": "OStimCumOnChestWithPlayerTargetPartnerClimaxCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x8EF"
+		},
+		"playerPartnerClimaxStatList":{
+			"info": "OStimCumOnChestWithPlayerTargetPartnerClimaxList",
+			"mod": "OStim.esp",
+			"formid": "0x8F1"
+		},
 		"stringLists":{
 			"cum":[
 				"chest",
@@ -29,7 +69,7 @@
 		}
 	},
 	"tags":[
-		"climax",
+		"cumshot",
 		"sexual"
 	]
 }

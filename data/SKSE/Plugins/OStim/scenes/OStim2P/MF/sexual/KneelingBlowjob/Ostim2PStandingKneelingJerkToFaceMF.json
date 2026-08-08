@@ -1,0 +1,82 @@
+{
+  "name": "$StandingJerktoFace",
+  "modPack": "OStim",
+  "length": 2.0,
+  "speeds": [
+    {
+      "animation": "OStim2PStandingKneelingJerkToFaceMF_S1",
+      "playbackSpeed": 1,
+      "displaySpeed": 0.5
+    },
+    {
+      "animation": "OStim2PStandingKneelingJerkToFaceMF_S2",
+      "playbackSpeed": 1,
+      "displaySpeed": 1
+    },
+    {
+      "animation": "OStim2PStandingKneelingJerkToFaceMF_S3",
+      "playbackSpeed": 1,
+      "displaySpeed": 1.5
+    },
+    {
+      "animation": "OStim2PStandingKneelingJerkToFaceMF_S4",
+      "playbackSpeed": 1,
+      "displaySpeed": 2
+    }
+  ],
+  "navigations": [
+    {
+      "destination": "OStim2PStandingKneelingMF",
+      "priority": -1000,
+	    "description": "$ostim_nav_return",
+	    "icon": "ostim/symbols/return",
+      "noWarnings": false
+    },
+    {
+      "destination": "OStim2PKneelingBlowjobMF",
+      "description": "$ostim_nav_blowjob_t{0}",
+      "icon": "OStim/sexual/blowjob_mf",
+      "priority": 3000
+    }
+  ],
+  "defaultSpeed": 1,
+  "noRandomSelection": false,
+  "actors": [
+    {
+      "type": "npc",
+      "intendedSex": "male",
+      "sosBend": 2,
+	    "scale": 1.03,
+      "lookUp": -50,
+      "tags": [
+        "standing"
+      ],
+      "feetOnGround": true
+    },
+    {
+      "type": "npc",
+      "intendedSex": "female",
+	    "scale": 1.0,
+      "tags": [
+        "kneeling"
+      ],
+      "feetOnGround": false
+    }
+  ],
+  "actions": [
+    {
+      "type": "malemasturbation",
+      "actor": 0
+    },
+    {
+      "type": "spectating",
+      "actor": 1,
+      "target": 0
+    },
+    {
+      "type": "facial",
+      "actor": 0,
+      "target": 1
+    }
+  ]
+}

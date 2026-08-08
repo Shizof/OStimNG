@@ -4,7 +4,7 @@
         <DataFolder>OStim 3BA</DataFolder>
         <SourceFile>OStim Calyps Strap-On.nif</SourceFile>
         <OutputPath>meshes\OStim\strapons</OutputPath>
-        <OutputFile GenWeights="true">CalypsStrapOn</OutputFile>
+        <OutputFile GenWeights="true" PreventMorphFile="false" KeepZappedShapes="false">CalypsStrapOn</OutputFile>
         <Shape target="Dildo">Dildo</Shape>
         <Shape target="DildoCollision">DildoCollision</Shape>
         <Shape target="GearCore">GearCore</Shape>
@@ -366,7 +366,7 @@
         <DataFolder>OStim 3BA</DataFolder>
         <SourceFile>OStim Calyps Strap-On Simple.nif</SourceFile>
         <OutputPath>meshes\OStim\strapons</OutputPath>
-        <OutputFile GenWeights="true">CalypsStrapOnSimple</OutputFile>
+        <OutputFile GenWeights="true" PreventMorphFile="false" KeepZappedShapes="false">CalypsStrapOnSimple</OutputFile>
         <Shape target="Dildo">Dildo</Shape>
         <Shape target="DildoCollision">DildoCollision</Shape>
         <Shape target="GearCore">GearCore</Shape>

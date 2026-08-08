@@ -1,0 +1,73 @@
+{
+  "name": "$OStim2PMaleKneelingAllFoursJerkToFaceMF",
+  "modpack": "OStim",
+  "length": 2.0,
+  "speeds": [
+    {
+      "animation": "OStim2PMaleKneelingAllFoursJerkToFaceMF",
+      "displaySpeed": 1
+    }
+  ],
+  "navigations": [
+    {
+      "destination": "OStim2PSittingFemaleInMF",
+      "description": "$ostim_nav_return",
+      "icon": "OStim/symbols/return",
+      "priority": -1000
+    },
+    {
+      "destination": "OStim2PMaleKneelingAllFoursBlowJobMF",
+      "description": "$ostim_nav_blowjob_t{0}",
+      "icon": "OStim/sexual/blowjob_mf",
+      "priority": 0
+    },
+    {
+      "destination": "OStim2PMaleSittingJerkToFaceMF",
+      "description": "$ostim_nav_sit_down_a{0}",
+      "icon": "OStim/positional/kneeling_m",
+      "priority": 0
+    }
+  ],
+  "actors":[
+    {
+      "intendedSex": "male",
+      "sosBend": 2,
+      "scale": 1.03,
+          "lookUp": 50,
+      "tags": [
+        "kneeling"
+      ],
+      "feetOnGround": false
+    },
+    {
+      "intendedSex": "female",
+          "lookUp": -10,
+          "lookLeft": 0,
+      "tags": [
+        "allfours"
+      ],
+      "feetOnGround": false
+    }
+  ],
+  "actions": [
+    {
+      "type": "malemasturbation",
+      "actor": 0
+    },
+    {
+      "type": "spectating",
+      "actor": 1,
+      "target": 0
+    },
+    {
+      "type": "facial",
+      "actor": 0,
+      "target": 1
+    },
+    {
+      "type": "cumonchest",
+      "actor": 0,
+      "target": 1
+    }
+  ]
+}

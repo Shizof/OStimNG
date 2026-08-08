@@ -1,6 +1,7 @@
 #pragma once
 
 #include "GameAPI/GameFaction.h"
+#include "GameAPI/GameList.h"
 
 namespace Graph {
     namespace Action {
@@ -15,7 +16,17 @@ namespace Graph {
             std::string expressionOverride = "";
             std::set<std::string> requirements;
             uint32_t strippingMask = 0;
+            std::set<std::string> equipObjects;
             std::vector<GameAPI::GameFaction> factions;
+            std::vector<GameAPI::GameFaction> statFactions;
+            std::vector<GameAPI::GameFaction> playerStatFactions;
+            std::vector<GameAPI::GameFaction> climaxStatFactions;
+            std::vector<GameAPI::GameFaction> partnerClimaxStatFactions;
+            std::vector<GameAPI::GameFaction> playerClimaxStatFactions;
+            std::vector<GameAPI::GameFaction> playerPartnerClimaxStatFactions;
+            std::vector<GameAPI::GameList> playerStatLists;
+            std::vector<GameAPI::GameList> playerClimaxStatLists;
+            std::vector<GameAPI::GameList> playerPartnerClimaxStatLists;
             std::unordered_map<std::string, int> ints;
             std::unordered_map<std::string, std::vector<int>> intLists;
             std::unordered_map<std::string, float> floats;
@@ -23,6 +34,8 @@ namespace Graph {
             std::unordered_map<std::string, std::string> strings;
             std::unordered_map<std::string, std::vector<std::string>> stringLists;
             std::vector<std::string> toySlots;
+
+            void merge(ActionActor& other);
         };
     }
 }

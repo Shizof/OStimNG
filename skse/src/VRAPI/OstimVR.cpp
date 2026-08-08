@@ -15,6 +15,8 @@ namespace OStimVR
 
     float originalVRIKplayerHeight = -1.0f;
 
+    namespace fs = std::filesystem;
+
     REL::Relocation<float*> g_fActivatePickLength(REL::VariantID(0, 0, 0x1E95188));
     REL::Relocation<float*> g_fActivatePickRadius(REL::VariantID(0, 0, 0x1E95170));
     REL::Relocation<float*> g_fGamepadLookAngleSnapAmount(REL::VariantID(0, 0, 0x1E71688));
@@ -30,8 +32,8 @@ namespace OStimVR
     int trackHands = 1;
     float nearDistance = 3.0f;
 
-    float lockHmdMinThreshold = 20.0f;
-    float lockHmdMaxThreshold = 2.0f;
+    float lockHmdMinThreshold = 2.0f;
+    float lockHmdMaxThreshold = 20.0f;
     float lockHmdSpeed = 50.0f;
 
     // OStimVR Settings General
@@ -79,51 +81,365 @@ namespace OStimVR
 
     int disableGravityGloves = 0;
 
-    void MovePlayerInThirdPersonStart(bool firstPerson) 
+    bool FBTExists = false;
+
+    bool firstPersonBaseRotationValid = false;
+    float firstPersonBaseRotation = 0.0f;
+
+    bool sceneSnapWalkBaselineValid = false;
+    RE::NiTransform sceneSnapWalkBaseline;
+    bool sceneHeightOffsetBaselineValid = false;
+    RE::NiMatrix3 sceneHeightOffsetBaselineRotation;
+    std::uint32_t cameraTransitionGeneration = 0;
+    std::uint32_t hmdPositionTransitionGeneration = 0;
+
+    float NormalizeAngleRadians(float angle)
     {
-        // SKSE::GetTaskInterface()->AddTask([firstPerson]() {
+        while (angle > 3.14159265359f) angle -= 6.28318530718f;
+        while (angle < -3.14159265359f) angle += 6.28318530718f;
+        return angle;
+    }
+
+    OstimVRAlignment GetCurrentSceneAlignment()
+    {
         OstimVRAlignment sceneAlignment;
         auto state = UI::UIState::GetSingleton();
-        if (state) {
-            if (state->currentThread) {
-                auto center = state->currentThread->getCenter();
+        if (state && state->currentThread) {
+            auto currentNode = state->currentThread->getCurrentNodeInternal();
+            if (currentNode && currentNode->isTransition == false) {
+                auto it = sceneAlignmentMap.find(currentNode->scene_id);
+                if (it != sceneAlignmentMap.end()) sceneAlignment = it->second;
+            }
+        }
+        return sceneAlignment;
+    }
 
-                if (firstPerson) {
-                    auto player = RE::PlayerCharacter::GetSingleton();
-                    if (player != nullptr && player->AsReference()) {
-                        RE::NiPoint3 newPos = player->AsReference()->GetPosition();
-                        newPos.x = center.x;
-                        newPos.y = center.y;
+    float GetFirstPersonViewRotation()
+    {
+        auto sceneAlignment = GetCurrentSceneAlignment();
+        return ostimAlignmentR + (globalAlignments.angleOffsetDegrees + sceneAlignment.angleOffsetDegrees) / 57.2957795131f;
+    }
 
-                        player->AsReference()->SetAngle(RE::NiPoint3{0.0f, 0.0f, center.r});
-                        player->AsReference()->SetPosition(newPos);
-                    }
-                } else {
-                    float sin = std::sin(center.r);
-                    float cos = std::cos(center.r);
+    float GetDesiredViewRotation(bool firstPerson)
+    {
+        auto state = UI::UIState::GetSingleton();
+        if (!state || !state->currentThread) return GetFirstPersonViewRotation();
+        return firstPerson ? GetFirstPersonViewRotation() : state->currentThread->getCenter().r + 1.571f;
+    }
 
-                    auto player = RE::PlayerCharacter::GetSingleton();
-                    if (player != nullptr && player->AsReference()) {
-                        RE::NiPoint3 newPos = player->AsReference()->GetPosition();
+    void CaptureSceneVRRotationBaseline()
+    {
+        sceneSnapWalkBaselineValid = false;
+        sceneHeightOffsetBaselineValid = false;
 
-                        // Forward displacement
-                        newPos.x = newPos.x + (sin * 25.0f);
-                        newPos.y = newPos.y + (cos * 25.0f);
+        auto player = RE::PlayerCharacter::GetSingleton();
+        if (!player) return;
 
-                        // Side displacement
-                        float sideDisplacement = 15.0f;
-                        newPos.x += (-cos * sideDisplacement);
-                        newPos.y += (sin * sideDisplacement);
+        auto vrNodes = player->GetVRNodeData();
+        if (!vrNodes) return;
 
-                        player->AsReference()->SetAngle(RE::NiPoint3{0.0f, 0.0f, center.r + 1.571f});
-                        player->AsReference()->SetPosition(newPos);
+        if (vrNodes->SnapWalkOffsetNode) {
+            sceneSnapWalkBaseline = vrNodes->SnapWalkOffsetNode->local;
+            sceneSnapWalkBaselineValid = true;
+        }
+        if (vrNodes->HeightOffsetNode) {
+            sceneHeightOffsetBaselineRotation = vrNodes->HeightOffsetNode->local.rotate;
+            sceneHeightOffsetBaselineValid = true;
+        }
+    }
 
-                        // player->AsReference()->SetPosition(RE::NiPoint3(center.x, center.y, center.z));
-                    }
+    void ClearVRIKAnimationRotation()
+    {
+        if (vrikInterface != nullptr) {
+            vrikInterface->setSettingDouble("rotateHmdToBodySeconds", 0.0);
+            vrikInterface->setSettingDouble("rotateHmdToBody", 0.0);
+        }
+
+        auto player = RE::PlayerCharacter::GetSingleton();
+        if (!player) return;
+
+        auto vrNodes = player->GetVRNodeData();
+        if (vrNodes && vrNodes->HeightOffsetNode) {
+            if (sceneHeightOffsetBaselineValid) {
+                vrNodes->HeightOffsetNode->local.rotate = sceneHeightOffsetBaselineRotation;
+            } else {
+                vrNodes->HeightOffsetNode->local.rotate = RE::NiMatrix3{};
+            }
+        }
+    }
+
+    void ResetSceneVRRotationForCameraSwitch()
+    {
+        firstPersonBaseRotationValid = false;
+        ClearVRIKAnimationRotation();
+
+        if (!sceneSnapWalkBaselineValid) return;
+
+        auto player = RE::PlayerCharacter::GetSingleton();
+        if (!player) return;
+
+        auto vrNodes = player->GetVRNodeData();
+        if (!vrNodes || !vrNodes->SnapWalkOffsetNode) return;
+
+        vrNodes->SnapWalkOffsetNode->local.rotate = sceneSnapWalkBaseline.rotate;
+        vrNodes->SnapWalkOffsetNode->local.translate = sceneSnapWalkBaseline.translate;
+    }
+
+    void RestoreSceneVRRotationBaseline()
+    {
+        auto player = RE::PlayerCharacter::GetSingleton();
+        if (player) {
+            auto vrNodes = player->GetVRNodeData();
+            if (vrNodes) {
+                if (sceneSnapWalkBaselineValid && vrNodes->SnapWalkOffsetNode) {
+                    vrNodes->SnapWalkOffsetNode->local.rotate = sceneSnapWalkBaseline.rotate;
+                    vrNodes->SnapWalkOffsetNode->local.translate = sceneSnapWalkBaseline.translate;
+                }
+                if (sceneHeightOffsetBaselineValid && vrNodes->HeightOffsetNode) {
+                    vrNodes->HeightOffsetNode->local.rotate = sceneHeightOffsetBaselineRotation;
                 }
             }
         }
-        //});
+
+        sceneSnapWalkBaselineValid = false;
+        sceneHeightOffsetBaselineValid = false;
+        firstPersonBaseRotationValid = false;
+    }
+
+    void RotateVRViewBy(float rotationDelta)
+    {
+        rotationDelta = NormalizeAngleRadians(rotationDelta);
+        if (std::abs(rotationDelta) < 0.0001f) return;
+
+        auto player = RE::PlayerCharacter::GetSingleton();
+        if (!player) return;
+
+        auto vrNodes = player->GetVRNodeData();
+        if (!vrNodes || !vrNodes->SnapWalkOffsetNode) return;
+
+        RE::NiAVObject* hmd = vrNodes->UprightHmdNode.get();
+        if (!hmd) hmd = vrNodes->GamepadNode.get();
+        if (!hmd) return;
+
+        auto snapNode = vrNodes->SnapWalkOffsetNode.get();
+        RE::NiMatrix3 rotation;
+        rotation.MakeZRotation(rotationDelta);
+
+        RE::NiPoint3 hmdWorldPos = hmd->world.translate;
+        RE::NiPoint3 snapWorldPos = snapNode->world.translate;
+        RE::NiPoint3 rotatedHmdWorldPos = snapWorldPos + rotation * (hmdWorldPos - snapWorldPos);
+        RE::NiPoint3 worldPositionCorrection = hmdWorldPos - rotatedHmdWorldPos;
+
+        if (snapNode->parent) {
+            auto parentInverseRotation = snapNode->parent->world.rotate.Transpose();
+            snapNode->local.rotate = parentInverseRotation * (rotation * snapNode->world.rotate);
+
+            RE::NiPoint3 localPositionCorrection = parentInverseRotation * worldPositionCorrection;
+            if (std::abs(snapNode->parent->world.scale) > 0.0001f) {
+                localPositionCorrection /= snapNode->parent->world.scale;
+            }
+            snapNode->local.translate += localPositionCorrection;
+        } else {
+            snapNode->local.rotate = rotation * snapNode->local.rotate;
+            snapNode->local.translate += worldPositionCorrection;
+        }
+    }
+
+    void RotateVRViewTo(float targetRotation)
+    {
+        auto player = RE::PlayerCharacter::GetSingleton();
+        if (!player) return;
+
+        auto vrNodes = player->GetVRNodeData();
+        if (!vrNodes) return;
+
+        RE::NiAVObject* hmd = vrNodes->UprightHmdNode.get();
+        if (!hmd) hmd = vrNodes->GamepadNode.get();
+        if (!hmd) return;
+
+        RE::NiPoint3 hmdForward = hmd->world.rotate * RE::NiPoint3{0.0f, 1.0f, 0.0f};
+        float currentRotation = std::atan2(hmdForward.x, hmdForward.y);
+        float rotationDelta = NormalizeAngleRadians(targetRotation - currentRotation);
+
+        RotateVRViewBy(rotationDelta);
+    }
+
+    void FollowFirstPersonBaseRotation(float targetRotation)
+    {
+        if (!playerInScene || !CurrentCameraFirstPerson) return;
+
+        if (firstPersonBaseRotationValid) {
+            float rotationDelta = NormalizeAngleRadians(targetRotation - firstPersonBaseRotation);
+            if (std::abs(rotationDelta) >= 0.0001f) {
+                RotateVRViewBy(rotationDelta);
+            }
+        }
+
+        firstPersonBaseRotation = targetRotation;
+        firstPersonBaseRotationValid = true;
+
+        if (vrikInterface != nullptr) {
+            vrikInterface->setSettingDouble("rotateHmdToBodySeconds", 2.0);
+        }
+    }
+
+    void SetFirstPersonHmdLockSettings(float maxThreshold, float speed)
+    {
+        if (vrikInterface == nullptr) return;
+
+        vrikInterface->setSettingDouble("lockHmdMinThreshold", lockHmdMinThreshold);
+        vrikInterface->setSettingDouble("lockHmdMaxThreshold", maxThreshold);
+        vrikInterface->setSettingDouble("lockHmdSpeed", speed);
+        vrikInterface->setSettingDouble("lockHmdToBody", 1.0);
+    }
+
+    void ScheduleFirstPersonHmdPositionRecentering(bool resetCurrentOffset)
+    {
+        if (vrikInterface == nullptr || !playerInScene || !CurrentCameraFirstPerson) return;
+
+        const std::uint32_t generation = ++hmdPositionTransitionGeneration;
+
+        if (resetCurrentOffset) {
+            vrikInterface->setSettingDouble("lockHmdToBody", 0.0);
+        } else {
+            SetFirstPersonHmdLockSettings(lockHmdMaxThreshold, lockHmdSpeed);
+        }
+
+        std::thread([generation, resetCurrentOffset]() {
+            auto runIfCurrent = [generation](const std::function<void()>& action) {
+                SKSE::GetTaskInterface()->AddTask([generation, action]() {
+                    if (!playerInScene || !CurrentCameraFirstPerson || hmdPositionTransitionGeneration != generation) return;
+                    action();
+                });
+            };
+
+            if (resetCurrentOffset) {
+                Sleep(100);
+                runIfCurrent([]() { SetFirstPersonHmdLockSettings(lockHmdMaxThreshold, lockHmdSpeed); });
+                Sleep(200);
+            } else {
+                Sleep(300);
+            }
+
+            auto recenterPulse = [runIfCurrent]() {
+                runIfCurrent([]() { SetFirstPersonHmdLockSettings(lockHmdMinThreshold, 1000.0f); });
+                Sleep(60);
+                runIfCurrent([]() { SetFirstPersonHmdLockSettings(lockHmdMaxThreshold, lockHmdSpeed); });
+            };
+
+            recenterPulse();
+
+            Sleep(440);
+            recenterPulse();
+        }).detach();
+    }
+
+    void ScheduleFirstPersonHmdPositionRecenteringAfterAnimation()
+    {
+        if (vrikInterface == nullptr || !playerInScene || !CurrentCameraFirstPerson) 
+			return;
+
+        const std::uint32_t generation = ++hmdPositionTransitionGeneration;
+        SetFirstPersonHmdLockSettings(lockHmdMaxThreshold, lockHmdSpeed);
+
+        SKSE::GetTaskInterface()->AddTask([generation]() {
+            if (!playerInScene || !CurrentCameraFirstPerson || hmdPositionTransitionGeneration != generation) return;
+
+            SKSE::GetTaskInterface()->AddTask([generation]() {
+                if (!playerInScene || !CurrentCameraFirstPerson || hmdPositionTransitionGeneration != generation) return;
+
+                SetFirstPersonHmdLockSettings(lockHmdMinThreshold, 1000.0f);
+
+                std::thread([generation]() {
+                    Sleep(60);
+                    SKSE::GetTaskInterface()->AddTask([generation]() {
+                        if (!playerInScene || !CurrentCameraFirstPerson || hmdPositionTransitionGeneration != generation) return;
+                        SetFirstPersonHmdLockSettings(lockHmdMaxThreshold, lockHmdSpeed);
+                    });
+
+                    Sleep(340);
+                    SKSE::GetTaskInterface()->AddTask([generation]() {
+                        if (!playerInScene || !CurrentCameraFirstPerson || hmdPositionTransitionGeneration != generation) return;
+                        SetFirstPersonHmdLockSettings(lockHmdMinThreshold, 1000.0f);
+                    });
+
+                    Sleep(60);
+                    SKSE::GetTaskInterface()->AddTask([generation]() {
+                        if (!playerInScene || !CurrentCameraFirstPerson || hmdPositionTransitionGeneration != generation) return;
+                        SetFirstPersonHmdLockSettings(lockHmdMaxThreshold, lockHmdSpeed);
+                    });
+                }).detach();
+            });
+        });
+    }
+    void ApplyPlayerViewPosition(const RE::NiPoint3& position, float rotation)
+    {
+        auto player = RE::PlayerCharacter::GetSingleton();
+        if (!player) return;
+        GameAPI::GameActor(player).setPosition(GameAPI::GamePosition(position, rotation));
+    }
+
+    void MovePlayerInThirdPersonStart(bool firstPerson)
+    {
+        auto state = UI::UIState::GetSingleton();
+        auto player = RE::PlayerCharacter::GetSingleton();
+        if (!state || !state->currentThread || !player) return;
+
+        auto center = state->currentThread->getCenter();
+        RE::NiPoint3 newPos = player->GetPosition();
+        float playerRotation = center.r;
+
+        if (firstPerson) 
+        {
+            newPos.x = center.x;
+            newPos.y = center.y;
+        } else {
+            float sin = std::sin(center.r);
+            float cos = std::cos(center.r);
+
+            // Forward displacement
+            newPos.x += sin * 25.0f;
+            newPos.y += cos * 25.0f;
+
+            // Side displacement
+            newPos.x -= cos * 20.0f;
+            newPos.y += sin * 20.0f;
+            playerRotation = center.r + 1.571f;
+        }
+
+        ApplyPlayerViewPosition(newPos, playerRotation);
+        RotateVRViewTo(GetDesiredViewRotation(firstPerson));
+
+        if (firstPerson) {
+            firstPersonBaseRotation = GetFirstPersonViewRotation();
+            firstPersonBaseRotationValid = true;
+        } else {
+            firstPersonBaseRotationValid = false;
+        }
+
+        const std::uint32_t transitionGeneration = cameraTransitionGeneration;
+        std::thread([firstPerson, newPos, playerRotation, transitionGeneration]() {
+            auto reapply = [firstPerson, newPos, playerRotation, transitionGeneration](bool startAnimationRotationMonitor) {
+                SKSE::GetTaskInterface()->AddTask([firstPerson, newPos, playerRotation, transitionGeneration, startAnimationRotationMonitor]() {
+                    if (!playerInScene || CurrentCameraFirstPerson != firstPerson || cameraTransitionGeneration != transitionGeneration) return;
+                    ApplyPlayerViewPosition(newPos, playerRotation);
+                    RotateVRViewTo(GetDesiredViewRotation(firstPerson));
+
+                    if (firstPerson) {
+                        firstPersonBaseRotation = GetFirstPersonViewRotation();
+                        firstPersonBaseRotationValid = true;
+                        if (startAnimationRotationMonitor && vrikInterface != nullptr) {
+                            vrikInterface->setSettingDouble("rotateHmdToBodySeconds", 2.0);
+                        }
+                    }
+                });
+            };
+
+            Sleep(50);
+            reapply(false);
+            Sleep(150);
+            reapply(true);
+        }).detach();
     }
 
     /*void RotatePlayerInFirstPersonSwitch(float r)
@@ -147,15 +463,9 @@ namespace OStimVR
 
     void ModifyAlignment() 
     {
-        OstimVRAlignment sceneAlignment;
+        OstimVRAlignment sceneAlignment = GetCurrentSceneAlignment();
         auto state = UI::UIState::GetSingleton();
         if (state) {
-            auto currentNode = state->currentNode;
-            if (currentNode && currentNode->isTransition == false) {
-                if (sceneAlignmentMap.find(currentNode->scene_id) != sceneAlignmentMap.end()) {
-                    sceneAlignment = sceneAlignmentMap[currentNode->scene_id];
-                }
-            }
 
             if (state->currentThread) {
                 float sin = std::sin(state->currentThread->getCenter().r);
@@ -190,12 +500,14 @@ namespace OStimVR
                 /*if (CurrentCameraFirstPerson) {
                     vrikInterface->setSettingDouble("lockHmdToBody", 1);
                 }*/
-                if (enableVRIKScaling) {
+                if (enableVRIKScaling) 
+                {
                     auto gameActors = state->currentThread->getGameActors();
-                    for (int i = 0; i < gameActors.size(); i++) {
-                        if (gameActors[i].isPlayer()) {
+                    for (int i = 0; i < gameActors.size(); i++) 
+                    {
+                        if (gameActors[i].isPlayer()) 
+                        {
                             const float playerScale = gameActors[i].getScale();
-                            logger::critical("Playerscale is: {}", playerScale);
                             vrikInterface->setSettingDouble("bodySize", playerScale);
                             vrikInterface->setSettingDouble("armSize", playerScale);
                             //vrikInterface->setSettingDouble("armLength", 1.0f);
@@ -214,16 +526,7 @@ namespace OStimVR
         ostimAlignmentZ = z;
         ostimAlignmentR = r;
 
-        OstimVRAlignment sceneAlignment;
-        auto state = UI::UIState::GetSingleton();
-        if (state) {
-            auto currentNode = state->currentNode;
-            if (currentNode && currentNode->isTransition == false) {
-                if (sceneAlignmentMap.find(currentNode->scene_id) != sceneAlignmentMap.end()) {
-                    sceneAlignment = sceneAlignmentMap[currentNode->scene_id];
-                }
-            }
-        }
+        OstimVRAlignment sceneAlignment = GetCurrentSceneAlignment();
 
         float rotAngle = r * 57.2957795131f + globalAlignments.angleOffsetDegrees + sceneAlignment.angleOffsetDegrees;
         while (rotAngle > 360.0f) {
@@ -234,11 +537,12 @@ namespace OStimVR
         }
 
         vrikInterface->setSettingDouble("lockRotationAngle", rotAngle);
-        /*if (CurrentCameraFirstPerson)
-        {
-            vrikInterface->setSettingDouble("rotateHmdToBodySeconds", 2.0);
-        }*/
         vrikInterface->setSettingDouble("lockRotation", 1);
+
+        if (CurrentCameraFirstPerson) {
+            float targetRotation = rotAngle / 57.2957795131f;
+            SKSE::GetTaskInterface()->AddTask([targetRotation]() { FollowFirstPersonBaseRotation(targetRotation); });
+        }
 
         vrikInterface->setSettingDouble("lockPositionX", x + (rotCos * (globalAlignments.bodyOffsetX + sceneAlignment.bodyOffsetX)) + (rotSin * (globalAlignments.bodyOffsetY + sceneAlignment.bodyOffsetY)));
         vrikInterface->setSettingDouble("lockPositionY", y - (rotSin * (globalAlignments.bodyOffsetX + sceneAlignment.bodyOffsetX)) + (rotCos * (globalAlignments.bodyOffsetY + sceneAlignment.bodyOffsetY)));
@@ -254,6 +558,10 @@ namespace OStimVR
             vrikInterface->setSettingDouble("bodySize", playerScale);
             vrikInterface->setSettingDouble("armSize", playerScale);
             //vrikInterface->setSettingDouble("armLength", 1.0f);
+        }
+
+        if (playerInScene && CurrentCameraFirstPerson) {
+            ScheduleFirstPersonHmdPositionRecentering(false);
         }
 
         /*if (CurrentCameraFirstPerson) {
@@ -320,6 +628,8 @@ namespace OStimVR
     }
 
     void SetOstimVRSettings(bool firstPerson) {
+        ResetSceneVRRotationForCameraSwitch();
+
         if (firstPerson) {
 
             EnablePlayerControlsFunc(VM::GetSingleton(), 0, 0, true, false, false, true, false, true, false, true, 0);
@@ -384,32 +694,35 @@ namespace OStimVR
                 vrikInterface->setSettingDouble("enableRightArm", 0);
             }
 
-            if (ChangeHeadAboveDistance) {
-                vrikInterface->setSettingDouble("headAboveDistance",
-                                                firstPerson ? HeadAboveDistance : orgHeadAboveDistance);
+            if (ChangeHeadAboveDistance) 
+			{
+                vrikInterface->setSettingDouble("headAboveDistance", firstPerson ? HeadAboveDistance : orgHeadAboveDistance);
             }
-            if (ChangeHeadAboveDistance) {
-                vrikInterface->setSettingDouble("headInFrontDistance",
-                                                firstPerson ? HeadForwardDistance : orgHeadForwardDistance);
+            if (ChangeHeadForwardDistance) {
+                vrikInterface->setSettingDouble("headInFrontDistance", firstPerson ? HeadForwardDistance : orgHeadForwardDistance);
             }
 
-            // Shows head in third person mode and hides it in first person mode.
-            vrikInterface->setSettingDouble("enableHead", firstPerson ? 0 : 1);
-            vrikInterface->setSettingDouble("hidePlayerHeadDistance", firstPerson ? 0.0 : 12.0f);
+            vrikInterface->setSettingDouble("enableHead", 1);
 
-            vrikInterface->setSettingDouble("lockHmdToBody", firstPerson ? 1 : 0);
+            if (FBTExists)
+                vrikInterface->setSettingDouble("enableBody", firstPerson ? 0 : 1);
+
+            vrikInterface->setSettingDouble("hidePlayerHeadDistance", 12.0f);
+
             vrikInterface->setSettingDouble("lockHmdMinThreshold", firstPerson ? lockHmdMinThreshold : 500.0f);
             vrikInterface->setSettingDouble("lockHmdMaxThreshold", firstPerson ? lockHmdMaxThreshold : 500.0f);
             vrikInterface->setSettingDouble("lockHmdSpeed", firstPerson ? lockHmdSpeed : 20.0f);
-
-            //?
-            vrikInterface->setSettingDouble("rotateHmdToBodySeconds", firstPerson ? 2.0 : 0);
-            vrikInterface->setSettingDouble("lockHmdToBody", firstPerson ? 1 : 0);
+            vrikInterface->setSettingDouble("rotateHmdToBodySeconds", 0.0);
+            vrikInterface->setSettingDouble("rotateHmdToBody", 0.0);
+            vrikInterface->setSettingDouble("lockHmdToBody", 0.0);
         }
 
         ShowHideControllersFunc(false);
 
         MovePlayerInThirdPersonStart(firstPerson);
+        if (firstPerson) {
+            ScheduleFirstPersonHmdPositionRecentering(true);
+        }
         if (!firstPerson) {
             std::thread t1(FixStandingBug);
             t1.detach();
@@ -448,7 +761,6 @@ namespace OStimVR
                 if (player != nullptr && player->AsReference()) {
                     RE::NiPoint3 newPos = player->AsReference()->GetPosition();
                     float distSqr = distance2DNoSqrt(newPos, RE::NiPoint3(center.x, center.y, center.z));
-                    logger::error("Dist: {}", distSqr);
                     if (distSqr > 15000.0f) {
                         return true;
                     }
@@ -470,14 +782,22 @@ namespace OStimVR
         }*/
         // logger::info("Applying {} settings", firstPerson ? "First Person" : "Third Person");
 
+        const std::uint32_t transitionGeneration = ++cameraTransitionGeneration;
+        ++hmdPositionTransitionGeneration;
         CurrentCameraFirstPerson = firstPerson;
 
-        SKSE::GetTaskInterface()->AddTask([firstPerson]() { SetOstimVRSettings(firstPerson); });
+        SKSE::GetTaskInterface()->AddTask([firstPerson, transitionGeneration]() {
+            if (!playerInScene || CurrentCameraFirstPerson != firstPerson || cameraTransitionGeneration != transitionGeneration) return;
+            SetOstimVRSettings(firstPerson);
+        });
     }
 
     void PlayerSceneStart() 
     {
         playerInScene = true;
+        ++cameraTransitionGeneration;
+        ++hmdPositionTransitionGeneration;
+        CaptureSceneVRRotationBaseline();
 
         controllersShown = -1;
 
@@ -606,11 +926,17 @@ namespace OStimVR
     void PlayerSceneEnd() 
     {
         playerInScene = false;
+        ++cameraTransitionGeneration;
+        ++hmdPositionTransitionGeneration;
+        firstPersonBaseRotationValid = false;
 
-        // Set VRIK settings back
         if (vrikInterface != nullptr) {
+            vrikInterface->setSettingDouble("rotateHmdToBodySeconds", 0.0);
+            vrikInterface->setSettingDouble("rotateHmdToBody", 0.0);
             vrikInterface->restoreSettings();
         }
+
+        RestoreSceneVRRotationBaseline();
 
         // Set PLANCK setting back
         if (planckInterface != nullptr) {
@@ -745,6 +1071,9 @@ namespace OStimVR
 
     void loadConfig() 
     {
+        fs::path fbtPath = "Data\\SKSE\\Plugins\\SkyrimVR-FBT.dll";
+        FBTExists = std::filesystem::exists(fbtPath);
+
         std::string filepath = "Data\\SKSE\\Plugins\\OStimVR.ini";
 
         std::ifstream file(filepath);

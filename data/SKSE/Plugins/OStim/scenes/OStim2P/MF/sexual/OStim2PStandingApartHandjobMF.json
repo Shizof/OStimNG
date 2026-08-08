@@ -22,7 +22,7 @@
 	],
 	"navigations":[
 		{
-			"destination": "OStim2PStandingApartMF",
+			"destination": "OStim2PStandingHoldingMF",
 			"description": "$ostim_nav_return",
 			"icon": "OStim/symbols/return",
 			"priority": -1000
@@ -32,6 +32,12 @@
 			"description": "$ostim_nav_kiss_t{1}",
 			"icon": "OStim/sensual/kissing_mf",
 			"priority": 0
+		},
+		{
+			"destination": "OStim2PStandingSquattingMF",
+			"description": "$ostim_nav_squat_before_t{0}",
+			"icon": "OStim/positional/squatting_f",
+			"priority": 1000
 		}
 	],
 	"actors":[

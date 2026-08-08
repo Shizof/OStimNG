@@ -10,7 +10,7 @@ namespace OStim {
     public:
         inline static const char* NAME = "Settings";
 
-        // --- API version 1 ---
+        // --- ABI version 1 ---
 
         /**
         * adds a setting group to the addon page in the configuration menu

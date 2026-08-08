@@ -38,6 +38,24 @@
 			"description": "$ostim_nav_hold_t{1}",
 			"icon": "OStim/sensual/spooning_mf",
 			"priority": 0
+		},
+		{
+			"destination": "OStim2PProneMaleMountedMF",
+			"description": "$ostim_nav_sit_up_a{0}",
+			"icon": "OStim/symbols/arrow_up",
+			"priority": 1000
+		},
+	    {
+	      "destination": "OStim2PProneMaleMountedCrackFuckMF",
+	      "description": "$ostim_nav_crackfuck_t{1}",
+	      "icon": "OStim/sexual/buttjob_mf",
+	      "priority": 2000
+	    },
+		{
+			"destination": "OStim2PProneJerkToButtMF",
+			"description": "$ostim_nav_masturbate_a{0}",
+			"icon": "OStim/sexual/malemasturbation",
+			"priority": 3000
 		}
 	],
 	"tags":[
@@ -59,6 +77,7 @@
 			"feetOnGround": false,
 			"tags": [
 				"lyingfront",
+				"facingaway",
 				"onbottom"
 			]
 		}

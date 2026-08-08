@@ -16,8 +16,8 @@
 		},
 		{
 			"destination": "OStim2PStandingHoldingChinToHoldingChinHugMF",
-			"description": "$ostim_nav_hold_t{1}",
-			"icon": "OStim/sensual/embrace_mf",
+			"description": "$ostim_nav_hold_arms_t{0}",
+			"icon": "OStim/detail/grab_f",
 			"priority": 0
 		},
 		{
@@ -25,6 +25,12 @@
 			"description": "$ostim_nav_kiss_t{1}",
 			"icon": "OStim/sensual/kissing_mf",
 			"priority": 0
+		},
+		{
+			"destination": "OStim2PStandingSquattingMF",
+			"description": "$ostim_nav_squat_before_t{0}",
+			"icon": "OStim/positional/squatting_f",
+			"priority": 1000
 		}
 	],
 	"actors":[
@@ -59,6 +65,11 @@
   			"type": "holdinghand",
   			"actor": 0,
   			"target": 1
+  		},
+  		{
+  			"type": "holdingarm",
+  			"actor": 1,
+  			"target": 0
   		}
   	]
 }

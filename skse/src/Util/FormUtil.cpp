@@ -38,7 +38,7 @@ namespace FormUtil {
     bool canUndress(RE::TESForm* form) {
         if (form->formType == RE::TESObjectARMO::FORMTYPE) {
             RE::TESObjectARMO* armor = form->As<RE::TESObjectARMO>();
-            if ((MCM::MCMTable::getUndressingMask() & armor->GetSlotMask().underlying()) == 0) {
+            if ((MCM::MCMTable::getUndressingMask() & armor->GetSlotMask().underlying()) == 0) {  //for vr version
                 return false;
             }
         }

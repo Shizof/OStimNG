@@ -6,13 +6,42 @@
 		"info": "the one holding the toy",
 		"stimulation":0.1,
 		"maxStimulation":75,
-		"fullStrip":true,
 		"moan":true,
 		"talk":true,
 		"faction":{
 			"info": "OStimVaginalToyingActorFaction",
 			"mod": "OStim.esp",
 			"formid": "0xEA3"
+		},
+		"statFaction":{
+			"info": "OStimVaginalToyingActorCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0xF37"
+		},
+		"playerStatFaction":{
+			"info": "OStimVaginalToyingWithPlayerActorCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x80D"
+		},
+		"partnerClimaxStatFaction":{
+			"info": "OStimVaginalToyingActorPartnerClimaxCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x9B6"
+		},
+		"playerPartnerClimaxStatFaction":{
+			"info": "OStimVaginalToyingWithPlayerActorPartnerClimaxCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x9B7"
+		},
+		"playerStatList":{
+			"info": "OStimVaginalToyingWithPlayerActorList",
+			"mod": "OStim.esp",
+			"formid": "0x9BA"
+		},
+		"playerPartnerClimaxStatList":{
+			"info": "OStimVaginalToyingWithPlayerActorPartnerClimaxList",
+			"mod": "OStim.esp",
+			"formid": "0x9BB"
 		}
 	},
 	"target":{
@@ -36,6 +65,36 @@
 			"mod": "OStim.esp",
 			"formid": "0xEA4"
 		},
+		"statFaction":{
+			"info": "OStimVaginalToyingTargetCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0xF38"
+		},
+		"playerStatFaction":{
+			"info": "OStimVaginalToyingWithPlayerTargetCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x80E"
+		},
+		"climaxStatFaction":{
+			"info": "OStimVaginalToyingTargetClimaxCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x9B8"
+		},
+		"playerClimaxStatFaction":{
+			"info": "OStimVaginalToyingWithPlayerTargetClimaxCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x9B9"
+		},
+		"playerStatList":{
+			"info": "OStimVaginalToyingWithPlayerTargetList",
+			"mod": "OStim.esp",
+			"formid": "0x9BC"
+		},
+		"playerClimaxStatList":{
+			"info": "OStimVaginalToyingWithPlayerTargetClimaxList",
+			"mod": "OStim.esp",
+			"formid": "0x9BD"
+		},
 		"toySlot": "genital"
 	},
 	"performer":{
@@ -45,6 +104,8 @@
 	},
 	"tags":[
 		"sexual",
-		"toy"
+		"toying",
+		"vaginalpenetration",
+		"vaginalstimulation"
 	]
 }

@@ -1,0 +1,100 @@
+{
+  "name": "$OStim2PSquattingBlowjobMF",
+  "modPack": "OStim",
+  "length": 2.0,
+  "speeds": [
+    {
+      "animation": "OStim2PSquattingBlowjobMF_S1",
+      "playbackSpeed": 1,
+      "displaySpeed": 0.5
+    },
+    {
+      "animation": "OStim2PSquattingBlowjobMF_S2",
+      "playbackSpeed": 1,
+      "displaySpeed": 1
+    },
+    {
+      "animation": "OStim2PSquattingBlowjobMF_S3",
+      "playbackSpeed": 1,
+      "displaySpeed": 1.5
+    },
+    {
+      "animation": "OStim2PSquattingBlowjobMF_S4",
+      "playbackSpeed": 1,
+      "displaySpeed": 2
+    }
+  ],
+  "navigations": [
+    {
+      "destination": "OStim2PStandingSquattingMF",
+      "description": "$ostim_nav_return",
+      "icon": "OStim/symbols/return",
+      "priority": -1000,
+      "noWarnings": false
+    },
+    {
+      "destination": "OStim2PSquattingBlowjobMasturbationMF",
+      "description": "$ostim_nav_masturbate_a{1}",
+      "icon": "OStim/sexual/femalemasturbation",
+      "priority": 0,
+      "noWarnings": false
+    },
+    {
+      "destination": "OStim2PSquattingBlowjobHoldingHeadMF",
+      "description": "$ostim_nav_hold_head_t{1}",
+      "icon": "OStim/detail/holdinghead_mf",
+      "priority": 0,
+      "noWarnings": false
+    },
+    {
+      "destination": "OStim2PSquattingFaceFuckMF",
+      "description": "$ostim_nav_facefuck_t{1}",
+      "icon": "OStim/sexual/facefuck_mf",
+      "priority": 0
+    },
+    {
+      "destination": "OStim2PSquattingHandjobMF",
+      "description": "$ostim_nav_handjob_t{0}",
+      "icon": "OStim/sexual/handjob_mf",
+      "priority": 0,
+      "noWarnings": false
+    },
+    {
+      "destination": "OStim2PSquattingJerkToFaceMF",
+      "description": "$ostim_nav_masturbate_to_face_t{1}",
+      "icon": "OStim/sexual/malemasturbation",
+      "priority": 3000
+    }
+  ],
+  "actors": [
+    {
+      "type": "npc",
+      "intendedSex": "male",
+      "sosBend": -1,
+      "scale": 1.03,
+      "lookUp": -50,
+      "tags": [
+        "standing"
+      ],
+      "feetOnGround": true
+    },
+    {
+      "type": "npc",
+      "intendedSex": "female",
+      "scaleHeight": 67,
+      "scale": 1.0,
+      "lookUp": -100,
+      "tags": [
+        "squatting"
+      ],
+      "feetOnGround": true
+    }
+  ],
+  "actions": [
+    {
+      "type": "blowjob",
+      "actor": 1,
+      "target": 0
+    }
+  ]
+}

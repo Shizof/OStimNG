@@ -25,6 +25,18 @@
 			"description": "$ostim_nav_all_fours_a{1}",
 			"icon": "OStim/positional/allfours_alt_f",
 			"priority": 0
+		},
+		{
+			"destination": "OStim2PSidewaysMF",
+			"description": "$ostim_nav_sex_sideways_t{1}",
+			"icon": "OStim/sexual/vaginalsex_mf",
+			"priority": 0
+		},
+		{
+			"destination": "OStim2PSidewaysJerkToBodyMF",
+			"description": "$ostim_nav_masturbate_a{0}",
+			"icon": "OStim/sexual/malemasturbation",
+			"priority": 3000
 		}
 	],
 	"tags":[

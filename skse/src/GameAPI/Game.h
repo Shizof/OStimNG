@@ -14,7 +14,7 @@ namespace GameAPI {
         static void shakeController(float leftStrength, float rightStrength, float duration);
         static GameActor getCrosshairActor();
 
-        inline static void notification(std::string text) { RE::SendHUDMessage::ShowHUDMessage(text.c_str()); }
+        inline static void notification(std::string text) { RE::SendHUDMessage::ShowHUDMessage(text.c_str()); }   //for vr version
         inline static int getMessageBoxOptionLimit() { return 9; }
         static void showMessageBox(std::string content, std::vector<std::string> options, std::function<void(unsigned int)> callback);
 

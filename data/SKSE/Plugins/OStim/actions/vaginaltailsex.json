@@ -1,0 +1,117 @@
+{
+	"actor":{
+		"info": "the one with the tail",
+		"stimulation":0.1,
+		"maxStimulation":50,
+		"moan":true,
+		"talk":true,
+		"requirements":[
+			"tail"
+		],
+		"equipObject": "tail",
+		"faction":{
+			"info": "OStimVaginalTailSexActorFaction",
+			"mod": "OStim.esp",
+			"formid": "0xF86"
+		},
+		"statFaction":{
+			"info": "OStimVaginalTailSexActorCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0xF88"
+		},
+		"playerStatFaction":{
+			"info": "OStimVaginalTailSexWithPlayerActorCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x80B"
+		},
+		"partnerClimaxStatFaction":{
+			"info": "OStimVaginalTailSexActorPartnerClimaxCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x9AE"
+		},
+		"playerPartnerClimaxStatFaction":{
+			"info": "OStimVaginalTailSexWithPlayerActorPartnerClimaxCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x9AF"
+		},
+		"playerStatList":{
+			"info": "OStimVaginalTailSexWithPlayerActorList",
+			"mod": "OStim.esp",
+			"formid": "0x9B2"
+		},
+		"playerPartnerClimaxStatList":{
+			"info": "OStimVaginalTailSexWithPlayerActorPartnerClimaxList",
+			"mod": "OStim.esp",
+			"formid": "0x9B3"
+		}
+	},
+	"target":{
+		"info": "the one with the vulva",
+		"stimulation":1.0,
+		"fullStrip":true,
+		"moan":true,
+		"talk":true,
+		"requirements":[
+			"vagina"
+		],
+		"strippingSlots":[
+			32,
+			49,
+			52,
+			53,
+			54
+		],
+		"toySlot": "genital",
+		"faction":{
+			"info": "OStimVaginalTailSexTargetFaction",
+			"mod": "OStim.esp",
+			"formid": "0xF87"
+		},
+		"statFaction":{
+			"info": "OStimVaginalTailSexTargetCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0xF89"
+		},
+		"playerStatFaction":{
+			"info": "OStimVaginalTailSexWithPlayerTargetCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x80C"
+		},
+		"climaxStatFaction":{
+			"info": "OStimVaginalTailSexTargetClimaxCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x9B0"
+		},
+		"playerClimaxStatFaction":{
+			"info": "OStimVaginalTailSexWithPlayerTargetClimaxCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x9B1"
+		},
+		"playerStatList":{
+			"info": "OStimVaginalTailSexWithPlayerTargetList",
+			"mod": "OStim.esp",
+			"formid": "0x9B4"
+		},
+		"playerClimaxStatList":{
+			"info": "OStimVaginalTailSexWithPlayerTargetClimaxList",
+			"mod": "OStim.esp",
+			"formid": "0x9B5"
+		}
+	},
+	"performer":{
+		"floats":{
+			"stamina":1.0
+		}
+	},
+	"peak":{
+		"type":"bonedistance",
+		"actorBone":"NPC Genitals01 [Gen01]",
+		"targetBone":"VaginaDeep1"
+	},
+	"tags":[
+		"intercourse",
+		"sexual",
+		"vaginalpenetration",
+		"vaginalstimulation"
+	]
+}

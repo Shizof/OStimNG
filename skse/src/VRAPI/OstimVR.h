@@ -31,6 +31,8 @@ namespace OStimVR
 
     extern bool playerInScene;
 
+    extern bool FBTExists;
+
 
     void AddRagdollCollisionIgnoredActors();
     void RemoveRagdollCollisionIgnoredActors();
@@ -55,6 +57,7 @@ namespace OStimVR
     void PrintNodesTree(int depth, std::vector<Graph::Node*>& visitedList, Graph::Node* node);
 
     void VRIKLockPositionAndRotation(float rotSin, float rotCos, float x, float y, float z, float r, float playerScale);
+    void ScheduleFirstPersonHmdPositionRecenteringAfterAnimation();
 
     void ShowHideControllersFunc(bool ostimwheelknowntobeopen);
 

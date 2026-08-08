@@ -1,0 +1,89 @@
+{
+  "name": "$OStim2PStandingKneelingBoobjobMF",
+  "modPack": "OStim",
+  "length": 2.0,
+  "speeds": [
+    {
+      "animation": "OStim2PStandingKneelingBoobjobMF_S1",
+      "playbackSpeed": 1,
+      "displaySpeed": 0.5
+    },
+    {
+      "animation": "OStim2PStandingKneelingBoobjobMF_S2",
+      "playbackSpeed": 1,
+      "displaySpeed": 1
+    },
+    {
+      "animation": "OStim2PStandingKneelingBoobjobMF_S3",
+      "playbackSpeed": 1,
+      "displaySpeed": 1.5
+    },
+    {
+      "animation": "OStim2PStandingKneelingBoobjobMF_S4",
+      "playbackSpeed": 1,
+      "displaySpeed": 2
+    }
+  ],
+  "navigations": [
+    {
+      "destination": "OStim2PStandingKneelingMF",
+      "description": "$ostim_nav_return",
+      "icon": "OStim/symbols/return",
+      "priority": -1000
+    },
+    {
+      "destination": "OStim2PStandingKneelingTitfuckMF",
+      "description": "$ostim_nav_titfuck_t{1}",
+      "icon": "OStim/sexual/boobjob_mf",
+      "priority": 2000
+    },
+    {
+      "destination": "OStim2PKneelingHandjobMF",
+      "description": "$ostim_nav_handjob_t{0}",
+      "icon": "OStim/sexual/handjob_mf",
+      "priority": 2000
+    },
+    {
+      "destination": "OStim2PKneelingBlowjobMF",
+      "description": "$ostim_nav_blowjob_t{0}",
+      "icon": "OStim/sexual/blowjob_mf",
+      "priority": 2000
+    },
+    {
+      "destination": "Ostim2PKneelingJerkToFaceMF",
+      "description": "$ostim_nav_masturbate_to_face_t{1}",
+      "icon": "OStim/sexual/malemasturbation",
+      "priority": 3001
+    }
+  ],
+  "actors": [
+    {
+      "type": "npc",
+      "intendedSex": "male",
+      "sosBend": 2,
+      "scale": 1.03,
+      "lookUp": -50,
+      "tags": [
+        "standing"
+      ],
+      "feetOnGround": true
+    },
+    {
+      "type": "npc",
+      "intendedSex": "female",
+      "scale": 1.0,
+      "tags": [
+        "kneeling"
+      ],
+      "feetOnGround": false
+    }
+  ],
+  "actions": [
+    {
+      "type": "boobjob",
+      "actor": 1,
+      "target": 0,
+      "performer": 1
+    }
+  ]
+}

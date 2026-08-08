@@ -7,7 +7,7 @@
 namespace OStim {
     class ThreadBuilder {
     public:
-        // --- API version 2 ---
+        // --- ABI version 2 ---
         virtual void setDominantActors(uint32_t actorCount, void** actors) = 0;
         virtual void setFurniture(void* furniture) = 0;
         virtual void setDuration(int32_t duration) = 0;

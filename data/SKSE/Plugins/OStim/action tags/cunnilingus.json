@@ -1,0 +1,83 @@
+{
+	"actor":{
+		"faction":{
+			"info": "OStimCunnilingusActorFaction",
+			"mod": "OStim.esp",
+			"formid": "0xE5B"
+		},
+		"statFaction":{
+			"info": "OStimCunnilingusActorCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0xF3B"
+		},
+		"playerStatFaction":{
+			"info": "OStimCunnilingusWithPlayerActorCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0xF97"
+		},
+		"partnerClimaxStatFaction":{
+			"info": "OStimCunnilingusActorPartnerClimaxCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x82E"
+		},
+		"playerPartnerClimaxStatFaction":{
+			"info": "OStimCunnilingusWithPlayerActorPartnerClimaxCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x830"
+		},
+		"playerStatList":{
+			"info": "OStimCunnilingusWithPlayerActorList",
+			"mod": "OStim.esp",
+			"formid": "0x878"
+		},
+		"playerPartnerClimaxStatList":{
+			"info": "OStimCunnilingusWithPlayerActorPartnerClimaxList",
+			"mod": "OStim.esp",
+			"formid": "0x879"
+		}
+	},
+	"target":{
+		"faction":{
+			"info": "OStimCunnilingusTargetFaction",
+			"mod": "OStim.esp",
+			"formid": "0xE5C"
+		},
+		"statFaction":{
+			"info": "OStimCunnilingusTargetCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0xF3C"
+		},
+		"playerStatFaction":{
+			"info": "OStimCunnilingusWithPlayerTargetCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0xF97"
+		},
+		"climaxStatFaction":{
+			"info": "OStimCunnilingusTargetClimaxCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x82D"
+		},
+		"playerClimaxStatFaction":{
+			"info": "OStimCunnilingusWithPlayerTargetClimaxCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x82F"
+		},
+		"playerStatList":{
+			"info": "OStimCunnilingusWithPlayerTargetList",
+			"mod": "OStim.esp",
+			"formid": "0x87A"
+		},
+		"playerClimaxStatList":{
+			"info": "OStimCunnilingusWithPlayerTargetClimaxList",
+			"mod": "OStim.esp",
+			"formid": "0x87B"
+		}
+	},
+	"performer":{
+		"faction":{
+			"info": "OStimCunnilingusPerformerFaction",
+			"mod": "OStim.esp",
+			"formid": "0xE5D"
+		}
+	}
+}

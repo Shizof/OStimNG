@@ -1,0 +1,118 @@
+{
+	"actor":{
+		"info": "the one with the tail",
+		"stimulation":0.1,
+		"maxStimulation":50,
+		"moan":true,
+		"talk":true,
+		"requirements":[
+			"tail"
+		],
+		"equipObject": "tail",
+		"faction":{
+			"info": "OStimAnalTailSexActorFaction",
+			"mod": "OStim.esp",
+			"formid": "0xF82"
+		},
+		"statFaction":{
+			"info": "OStimAnalTailSexActorCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0xF84"
+		},
+		"playerStatFaction":{
+			"info": "OStimAnalTailSexWithPlayerActorCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0xFCE"
+		},
+		"partnerClimaxStatFaction":{
+			"info": "OStimAnalTailSexActorPartnerClimaxCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x926"
+		},
+		"playerPartnerClimaxStatFaction":{
+			"info": "OStimAnalTailSexWithPlayerActorPartnerClimaxCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x927"
+		},
+		"playerStatList":{
+			"info": "OStimAnalTailSexWithPlayerActorList",
+			"mod": "OStim.esp",
+			"formid": "0x92A"
+		},
+		"playerPartnerClimaxStatList":{
+			"info": "OStimAnalTailSexWithPlayerActorPartnerClimaxList",
+			"mod": "OStim.esp",
+			"formid": "0x92B"
+		}
+	},
+	"target":{
+		"info": "the one with the butt",
+		"stimulation":0.3,
+		"fullStrip":true,
+		"moan":true,
+		"talk":true,
+		"requirements":[
+			"anus"
+		],
+		"strippingSlots":[
+			32,
+			49,
+			52,
+			53,
+			54
+		],
+		"toySlot": "anus",
+		"equipObject": "tail",
+		"faction":{
+			"info": "OStimAnalTailSexTargetFaction",
+			"mod": "OStim.esp",
+			"formid": "0xF83"
+		},
+		"statFaction":{
+			"info": "OStimAnalTailSexTargetCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0xF85"
+		},
+		"playerStatFaction":{
+			"info": "OStimAnalTailSexWithPlayerTargetCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0xFCF"
+		},
+		"climaxStatFaction":{
+			"info": "OStimAnalTailSexTargetClimaxCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x928"
+		},
+		"playerClimaxStatFaction":{
+			"info": "OStimAnalTailSexWithPlayerTargetClimaxCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x929"
+		},
+		"playerStatList":{
+			"info": "OStimAnalTailSexWithPlayerTargetList",
+			"mod": "OStim.esp",
+			"formid": "0x92C"
+		},
+		"playerClimaxStatList":{
+			"info": "OStimAnalTailSexWithPlayerTargetClimaxList",
+			"mod": "OStim.esp",
+			"formid": "0x92D"
+		}
+	},
+	"performer":{
+		"floats":{
+			"stamina":1.0
+		}
+	},
+	"peak":{
+		"type":"bonedistance",
+		"actorBone":"NPC Genitals01 [Gen01]",
+		"targetBone":"VaginaDeep1"
+	},
+	"tags":[
+		"intercourse",
+		"sexual",
+		"analpenetration",
+		"analstimulation"
+	]
+}

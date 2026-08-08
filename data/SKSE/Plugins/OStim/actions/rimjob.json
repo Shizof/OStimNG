@@ -1,16 +1,18 @@
 {
+	"info": "rimjob is without a tongue, if you want a tongue use anallicking",
 	"aliases":[
+		"analeating",
+		"anilingus",
 		"rimj",
 		"rj"
 	],
-	"info": "rimjob is with a tongue, if you want no tongue use anilingus",
 	"actor":{
 		"info": "the one with the mouth",
 		"stimulation":0.1,
 		"maxStimulation":50,
 		"moan":true,
 		"muffled":true,
-		"expressionOverride":"tongue",
+		"expressionOverride":"openmouth",
 		"requirements":[
 			"mouth"
 		],
@@ -20,18 +22,41 @@
 			44,
 			55
 		],
-		"faction":[
-			{
-				"info": "OStimRimjobActorFaction",
-				"mod": "OStim.esp",
-				"formid": "0xE80"
-			},
-			{
-				"info": "OStimAnyOralActorFaction",
-				"mod": "OStim.esp",
-				"formid": "0xEA7"
-			}
-		]
+		"faction":{
+			"info": "OStimRimjobActorFaction",
+			"mod": "OStim.esp",
+			"formid": "0xF3F"
+		},
+		"statFaction":{
+			"info": "OStimRimjobActorCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0xF41"
+		},
+		"playerStatFaction":{
+			"info": "OStimRimjobWithPlayerActorCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0xFF2"
+		},
+		"partnerClimaxStatFaction":{
+			"info": "OStimRimjobActorPartnerClimaxCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x95E"
+		},
+		"playerPartnerClimaxStatFaction":{
+			"info": "OStimRimjobWithPlayerActorPartnerClimaxCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x95F"
+		},
+		"playerStatList":{
+			"info": "OStimRimjobWithPlayerActorList",
+			"mod": "OStim.esp",
+			"formid": "0x962"
+		},
+		"playerPartnerClimaxStatList":{
+			"info": "OStimRimjobWithPlayerActorPartnerClimaxList",
+			"mod": "OStim.esp",
+			"formid": "0x963"
+		}
 	},
 	"target":{
 		"info": "the one with the butt",
@@ -49,26 +74,57 @@
 			53,
 			54
 		],
-		"faction":[
-			{
-				"info": "OStimRimjobTargetFaction",
-				"mod": "OStim.esp",
-				"formid": "0xE81"
-			},
-			{
-				"info": "OStimAnyOralTargetFaction",
-				"mod": "OStim.esp",
-				"formid": "0xEA8"
-			}
-		],
+		"faction":{
+			"info": "OStimRimjobTargetFaction",
+			"mod": "OStim.esp",
+			"formid": "0xF40"
+		},
+		"statFaction":{
+			"info": "OStimRimjobTargetCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0xF42"
+		},
+		"playerStatFaction":{
+			"info": "OStimRimjobWithPlayerTargetCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0xFF3"
+		},
+		"climaxStatFaction":{
+			"info": "OStimRimjobTargetClimaxCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x960"
+		},
+		"playerClimaxStatFaction":{
+			"info": "OStimRimjobWithPlayerTargetClimaxCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x961"
+		},
+		"playerStatList":{
+			"info": "OStimRimjobWithPlayerTargetList",
+			"mod": "OStim.esp",
+			"formid": "0x964"
+		},
+		"playerClimaxStatList":{
+			"info": "OStimRimjobWithPlayerTargetClimaxList",
+			"mod": "OStim.esp",
+			"formid": "0x965"
+		},
 		"toySlot": "anus"
 	},
 	"performer":{
+		"faction":{
+			"info": "OStimRimjobPerformerFaction",
+			"mod": "OStim.esp",
+			"formid": "0xF43"
+		},
 		"floats":{
 			"stamina":0.75
 		}
 	},
 	"tags":[
+		"analstimulation",
+		"anilingus",
+		"oral",
 		"sexual"
 	]
 }

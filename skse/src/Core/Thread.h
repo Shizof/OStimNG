@@ -54,6 +54,8 @@ namespace Threading {
 
         void initContinue(ThreadStartParams params);
 
+        inline int getPlayerIndex() { return playerIndex; }
+
         inline ThreadFlags getThreadFlags() { return threadFlags; }
         inline bool isFlagged(ThreadFlag flag) { return (threadFlags & flag) == flag; }
         inline void flag(ThreadFlag flag) { threadFlags |= flag; }
@@ -121,6 +123,7 @@ namespace Threading {
 
         Graph::Node* m_currentNode = nullptr;
         bool playerThread = false;
+        int playerIndex = -1;
         std::map<int32_t, ThreadActor> m_actors;
 
         std::shared_mutex nodeLock;
@@ -212,7 +215,7 @@ namespace Threading {
 #pragma region furniture
     public:
         inline GameAPI::GameObject getFurniture() { return furniture; }
-        inline Furniture::FurnitureType* getFurnitureType() { return furnitureType; }
+        inline Furniture::FurnitureType* getFurnitureTypeInternal() { return furnitureType; }
 
         void changeFurniture(GameAPI::GameObject furniture, Graph::Node* node);
 
@@ -249,6 +252,7 @@ namespace Threading {
         int nodeQueueCooldown = 0;
         std::queue<Graph::SequenceEntry> nodeQueue;
 
+        void fadeAndChangeNode(Graph::Node* node);
         void clearNodeQueue();
 #pragma endregion
 
@@ -272,6 +276,9 @@ namespace Threading {
         virtual void forEachThreadActor(OStim::ThreadActorVisitor* visitor) override;
 
         virtual OStim::Node* getCurrentNode() override;
+
+        virtual OStim::FurnitureType* getFurnitureType() override;
+        virtual void* getFurnitureObject() override;
 #pragma endregion
     };
 

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "GameAPI/GameFaction.h"
+#include "GameAPI/GameList.h"
 
 namespace Util {
     class APITable {
@@ -14,6 +15,8 @@ namespace Util {
         static inline GameAPI::GameFaction getTimesClimaxedFaction() { return OStimTimesClimaxedFaction; }
         static inline GameAPI::GameFaction getTimeUntilClimaxFaction() { return OStimTimeUntilClimaxFaction; }
 
+        static inline GameAPI::GameList getActorList() { return OStimActorList; }
+
     private:
         static inline GameAPI::GameFaction OStimActorCountFaction;
         static inline GameAPI::GameFaction OStimExcitementFaction;
@@ -21,5 +24,7 @@ namespace Util {
         static inline GameAPI::GameFaction OStimSchlongifiedFaction;
         static inline GameAPI::GameFaction OStimTimesClimaxedFaction;
         static inline GameAPI::GameFaction OStimTimeUntilClimaxFaction;
+
+        static inline GameAPI::GameList OStimActorList;
     };
 }

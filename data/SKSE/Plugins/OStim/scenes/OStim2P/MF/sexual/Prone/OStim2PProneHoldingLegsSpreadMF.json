@@ -59,6 +59,7 @@
 			"feetOnGround": false,
 			"tags": [
 				"lyingfront",
+				"facingaway",
 				"onbottom"
 			]
 		}

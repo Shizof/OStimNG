@@ -1,0 +1,79 @@
+{
+  "name": "$OStim2PSquattingHandjobMF",
+  "modPack": "OStim",
+  "length": 2.0,
+  "speeds": [
+    {
+      "animation": "OStim2PSquattingHandjobMF_S1",
+      "playbackSpeed": 1,
+      "displaySpeed": 1
+    },
+    {
+      "animation": "OStim2PSquattingHandjobMF_S2",
+      "playbackSpeed": 1,
+      "displaySpeed": 1.5
+    },
+    {
+      "animation": "OStim2PSquattingHandjobMF_S3",
+      "playbackSpeed": 1,
+      "displaySpeed": 2
+    },
+    {
+      "animation": "OStim2PSquattingHandjobMF_S4",
+      "playbackSpeed": 1,
+      "displaySpeed": 2.5
+    }
+  ],
+  "navigations": [
+    {
+      "destination": "OStim2PStandingSquattingMF",
+      "description": "$ostim_nav_return",
+      "icon": "OStim/symbols/return",
+      "priority": -1000,
+      "noWarnings": false
+    },
+    {
+      "destination": "OStim2PSquattingBlowjobMF",
+      "description": "$ostim_nav_blowjob_t{0}",
+      "icon": "OStim/sexual/blowjob_mf",
+      "priority": 2000
+    },
+    {
+      "destination": "OStim2PSquattingJerkToFaceMF",
+      "description": "$ostim_nav_masturbate_to_face_t{1}",
+      "icon": "OStim/sexual/malemasturbation",
+      "priority": 3000
+    }
+  ],
+  "actors": [
+    {
+      "type": "npc",
+      "intendedSex": "male",
+      "sosBend": 7,
+      "scale": 1.03,
+      "lookUp": -50,
+      "tags": [
+        "standing"
+      ],
+      "feetOnGround": true
+    },
+    {
+      "type": "npc",
+      "intendedSex": "female",
+      "scaleHeight": 67,
+      "scale": 1.0,
+      "lookUp": -50,
+      "tags": [
+        "squatting"
+      ],
+      "feetOnGround": true
+    }
+  ],
+  "actions": [
+    {
+      "type": "handjob",
+      "actor": 1,
+      "target": 0
+    }
+  ]
+}

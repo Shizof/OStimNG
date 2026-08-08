@@ -1,0 +1,112 @@
+{
+  "name": "$OStim2PSquattingJerkToFaceMF",
+  "modPack": "OStim",
+  "length": 2.0,
+  "speeds": [
+    {
+      "animation": "OStim2PSquattingJerkToFaceMF_S1",
+      "playbackSpeed": 1,
+      "displaySpeed": 0.5
+    },
+    {
+      "animation": "OStim2PSquattingJerkToFaceMF_S2",
+      "playbackSpeed": 1,
+      "displaySpeed": 1
+    },
+    {
+      "animation": "OStim2PSquattingJerkToFaceMF_S3",
+      "playbackSpeed": 1,
+      "displaySpeed": 1.5
+    },
+    {
+      "animation": "OStim2PSquattingJerkToFaceMF_S4",
+      "playbackSpeed": 1,
+      "displaySpeed": 2
+    }
+  ],
+  "navigations": [
+    {
+      "destination": "OStim2PStandingSquattingMF",
+      "priority": -1000,
+      "description": "$ostim_nav_return",
+      "icon": "ostim/symbols/return",
+      "noWarnings": false
+    },
+    {
+      "destination": "OStim2PSquattingBlowjobHoldingHeadMF",
+      "description": "$ostim_nav_blowjob_t{0}",
+      "icon": "OStim/sexual/blowjob_mf",
+      "priority": 0
+    },
+    {
+      "destination": "OStim2PSquattingFaceFuckMF",
+      "description": "$ostim_nav_facefuck_t{1}",
+      "icon": "OStim/sexual/facefuck_mf",
+      "priority": 0
+    },
+    {
+      "destination": "OStim2PKneelingJerkToFaceMF",
+      "description": "$ostim_nav_kneel_a{1}",
+      "icon": "OStim/positional/kneeling_f",
+      "priority": 2000
+    },
+    {
+      "destination": "OStim2PStandingSittingJerkToFaceMasturbationMF",
+      "description": "$ostim_nav_masturbate_a{1}",
+      "icon": "OStim/sexual/femalemasturbation",
+      "priority": 2000
+    },
+    {
+      "destination": "OStim2PStandingBehindJerkToButtMF",
+      "description": "$ostim_nav_turn_around_a{1}",
+      "icon": "OStim/positional/turnaround_f",
+      "priority": 2000
+    },
+    {
+      "destination": "OStim2PMissionaryJerkToPussyMF",
+      "description": "$ostim_nav_lie_back_a{1}",
+      "icon": "OStim/positional/lyingback_f",
+      "priority": 3000
+    }
+  ],
+  "actors": [
+    {
+      "type": "npc",
+      "intendedSex": "male",
+      "sosBend": 2,
+      "scale": 1.03,
+      "lookUp": -50,
+      "tags": [
+        "standing"
+      ],
+      "feetOnGround": true
+    },
+    {
+      "type": "npc",
+      "intendedSex": "female",
+      "scaleHeight": 67,
+      "scale": 1.0,
+      "lookLeft": 0,
+      "tags": [
+        "Squatting"
+      ],
+      "feetOnGround": true
+    }
+  ],
+  "actions": [
+    {
+      "type": "malemasturbation",
+      "actor": 0
+    },
+    {
+      "type": "spectating",
+      "actor": 1,
+      "target": 0
+    },
+    {
+      "type": "facial",
+      "actor": 0,
+      "target": 1
+    }
+  ]
+}

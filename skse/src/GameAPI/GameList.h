@@ -12,5 +12,6 @@ namespace GameAPI {
 
         inline bool contains(GameObject object) const { return form->HasForm(object.form->GetBaseObject()->formID); }
         inline bool contains(GameActor actor) const { return form->HasForm(actor.form) || form->HasForm(actor.form->GetActorBase()) || form->HasForm(actor.form->GetRace()); }
+        inline void add(GameActor actor) { form->AddForm(actor.form->GetActorBase()); }
     };
 }

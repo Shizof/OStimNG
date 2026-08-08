@@ -11,7 +11,27 @@
 			52,
 			53,
 			54
-		]
+		],
+		"faction":{
+			"info": "OStimCumOnButtActorFaction",
+			"mod": "OStim.esp",
+			"formid": "0x862"
+		},
+		"climaxStatFaction":{
+			"info": "OStimCumOnButtActorClimaxCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x8E6"
+		},
+		"playerClimaxStatFaction":{
+			"info": "OStimCumOnButtWithPlayerActorClimaxCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x8E8"
+		},
+		"playerClimaxStatList":{
+			"info": "OStimCumOnButtWithPlayerActorClimaxList",
+			"mod": "OStim.esp",
+			"formid": "0x8EA"
+		}
 	},
 	"target":{
 		"info": "the one with the butt",
@@ -23,6 +43,26 @@
 			53,
 			54
 		],
+		"faction":{
+			"info": "OStimCumOnButtTargetFaction",
+			"mod": "OStim.esp",
+			"formid": "0x863"
+		},
+		"partnerClimaxStatFaction":{
+			"info": "OStimCumOnButtTargetPartnerClimaxCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x8E7"
+		},
+		"playerPartnerClimaxStatFaction":{
+			"info": "OStimCumOnButtWithPlayerTargetPartnerClimaxCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x8E9"
+		},
+		"playerPartnerClimaxStatList":{
+			"info": "OStimCumOnButtWithPlayerTargetPartnerClimaxList",
+			"mod": "OStim.esp",
+			"formid": "0x8EB"
+		},
 		"stringLists":{
 			"cum":[
 				"back",
@@ -31,7 +71,7 @@
 		}
 	},
 	"tags":[
-		"climax",
+		"cumshot",
 		"sexual"
 	]
 }

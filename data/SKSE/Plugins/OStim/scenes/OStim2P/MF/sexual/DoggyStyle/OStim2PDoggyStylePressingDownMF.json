@@ -38,6 +38,12 @@
 			"description": "$ostim_nav_kneel_a{0}",
 			"icon": "OStim/positional/kneeling_m",
 			"priority": 1000
+		},
+		{
+			"destination": "OStim2PSittingDoggyJerkToButtMF",
+			"description": "$ostim_nav_masturbate_to_butt_t{1}",
+			"icon": "OStim/sexual/malemasturbation",
+			"priority": 3000
 		}
 	],
 	"tags":[

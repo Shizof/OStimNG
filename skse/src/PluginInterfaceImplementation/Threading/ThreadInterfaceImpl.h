@@ -18,5 +18,8 @@ namespace Interface {
 
 
         virtual OStim::ThreadBuilder* createThreadBuilder(uint32_t actorCount, void** actors) override;
+
+
+        virtual OStim::ThreadActor* getActor(void* gameActor) override;
     };
 }

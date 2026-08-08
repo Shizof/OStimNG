@@ -9,24 +9,39 @@
 	],
 	"navigations":[
 		{
-			"destination": "OStim2PSittingMF",
-			"description": "$ostim_nav_sit_back_a{1}",
-			"icon": "OStim/detail/grab_m_end"
-		},
-		{
-			"destination": "OStim2PStandingApartMF",
-			"description": "$ostim_nav_stand_up",
-			"icon": "OStim/positional/standup_m"
-		},
-		{
 			"destination": "OStim2PSittingMaleInMF",
 			"description": "$ostim_nav_switch_positions",
 			"icon": "OStim/symbols/switch"
 		},
 		{
+			"destination": "OStim2PStandingApartMF",
+			"description": "$ostim_nav_switch_positions_stand",
+			"icon": "OStim/symbols/switch_up"
+		},
+		{
 			"destination": "OStim2PLyingKneelingMF",
 			"description": "$ostim_nav_lie_down",
 			"icon": "OStim/positional/lyingback_m"
+		},
+		{
+			"destination": "OStim2PCowgirlIdleMF",
+			"description": "$ostim_nav_mount_t{0}",
+			"icon": "OStim/sexual/cowgirl_mf"
+		},
+		{
+		  "destination": "OStim2PMaleSittingHandJobMF",
+		  "description": "$ostim_nav_handjob_t{0}",
+		  "icon": "OStim/sexual/handjob_mf"
+		},
+		{
+		  "destination": "OStim2PMaleSittingBlowJobMF",
+		  "description": "$ostim_nav_blowjob_t{0}",
+		  "icon": "OStim/sexual/blowjob_lying_mf"
+		},
+		{
+			"destination": "OStim2PMaleSittingJerkToFaceMF",
+			"description": "$ostim_nav_masturbate_to_face_t{1}",
+			"icon": "OStim/sexual/malemasturbation"
 		}
 	],
 	"tags":[

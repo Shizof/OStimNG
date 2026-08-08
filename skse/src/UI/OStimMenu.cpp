@@ -27,7 +27,7 @@ namespace UI {
         }
     }
 
-    void OStimMenu::PostRegister() { 
+    void OStimMenu::PostRegister() {  //for vr version
         logger::info("PostRegister, hiding menu {}", menuName);
         auto ui = RE::UI::GetSingleton();
         if (ui) {

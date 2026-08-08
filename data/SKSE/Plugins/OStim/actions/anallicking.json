@@ -1,0 +1,123 @@
+{
+	"info": "anallicking is with a tongue, if you want no tongue use rimjob",
+	"aliases":[
+		"lickanus",
+		"lickinganus"
+	],
+	"actor":{
+		"info": "the one with the mouth",
+		"stimulation":0.1,
+		"maxStimulation":50,
+		"moan":true,
+		"muffled":true,
+		"expressionOverride":"tongue",
+		"requirements":[
+			"mouth"
+		],
+		"strippingSlots":[
+			30,
+			31,
+			44,
+			55
+		],
+		"faction":{
+			"info": "OStimAnalLickingActorFaction",
+			"mod": "OStim.esp",
+			"formid": "0xE80"
+		},
+		"statFaction":{
+			"info": "OStimAnalLickingActorCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0xF3D"
+		},
+		"playerStatFaction":{
+			"info": "OStimAnalLickingWithPlayerActorCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0xFCA"
+		},
+		"partnerClimaxStatFaction":{
+			"info": "OStimAnalLickingActorPartnerClimaxCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x91E"
+		},
+		"playerPartnerClimaxStatFaction":{
+			"info": "OStimAnalLickingWithPlayerActorPartnerClimaxCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x91F"
+		},
+		"playerStatList":{
+			"info": "OStimAnalLickingWithPlayerActorList",
+			"mod": "OStim.esp",
+			"formid": "0x922"
+		},
+		"playerPartnerClimaxStatList":{
+			"info": "OStimAnalLickingWithPlayerActorPartnerClimaxList",
+			"mod": "OStim.esp",
+			"formid": "0x923"
+		}
+	},
+	"target":{
+		"info": "the one with the butt",
+		"stimulation":0.3,
+		"fullStrip":true,
+		"moan":true,
+		"talk":true,
+		"requirements":[
+			"anus"
+		],
+		"strippingSlots":[
+			32,
+			49,
+			52,
+			53,
+			54
+		],
+		"faction":{
+			"info": "OStimAnalLickingTargetFaction",
+			"mod": "OStim.esp",
+			"formid": "0xE81"
+		},
+		"statFaction":{
+			"info": "OStimAnalLickingTargetCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0xF3E"
+		},
+		"playerStatFaction":{
+			"info": "OStimAnalLickingWithPlayerTargetCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0xFCB"
+		},
+		"climaxStatFaction":{
+			"info": "OStimAnalLickingTargetClimaxCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x920"
+		},
+		"playerClimaxStatFaction":{
+			"info": "OStimAnalLickingWithPlayerTargetClimaxCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x921"
+		},
+		"playerStatList":{
+			"info": "OStimAnalLickingWithPlayerTargetList",
+			"mod": "OStim.esp",
+			"formid": "0x924"
+		},
+		"playerClimaxStatList":{
+			"info": "OStimAnalLickingWithPlayerTargetClimaxList",
+			"mod": "OStim.esp",
+			"formid": "0x925"
+		},
+		"toySlot": "anus"
+	},
+	"performer":{
+		"floats":{
+			"stamina":0.75
+		}
+	},
+	"tags":[
+		"analstimulation",
+		"anilingus",
+		"oral",
+		"sexual"
+	]
+}

@@ -20,18 +20,41 @@
 			44,
 			55
 		],
-		"faction":[
-			{
-				"info": "OStimSuckingNipplesActorFaction",
-				"mod": "OStim.esp",
-				"formid": "0xE86"
-			},
-			{
-				"info": "OStimAnyOralActorFaction",
-				"mod": "OStim.esp",
-				"formid": "0xEA7"
-			}
-		]
+		"faction":{
+			"info": "OStimSuckingNipplesActorFaction",
+			"mod": "OStim.esp",
+			"formid": "0xE86"
+		},
+		"statFaction":{
+			"info": "OStimSuckingNippleActorCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0xF71"
+		},
+		"playerStatFaction":{
+			"info": "OStimSuckingNippleWithPlayerActorCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0xFF4"
+		},
+		"partnerClimaxStatFaction":{
+			"info": "OStimSuckingNippleActorPartnerClimaxCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x98E"
+		},
+		"playerPartnerClimaxStatFaction":{
+			"info": "OStimSuckingNippleWithPlayerActorPartnerClimaxCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x98F"
+		},
+		"playerStatList":{
+			"info": "OStimSuckingNippleWithPlayerActorList",
+			"mod": "OStim.esp",
+			"formid": "0x992"
+		},
+		"playerPartnerClimaxStatList":{
+			"info": "OStimSuckingNippleWithPlayerActorPartnerClimaxList",
+			"mod": "OStim.esp",
+			"formid": "0x993"
+		}
 	},
 	"target":{
 		"info": "the one with the nipples",
@@ -47,18 +70,41 @@
 			46,
 			56
 		],
-		"faction":[
-			{
-				"info": "OStimSuckingNipplesTargetFaction",
-				"mod": "OStim.esp",
-				"formid": "0xE87"
-			},
-			{
-				"info": "OStimAnyOralTargetFaction",
-				"mod": "OStim.esp",
-				"formid": "0xEA8"
-			}
-		],
+		"faction":{
+			"info": "OStimSuckingNipplesTargetFaction",
+			"mod": "OStim.esp",
+			"formid": "0xE87"
+		},
+		"statFaction":{
+			"info": "OStimSuckingNippleActorCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0xF72"
+		},
+		"playerStatFaction":{
+			"info": "OStimSuckingNippleWithPlayerTargetCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0xFF5"
+		},
+		"climaxStatFaction":{
+			"info": "OStimSuckingNippleTargetClimaxCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x990"
+		},
+		"playerClimaxStatFaction":{
+			"info": "OStimSuckingNippleWithPlayerTargetClimaxCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x991"
+		},
+		"playerStatList":{
+			"info": "OStimSuckingNippleWithPlayerTargetList",
+			"mod": "OStim.esp",
+			"formid": "0x994"
+		},
+		"playerClimaxStatList":{
+			"info": "OStimSuckingNippleWithPlayerTargetClimaxList",
+			"mod": "OStim.esp",
+			"formid": "0x995"
+		},
 		"toySlot": "nipples"
 	},
 	"performer":{

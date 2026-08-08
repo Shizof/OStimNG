@@ -18,11 +18,15 @@ namespace Furniture {
         RE::NiPoint3 centerPos = {center.x, center.y, center.z};
         util::iterate_attached_cells(centerPos, radius, [&](RE::TESObjectREFR* ref) {
             GameAPI::GameObject object = ref;
-            auto refPos = ref->GetPosition();
+
+            RE::BGSKeywordForm* base = ref->GetBaseObject()->As<RE::BGSKeywordForm>();
+            if (base && base->HasKeywordString("NoStim")) {
+                return RE::BSContainer::ForEachResult::kContinue;
+            }
 
             if (sameFloor == 0.0 || std::fabs(centerPos.z - ref->GetPosition().z) <= sameFloor) {
-                FurnitureType* type = FurnitureTable::getFurnitureType(ref, true)->getListType();
-                if (type->id == "none" || !Graph::GraphTable::hasNodes(type->getMasterType(), actorCount)) {
+                FurnitureType* type = FurnitureTable::getFurnitureType(ref, true)->getListTypeInternal();
+                if (type->id == "none" || !Graph::GraphTable::hasNodes(type->getMasterTypeInternal(), actorCount)) {
                     return RE::BSContainer::ForEachResult::kContinue;
                 }
 

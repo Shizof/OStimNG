@@ -1,0 +1,81 @@
+{
+	"name": "$OStim2PReverseCowgirlButtJobMF",
+	"modpack": "OStim",
+	"length": 2.0,
+	"speeds":[
+		{
+			"animation": "OStim2PReverseCowgirlArchBackMF_S1",
+			"displaySpeed": 0.5
+		},
+		{
+			"animation": "OStim2PReverseCowgirlArchBackMF_S2",
+			"displaySpeed": 1.0
+		},
+		{
+			"animation": "OStim2PReverseCowgirlArchBackMF_S3",
+			"displaySpeed": 2.0
+		},
+		{
+			"animation": "OStim2PReverseCowgirlArchBackMF_S4",
+			"displaySpeed": 3.0
+		}
+	],
+	"navigations":[
+		{
+			"destination": "OStim2PReverseCowgirlIdleMF",
+			"description": "$ostim_nav_return",
+			"icon": "OStim/symbols/return",
+			"priority": -1000
+		},
+		{
+			"destination": "OStim2PReverseCowgirlArchBackMF",
+			"description": "$ostim_nav_sex_t{1}",
+			"icon": "OStim/sexual/analsex_mf",
+			"priority": 0
+		}
+	],
+	"tags":[
+		"reversecowgirl"
+	],
+	"actors":[
+		{
+			"intendedSex": "male",
+			"sosBend": 3,
+			"scale": 1.03,
+			"lookUp": -100,
+			"feetOnGround": false,
+			"tags": [
+				"lyingback",
+				"onbottom"
+			]
+		},
+		{
+			"intendedSex": "female",
+			"lookUp": -50,
+			"feetOnGround": false,
+			"tags": [
+				"kneeling",
+				"facingaway",
+				"ontop"
+			]
+		}
+	],
+  	"actions": [
+  		{
+      		"type": "buttjob",
+      		"actor": 1,
+      		"target": 0,
+      		"performer": 1
+    	},
+    	{
+    		"type": "mounting",
+    		"actor": 1,
+    		"target": 0
+    	},
+    	{
+    		"type": "holdingleg",
+    		"actor": 1,
+    		"target": 0
+    	}
+  	]
+}

@@ -10,7 +10,7 @@ namespace OStim{
     public:
         inline static const char* NAME = "SexToys";
 
-        // --- API version 1 ---
+        // --- ABI version 1 ---
 
         /**
         * register your listener once in the post load event

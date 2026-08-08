@@ -1,0 +1,90 @@
+{
+  "name": "$OStim2PSquattingBlowjobHoldingHeadMF",
+  "modPack": "OStim",
+  "length": 2.0,
+  "speeds": [
+    {
+      "animation": "OStim2PSquattingBlowjobHoldingHeadMF_S1",
+      "playbackSpeed": 1,
+      "displaySpeed": 0.5
+    },
+    {
+      "animation": "OStim2PSquattingBlowjobHoldingHeadMF_S2",
+      "playbackSpeed": 1,
+      "displaySpeed": 1
+    },
+    {
+      "animation": "OStim2PSquattingBlowjobHoldingHeadMF_S3",
+      "playbackSpeed": 1,
+      "displaySpeed": 1.5
+    },
+    {
+      "animation": "OStim2PSquattingBlowjobHoldingHeadMF_S4",
+      "playbackSpeed": 1,
+      "displaySpeed": 2
+    }
+  ],
+  "navigations": [
+    {
+      "destination": "OStim2PStandingSquattingMF",
+      "description": "$ostim_nav_return",
+      "icon": "OStim/symbols/return",
+      "priority": -1000,
+      "noWarnings": false
+    },
+    {
+      "destination": "OStim2PSquattingBlowjobMF",
+      "description": "$ostim_nav_hold_head_stop_t{1}",
+      "icon": "OStim/detail/grab_m_end",
+      "priority": 0
+    },
+    {
+      "destination": "OStim2PSquattingFaceFuckMF",
+      "description": "$ostim_nav_facefuck_t{1}",
+      "icon": "OStim/sexual/facefuck_mf",
+      "priority": 0
+    },
+    {
+      "destination": "OStim2PSquattingJerkToFaceMF",
+      "description": "$ostim_nav_masturbate_to_face_t{1}",
+      "icon": "OStim/sexual/malemasturbation",
+      "priority": 3000
+    }
+  ],
+  "actors": [
+    {
+      "type": "npc",
+      "intendedSex": "male",
+      "sosBend": -1,
+      "scale": 1.03,
+      "lookUp": -50,
+      "tags": [
+        "standing"
+      ],
+      "feetOnGround": true
+    },
+    {
+      "type": "npc",
+      "intendedSex": "female",
+      "scaleHeight": 67,
+      "scale": 1.0,
+      "lookUp": -100,
+      "tags": [
+        "Squatting"
+      ],
+      "feetOnGround": true
+    }
+  ],
+  "actions": [
+    {
+      "type": "blowjob",
+      "actor": 1,
+      "target": 0
+    },
+    {
+      "type": "holdinghead",
+      "actor": 0,
+      "target": 1
+    }
+  ]
+}

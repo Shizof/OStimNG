@@ -44,6 +44,12 @@
 			"description": "$ostim_nav_grope_breast_t{1}",
 			"icon": "OStim/detail/gropingbreast_mf",
 			"priority": 0
+		},
+		{
+		  "destination": "OStim2PMaleSittingHandJobMF",
+		  "description": "$ostim_nav_handjob_t{0}",
+		  "icon": "OStim/sexual/handjob_mf",
+		  "priority": 0
 		}
 	],
 	"tags":[

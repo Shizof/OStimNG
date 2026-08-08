@@ -48,12 +48,36 @@
 			"description": "$ostim_nav_pleasure_hand_grope_breast_t{1}",
 			"icon": "OStim/sexual/fingering_m",
 			"priority": 2000
+		},
+		{
+			"destination": "OStim2PSquattingBehindGropingButtBothHandsMF",
+			"description": "$ostim_nav_grope_butt_t{1}",
+			"icon": "OStim/detail/gropingbutt_behind_2h_mf",
+			"priority": 2000
+		},
+		{
+			"destination": "OStim2PStandingButtjobMF",
+			"description": "$ostim_nav_crackfuck_t{1}",
+			"icon": "OStim/sexual/buttjob_mf",
+			"priority": 2000
+		},
+		{
+			"destination": "OStim2PStandingBehindFuckMF",
+			"description": "$ostim_nav_sex_behind_t{1}",
+			"icon": "OStim/sexual/bendover_standing_mf",
+			"priority": 2000
+		},
+		{
+			"destination": "OStim2PStandingBehindJerkToButtMF",
+			"description": "$ostim_nav_masturbate_to_butt_t{1}",
+			"icon": "OStim/sexual/malemasturbation",
+			"priority": 2000
 		}
 	],
 	"actors":[
 		{
 			"intendedSex": "male",
-			"sosBend": 7,
+			"sosBend": 1,
 			"scale": 1.03,
             "lookUp": -35,
             "lookLeft": -25,

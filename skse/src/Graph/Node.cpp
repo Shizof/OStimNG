@@ -231,10 +231,10 @@ namespace Graph {
 
     int Node::getPrimaryPartner(int position) {
         for (Action::Action& action : actions) {
-            if (action.roles.actor == position) {
+            if (action.roles.actor == position && action.roles.target != position) {
                 return action.roles.target;
             }
-            if (action.roles.target == position) {
+            if (action.roles.target == position && action.roles.actor != position) {
                 return action.roles.actor;
             }
         }

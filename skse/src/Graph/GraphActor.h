@@ -19,6 +19,7 @@ namespace Graph {
         bool feetOnGround = false;
         int expressionAction = -1;
         int animationIndex = -1;
+        bool singleSpeed = false;
         std::string underlyingExpression = "";
         std::string expressionOverride = "";
         bool noStrip = false;
@@ -26,7 +27,17 @@ namespace Graph {
         bool talk = false;
         bool muffled = false;
         GameAPI::GamePosition offset;
+        std::set<std::string> equipObjects;
         std::vector<GameAPI::GameFaction> factions;
+        std::vector<GameAPI::GameFaction> statFactions;
+        std::vector<GameAPI::GameFaction> playerStatFactions;
+        std::vector<GameAPI::GameFaction> climaxStatFactions;
+        std::vector<GameAPI::GameFaction> partnerClimaxStatFactions;
+        std::vector<GameAPI::GameFaction> playerClimaxStatFactions;
+        std::vector<GameAPI::GameFaction> playerPartnerClimaxStatFactions;
+        std::vector<GameAPI::GameList> playerStatLists;
+        std::vector<GameAPI::GameList> playerClimaxStatLists;
+        std::vector<GameAPI::GameList> playerPartnerClimaxStatLists;
         std::unordered_map<int, Trait::FaceModifier> eyeballModifierOverride;
         std::vector<GraphActorTag> tags;
         Trait::ActorCondition condition;

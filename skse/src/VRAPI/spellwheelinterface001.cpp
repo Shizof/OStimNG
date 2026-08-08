@@ -21,15 +21,10 @@ spellwheelPluginApi::ISpellWheelInterface001* spellwheelPluginApi::getSpellWheel
 	// Dispatch a message to get the plugin interface from SpellWheel
 	SpellWheelMessage swMessage;
 	const auto skseMessaging = SKSE::GetMessagingInterface();
-    skseMessaging->Dispatch(SpellWheelMessage::kMessage_GetInterface, (void*)&swMessage, sizeof(SpellWheelMessage*), "SpellWheelVR");
-    if (!swMessage.GetApiFunction) {
+    const bool dispatched = skseMessaging->Dispatch(SpellWheelMessage::kMessage_GetInterface, (void*)&swMessage, sizeof(swMessage), "SpellWheelVR");
+    if (!dispatched || !swMessage.GetApiFunction) {
         return nullptr;
     }
-
-	if (!swMessage.GetApiFunction)
-	{
-		return nullptr;
-	}
 
 	// Fetch the API for this version of the Durability interface
 	g_spellwheelInterface = static_cast<ISpellWheelInterface001*>(swMessage.GetApiFunction(1));

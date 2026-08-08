@@ -8,5 +8,7 @@ namespace Util {
         OStimSchlongifiedFaction.loadFile("OStim.esp", 0xE9C);
         OStimTimesClimaxedFaction.loadFile("OStim.esp", 0xE49);
         OStimTimeUntilClimaxFaction.loadFile("OStim.esp", 0xE4A);
+
+        OStimActorList.loadFile("OStim.esp", 0x85F);
     }
 }

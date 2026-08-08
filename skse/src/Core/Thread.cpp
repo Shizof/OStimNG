@@ -32,8 +32,12 @@ namespace Threading {
     Thread::Thread(int threadID, ThreadStartParams params) : m_threadId{threadID}, furniture{params.furniture} {
         nodeHandler = new Threading::Threads::NodeHandler(this);
 
-        for (GameAPI::GameActor actor : params.actors) {
-            playerThread |= actor.isPlayer();
+        for (int i = 0; i < params.actors.size(); i++) {
+            if (params.actors[i].isPlayer()) {
+                playerThread = true;
+                playerIndex = i;
+                break;
+            }
         }
 
         threadFlags = params.threadFlags;
@@ -182,12 +186,26 @@ namespace Threading {
         return Alignment::Alignments::getActorAlignment(alignmentKey, m_currentNode, index);
     }
 
+    void Thread::fadeAndChangeNode(Graph::Node* node) {
+        std::thread fadeThread = std::thread([node] {
+            GameAPI::GameCamera::fadeToBlack(1);
+            std::this_thread::sleep_for(std::chrono::milliseconds(700));
+            Thread* thread = ThreadManager::GetSingleton()->getPlayerThread();
+            if (thread) {
+                thread->ChangeNode(node);
+            }
+            std::this_thread::sleep_for(std::chrono::milliseconds(550));
+            GameAPI::GameCamera::fadeFromBlack(1);
+        });
+        fadeThread.detach();
+    }
+
     void Thread::Navigate(std::string sceneId) {
         for (auto& nav : m_currentNode->navigations) {
             if (sceneId == nav.nodes.front()->scene_id) {
-                ChangeNode(nav.nodes.front());
+                warpTo(nav.nodes.front(), nav.nodes.front()->fadeOnEntry);
             }
-        }      
+        }
     }
 
     void Thread::ChangeNode(Graph::Node* a_node) {
@@ -256,7 +274,7 @@ namespace Threading {
                 } else if (MCM::MCMTable::partialUndressing()) {
                     uint32_t slotMask = m_currentNode->getStrippingMask(position);
                     if (slotMask != 0) {
-                        actor.undressPartial(slotMask);
+                        actor.undressPartialInternal(slotMask);
                         if ((slotMask & MCM::MCMTable::removeWeaponsWithSlot()) != 0) {
                             actor.removeWeapons();
                         }
@@ -309,6 +327,9 @@ namespace Threading {
         }
 
         if (playerThread) {
+            if (REL::Module::IsVR()) {
+                OStimVR::ScheduleFirstPersonHmdPositionRecenteringAfterAnimation();
+            }
             UI::UIState::GetSingleton()->NodeChanged(this, m_currentNode);
         }
 
@@ -492,7 +513,11 @@ namespace Threading {
         for (auto& actorIt : m_actors) {
             if (m_currentNode) {
                 if (m_currentNode->speeds.size() > speed) {
-                    actorIt.second.playAnimation(m_currentNode->speeds[speed]);
+                    if (actorIt.second.getGraphActor()->singleSpeed) {
+                        actorIt.second.playAnimation(m_currentNode->speeds[0]);
+                    } else {
+                        actorIt.second.playAnimation(m_currentNode->speeds[speed]);
+                    }
 
                     // this fixes some face bugs
                     // TODO how to do this with GraphActor?
@@ -853,11 +878,11 @@ namespace Threading {
         } else if (tag == "OStimUndressPartial") {
             std::string payload = a_event->payload.c_str();
             int mask = std::stoi(payload, nullptr, 16);
-            GetActor(actor)->undressPartial(mask);
+            GetActor(actor)->undressPartialInternal(mask);
         } else if (tag == "OStimRedressPartial"){
             std::string payload = a_event->payload.c_str();
             int mask = std::stoi(payload, nullptr, 16);
-            GetActor(actor)->redressPartial(mask);
+            GetActor(actor)->redressPartialInternal(mask);
         } else if (tag == "OStimRemoveWeapons") {
             GetActor(actor)->removeWeapons();
         } else if (tag == "OStimAddWeapons") {
@@ -956,5 +981,13 @@ namespace Threading {
 
     OStim::Node* Thread::getCurrentNode() {
         return m_currentNode;
+    }
+
+    OStim::FurnitureType* Thread::getFurnitureType() {
+        return furnitureType;
+    }
+
+    void* Thread::getFurnitureObject() {
+        return furniture.toABIPointer();
     }
 }

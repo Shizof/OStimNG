@@ -1,0 +1,8 @@
+{
+	"actor":{
+		"requirements":[
+			"hand"	
+		],
+		"equipObject": "book"
+	}
+}

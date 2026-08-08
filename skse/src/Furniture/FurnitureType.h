@@ -3,9 +3,10 @@
 #include "GameAPI/GameFaction.h"
 #include "GameAPI/GameObject.h"
 #include "GameAPI/GameVariable.h"
+#include "PluginInterface/Furniture/FurnitureType.h"
 
 namespace Furniture {
-    struct FurnitureType {
+    struct FurnitureType : OStim::FurnitureType {
     public:
         std::string id;
         std::string name = "";
@@ -28,11 +29,25 @@ namespace Furniture {
         FurnitureType* supertype = nullptr;
         bool listIndividually = false;
 
-        FurnitureType* getMasterType();
-        FurnitureType* getListType();
+        inline FurnitureType() { id = ""; }
+        FurnitureType(std::string id);
+
+        FurnitureType* getMasterTypeInternal();
+        FurnitureType* getListTypeInternal();
 
         bool isChildOf(FurnitureType* other);
 
         std::vector<GameAPI::GameFaction> getFactions();
+
+#pragma region abi
+    public:
+        virtual const char* getID() override;
+        virtual const char* getName() override;
+
+        virtual OStim::FurnitureType* getSuperType() override;
+        virtual OStim::FurnitureType* getMasterType() override;
+        virtual OStim::FurnitureType* getListType() override;
+        virtual bool isChildOf(const char* other) override;
+#pragma endregion
     };
 }

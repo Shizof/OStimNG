@@ -9,14 +9,14 @@
 	],
 	"navigations":[
 		{
-			"destination": "OStim2PLyingKneelingMF",
-			"description": "$ostim_nav_sit_back_a{1}",
+			"destination": "OStim2PSittingFemaleInMF",
+			"description": "$ostim_nav_return",
 			"icon": "OStim/symbols/return",
 			"priority": -1000
 		},
 		{
-			"destination": "OStim2PSittingMF",
-			"description": "$ostim_nav_sit_down",
+			"destination": "OStim2PLyingKneelingMF",
+			"description": "$ostim_nav_sit_beside_t{0}",
 			"icon": "OStim/positional/leanback_f",
 			"priority": -900
 		},
@@ -25,6 +25,18 @@
 			"description": "$ostim_nav_turn_around_a{1}",
 			"icon": "OStim/sexual/reversecowgirl_alt_mf",
 			"priority": 0
+		},
+		{
+		  "destination": "OStim2PMaleSittingHandJobMF",
+		  "description": "$ostim_nav_handjob_t{0}",
+		  "icon": "OStim/sexual/handjob_mf",
+		  "priority": 900
+		},
+		{
+		  "destination": "OStim2PFaceRidingMF",
+		  "description": "$ostim_nav_facesitting_t{0}",
+		  "icon": "OStim/sexual/facesitting_mf",
+		  "priority": 1000
 		},
 		{
 			"destination": "OStim2PCowgirlMF",

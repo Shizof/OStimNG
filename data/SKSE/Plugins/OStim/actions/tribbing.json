@@ -15,18 +15,56 @@
 			53,
 			54
 		],
-		"faction":[
-			{
-				"info": "OStimTribbingFaction",
-				"mod": "OStim.esp",
-				"formid": "0xE8B"
-			},
-			{
-				"info": "OStimAnySexMateFaction",
-				"mod": "OStim.esp",
-				"formid": "0xEC9"
-			}
-		],
+		"faction":{
+			"info": "OStimTribbingMateFaction",
+			"mod": "OStim.esp",
+			"formid": "0xE8B"
+		},
+		"statFaction":{
+			"info": "OStimTribbingMateCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0xF16"
+		},
+		"playerStatFaction":{
+			"info": "OStimTribbingWithPlayerMateCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0xFFE"
+		},
+		"climaxStatFaction":{
+			"info": "OStimTribbingMateClimaxCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x8B5"
+		},
+		"partnerClimaxStatFaction":{
+			"info": "OStimTribbingMatePartnerClimaxCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x8B6"
+		},
+		"playerClimaxStatFaction":{
+			"info": "OStimTribbingWithPlayerMateClimaxCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x8B7"
+		},
+		"playerPartnerClimaxStatFaction":{
+			"info": "OStimTribbingWithPlayerMatePartnerClimaxCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x8B8"
+		},
+		"playerStatList":{
+			"info": "OStimTribbingWithPlayerMateList",
+			"mod": "OStim.esp",
+			"formid": "0x8B9"
+		},
+		"playerClimaxStatList":{
+			"info": "OStimTribbingWithPlayerMateClimaxList",
+			"mod": "OStim.esp",
+			"formid": "0x8BA"
+		},
+		"playerPartnerClimaxStatList":{
+			"info": "OStimTribbingWithPlayerMatePartnerClimaxList",
+			"mod": "OStim.esp",
+			"formid": "0x8BB"
+		},
 		"toySlot": "genital"
 	},
 	"target":{
@@ -44,18 +82,21 @@
 			53,
 			54
 		],
-		"faction":[
-			{
-				"info": "OStimTribbingFaction",
-				"mod": "OStim.esp",
-				"formid": "0xE8B"
-			},
-			{
-				"info": "OStimAnySexMateFaction",
-				"mod": "OStim.esp",
-				"formid": "0xEC9"
-			}
-		],
+		"faction":{
+			"info": "OStimTribbingMateFaction",
+			"mod": "OStim.esp",
+			"formid": "0xE8B"
+		},
+		"statFaction":{
+			"info": "OStimTribbingMateCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0xF16"
+		},
+		"playerStatFaction":{
+			"info": "OStimTribbingWithPlayerMateCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0xFFE"
+		},
 		"toySlot": "genital"
 	},
 	"performer":{
@@ -64,6 +105,8 @@
 		}
 	},
 	"tags":[
+		"vulvalstimulation",
+		"-vulvalstimulation",
 		"intercourse",
 		"sexual"
 	]

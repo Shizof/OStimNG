@@ -44,6 +44,12 @@
 			"description": "$ostim_nav_kiss_foot_t{1}",
 			"icon": "OStim/sensual/kissing",
 			"priority": 500
+		},
+		{
+			"destination": "OStim2PMissionaryJerkToPussyMF",
+			"description": "$ostim_nav_masturbate_a{0}",
+			"icon": "OStim/sexual/malemasturbation",
+			"priority": 3000
 		}
 	],
 	"tags":[
@@ -52,7 +58,7 @@
 	"actors":[
 		{
 			"intendedSex": "male",
-			"sosBend": 2,
+			"sosBend": -1,
 			"scale": 1.03,
       		"lookUp": -25,
 			"feetOnGround": false,

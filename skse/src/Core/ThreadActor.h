@@ -6,6 +6,7 @@
 
 #include "Alignment/ActorKey.h"
 #include "GameAPI/GameActor.h"
+#include "GameAPI/GameList.h"
 #include "Graph/Event.h"
 #include "Graph/Node.h"
 #include "PluginInterface/Threading/ThreadActor.h"
@@ -36,12 +37,8 @@ namespace Threading {
 
         Alignment::ActorKey getAlignmentKey();
 
-        void undress();
-        void undressPartial(GameAPI::GameSlotMask mask);
-        void removeWeapons();
-        void redress();
-        void redressPartial(GameAPI::GameSlotMask mask);
-        void addWeapons();
+        void undressPartialInternal(GameAPI::GameSlotMask mask);
+        void redressPartialInternal(GameAPI::GameSlotMask mask);
 
         void changeNode(Graph::GraphActor* graphActor, std::vector<Trait::FacialExpression*>* nodeExpressions, std::vector<Trait::FacialExpression*>* overrideExpressions);
         void changeSpeed(int speed);
@@ -168,6 +165,20 @@ namespace Threading {
         void bendSchlong();
 #pragma endregion
 
+#pragma region api
+    private:
+        std::set<GameAPI::GameRecordIdentifier> statFactions;
+
+        void changeNodeAPIPre();
+        void changeNodeAPIPost();
+        void freeAPI();
+        void climaxAPI();
+
+        void incrementStatFaction(GameAPI::GameFaction faction);
+        void incrementFaction(GameAPI::GameFaction faction);
+        void addToStatList(GameAPI::GameList faction);
+#pragma endregion
+
 #pragma region climax
     public:
         inline bool getAwaitingClimax() { return awaitingClimax || awaitingClimaxInner; }
@@ -207,6 +218,7 @@ namespace Threading {
         std::unordered_map<std::string, EquipObjectHandler> equipObjects;
         std::vector<std::string> phonemeObjects;
 
+        void changeNodeEquipObjects(Graph::GraphActor* graphActor);
         void loopEquipObjects();
 #pragma endregion
 
@@ -328,6 +340,12 @@ namespace Threading {
 #pragma region abi
     public:
         virtual void* getGameActor() override;
+        virtual void undress() override;
+        virtual void undressPartial(uint32_t slotmask) override;
+        virtual void removeWeapons() override;
+        virtual void redress() override;
+        virtual void redressPartial(uint32_t slotmask) override;
+        virtual void addWeapons() override;
 #pragma endregion
 	};	
 }

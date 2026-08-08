@@ -46,7 +46,25 @@
 			"description": "$ostim_nav_bend_over_spank_t{1}",
 			"icon": "OStim/sexual/spank_right_mf",
 			"priority": 2000
-		}
+		},
+		{
+			"destination": "OStim2PSquattingBehindGropingButtBothHandsMF",
+			"description": "$ostim_nav_grope_butt_t{1}",
+			"icon": "OStim/detail/gropingbutt_behind_2h_mf",
+			"priority": 2000
+		},
+	    {
+	      "destination": "OStim2PStandingButtjobMF",
+	      "description": "$ostim_nav_crackfuck_t{1}",
+	      "icon": "OStim/sexual/buttjob_mf",
+	      "priority": 3000
+	    },
+	    {
+	      "destination": "OStim2PStandingButtjobMF",
+	      "description": "$ostim_nav_crackfuck_t{1}",
+	      "icon": "OStim/sexual/buttjob_mf",
+	      "priority": 3000
+	    }
 	],
 	"actors":[
 		{
@@ -76,11 +94,13 @@
 		{
       		"type": "buttjob",
       		"actor": 1,
-      		"target": 0
+      		"target": 0,
+      		"performer": 1
     	},
     	{
     		"type": "gropingbreast",
-    		"actor": 1
+    		"actor": 1,
+    		"performer": 1
     	}
 	]
 }

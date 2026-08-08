@@ -1,0 +1,126 @@
+{
+	"aliases":[
+		"deepthroat"	
+	],
+	"actor":{
+		"info": "the one with the mouth",
+		"stimulation":0.1,
+		"maxStimulation":75,
+		"moan": true,
+		"muffled":true,
+		"expressionOverride":"openmouth",
+		"requirements":[
+			"mouth"
+		],
+		"strippingSlots":[
+			30,
+			31,
+			44,
+			55
+		],
+		"faction":{
+			"info": "OStimBlowjobActorFaction",
+			"mod": "OStim.esp",
+			"formid": "0xE52"
+		},
+		"statFaction":{
+			"info": "OStimBlowjobActorCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0xF50"
+		},
+		"playerStatFaction":{
+			"info": "OStimDeepthroatingWithPlayerActorCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0xFDE"
+		},
+		"partnerClimaxStatFaction":{
+			"info": "OStimDeepthroatingActorPartnerClimaxCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x976"
+		},
+		"playerPartnerClimaxStatFaction":{
+			"info": "OStimDeepthroatingWithPlayerActorPartnerClimaxCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x977"
+		},
+		"playerStatList":{
+			"info": "OStimDeepthroatingWithPlayerActorList",
+			"mod": "OStim.esp",
+			"formid": "0x97A"
+		},
+		"playerPartnerClimaxStatList":{
+			"info": "OStimDeepthroatingWithPlayerActorPartnerClimaxList",
+			"mod": "OStim.esp",
+			"formid": "0x97B"
+		},
+		"stringLists":{
+			"cum":[
+				"throat"
+			]
+		}
+	},
+	"target":{
+		"info": "the one with the penis",
+		"stimulation":1.4,
+		"fullStrip":true,
+		"moan":true,
+		"talk":true,
+		"requirements":[
+			"penis"
+		],
+		"strippingSlots":[
+			32,
+			49,
+			52,
+			53,
+			54
+		],
+		"faction":{
+			"info": "OStimBlowjobTargetFaction",
+			"mod": "OStim.esp",
+			"formid": "0xE53"
+		},
+		"statFaction":{
+			"info": "OStimBlowjobTargetCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0xF51"
+		},
+		"playerStatFaction":{
+			"info": "OStimDeepthroatingWithPlayerTargetCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0xFDF"
+		},
+		"climaxStatFaction":{
+			"info": "OStimDeepthroatingTargetClimaxCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x978"
+		},
+		"playerClimaxStatFaction":{
+			"info": "OStimDeepthroatingWithPlayerTargetClimaxCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x979"
+		},
+		"playerStatList":{
+			"info": "OStimDeepthroatingWithPlayerTargetList",
+			"mod": "OStim.esp",
+			"formid": "0x97C"
+		},
+		"playerClimaxStatList":{
+			"info": "OStimDeepthroatingWithPlayerTargetClimaxList",
+			"mod": "OStim.esp",
+			"formid": "0x97D"
+		},
+		"toySlot": "genital"
+	},
+	"performer":{
+		"floats":{
+			"stamina":0.75
+		}
+	},
+	"tags":[
+		"fellatio",
+		"oral",
+		"penilestimulation",
+		"sexual"
+	]
+}

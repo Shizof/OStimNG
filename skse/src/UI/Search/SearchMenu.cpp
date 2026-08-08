@@ -36,7 +36,7 @@ namespace UI::Search {
             OverrideFunction(optionBoxes, new doSearchFunction, "doSearch");
             OverrideFunction(optionBoxes, new doSelectOptionFunction, "doSelectOption");
             OverrideFunction(optionBoxes, new doSetInputtingTextFunction, "doSetInputtingText");
-            OStimMenu::PostRegister();
+            OStimMenu::PostRegister(); //for vr version
         });
     }
 
@@ -161,7 +161,7 @@ namespace UI::Search {
         auto state = UI::UIState::GetSingleton();
         for (int i = 0; i < results.size(); i++) {
             if(results[i]->actors.size() == state->currentThread->getActorCount() 
-                && state->currentThread->getFurnitureType()->isChildOf(results[i]->furnitureType)
+                && state->currentThread->getFurnitureTypeInternal()->isChildOf(results[i]->furnitureType)
                 && !results[i]->isTransition)
                 data.push_back(SearchItem{ results[i]->scene_id,results[i]->scene_name });
         }

@@ -25,6 +25,51 @@
 			"mod": "OStim.esp",
 			"formid": "0xE64"
 		},
+		"statFaction":{
+			"info": "OStimGrindingPenisActorCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0xF60"
+		},
+		"playerStatFaction":{
+			"info": "OStimGrindingPenisWithPlayerActorCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0xFE5"
+		},
+		"climaxStatFaction":{
+			"info": "OStimVaginalSexActorClimaxCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x8D8"
+		},
+		"partnerClimaxStatFaction":{
+			"info": "OStimVaginalSexActorPartnerClimaxCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x8D9"
+		},
+		"playerClimaxStatFaction":{
+			"info": "OStimVaginalSexWithPlayerActorClimaxCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x8DA"
+		},
+		"playerPartnerClimaxStatFaction":{
+			"info": "OStimVaginalSexWithPlayerActorPartnerClimaxCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x8DB"
+		},
+		"playerStatList":{
+			"info": "OStimVaginalSexWithPlayerActorList",
+			"mod": "OStim.esp",
+			"formid": "0x8E0"
+		},
+		"playerClimaxStatList":{
+			"info": "OStimVaginalSexWithPlayerActorClimaxList",
+			"mod": "OStim.esp",
+			"formid": "0x8E1"
+		},
+		"playerPartnerClimaxStatList":{
+			"info": "OStimVaginalSexWithPlayerActorPartnerClimaxList",
+			"mod": "OStim.esp",
+			"formid": "0x8E2"
+		},
 		"toySlot": "genital"
 	},
 	"target":{
@@ -48,6 +93,51 @@
 			"mod": "OStim.esp",
 			"formid": "0xE65"
 		},
+		"statFaction":{
+			"info": "OStimGrindingPenisTargetCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0xF61"
+		},
+		"playerStatFaction":{
+			"info": "OStimGrindingPenisWithPlayerTargetCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0xFE6"
+		},
+		"climaxStatFaction":{
+			"info": "OStimVaginalSexActorClimaxCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x8DC"
+		},
+		"partnerClimaxStatFaction":{
+			"info": "OStimVaginalSexActorPartnerClimaxCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x8DD"
+		},
+		"playerClimaxStatFaction":{
+			"info": "OStimVaginalSexWithPlayerActorClimaxCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x8DE"
+		},
+		"playerPartnerClimaxStatFaction":{
+			"info": "OStimVaginalSexWithPlayerActorPartnerClimaxCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x8DF"
+		},
+		"playerStatList":{
+			"info": "OStimVaginalSexWithPlayerActorList",
+			"mod": "OStim.esp",
+			"formid": "0x8E3"
+		},
+		"playerClimaxStatList":{
+			"info": "OStimVaginalSexWithPlayerActorClimaxList",
+			"mod": "OStim.esp",
+			"formid": "0x8E4"
+		},
+		"playerPartnerClimaxStatList":{
+			"info": "OStimVaginalSexWithPlayerActorPartnerClimaxList",
+			"mod": "OStim.esp",
+			"formid": "0x8E5"
+		},
 		"toySlot": "genital"
 	},
 	"performer":{
@@ -61,6 +151,9 @@
 		}
 	},
 	"tags":[
-		"sexual"
+		"grinding",
+		"penilestimulation",
+		"sexual",
+		"-vaginalstimulation"
 	]
 }

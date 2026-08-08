@@ -45,7 +45,7 @@ namespace UI::Scene {
 			optionsOpen = isOpen;
 		}
 		void BuildOptionsData();
-		void BuildMenuData(MenuData& menudata);
+		void BuildMenuData(MenuData& menudata);  //for vr version
 
 	private:
 		void SendControl(int32_t control);

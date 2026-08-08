@@ -24,6 +24,36 @@
 			"mod": "OStim.esp",
 			"formid": "0xE58"
 		},
+		"statFaction":{
+			"info": "OStimButtjobActorCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0xF54"
+		},
+		"playerStatFaction":{
+			"info": "OStimButtjobWithPlayerActorCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0xFD6"
+		},
+		"partnerClimaxStatFaction":{
+			"info": "OStimButtjobActorPartnerClimaxCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x946"
+		},
+		"playerPartnerClimaxStatFaction":{
+			"info": "OStimButtjobWithPlayerActorPartnerClimaxCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x947"
+		},
+		"playerStatList":{
+			"info": "OStimButtjobWithPlayerActorList",
+			"mod": "OStim.esp",
+			"formid": "0x94A"
+		},
+		"playerPartnerClimaxStatList":{
+			"info": "OStimButtjobWithPlayerActorPartnerClimaxList",
+			"mod": "OStim.esp",
+			"formid": "0x94B"
+		},
 		"stringLists":{
 			"cum":[
 				"butt"
@@ -51,6 +81,36 @@
 			"mod": "OStim.esp",
 			"formid": "0xE59"
 		},
+		"statFaction":{
+			"info": "OStimButtjobTargetCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0xF55"
+		},
+		"playerStatFaction":{
+			"info": "OStimButtjobWithPlayerTargetCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0xFD7"
+		},
+		"climaxStatFaction":{
+			"info": "OStimButtjobTargetClimaxCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x948"
+		},
+		"playerClimaxStatFaction":{
+			"info": "OStimButtjobWithPlayerTargetClimaxCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x949"
+		},
+		"playerStatList":{
+			"info": "OStimButtjobWithPlayerTargetList",
+			"mod": "OStim.esp",
+			"formid": "0x94C"
+		},
+		"playerClimaxStatList":{
+			"info": "OStimButtjobWithPlayerTargetClimaxList",
+			"mod": "OStim.esp",
+			"formid": "0x94D"
+		},
 		"toySlot": "genital"
 	},
 	"performer":{
@@ -64,6 +124,7 @@
 		}
 	},
 	"tags":[
+		"penilestimulation",
 		"sexual"
 	]
 }

@@ -22,6 +22,36 @@
 			"mod": "OStim.esp",
 			"formid": "0xE5F"
 		},
+		"statFaction":{
+			"info": "OStimFootjobActorCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0xF5A"
+		},
+		"playerStatFaction":{
+			"info": "OStimFootjobWithPlayerActorCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0xFE0"
+		},
+		"partnerClimaxStatFaction":{
+			"info": "OStimFootjobActorPartnerClimaxCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x94E"
+		},
+		"playerPartnerClimaxStatFaction":{
+			"info": "OStimFootjobWithPlayerActorPartnerClimaxCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x94F"
+		},
+		"playerStatList":{
+			"info": "OStimFootjobWithPlayerActorList",
+			"mod": "OStim.esp",
+			"formid": "0x952"
+		},
+		"playerPartnerClimaxStatList":{
+			"info": "OStimFootjobWithPlayerActorPartnerClimaxList",
+			"mod": "OStim.esp",
+			"formid": "0x953"
+		},
 		"stringLists":{
 			"cum":[
 				"feet"
@@ -49,6 +79,36 @@
 			"mod": "OStim.esp",
 			"formid": "0xE60"
 		},
+		"statFaction":{
+			"info": "OStimFootjobTargetCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0xF5B"
+		},
+		"playerStatFaction":{
+			"info": "OStimFootjobWithPlayerTargetCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0xFE1"
+		},
+		"climaxStatFaction":{
+			"info": "OStimFootjobTargetClimaxCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x950"
+		},
+		"playerClimaxStatFaction":{
+			"info": "OStimFootjobWithPlayerTargetClimaxCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x951"
+		},
+		"playerStatList":{
+			"info": "OStimFootjobWithPlayerTargetList",
+			"mod": "OStim.esp",
+			"formid": "0x954"
+		},
+		"playerClimaxStatList":{
+			"info": "OStimFootjobWithPlayerTargetClimaxList",
+			"mod": "OStim.esp",
+			"formid": "0x955"
+		},
 		"toySlot": "genital"
 	},
 	"performer":{
@@ -74,6 +134,7 @@
 		"targetBone":"NPC Genitals01 [Gen01]"
 	},
 	"tags":[
+		"penilestimulation",
 		"sexual"
 	]
 }

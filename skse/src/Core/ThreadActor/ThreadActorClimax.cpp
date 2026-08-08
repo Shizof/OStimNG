@@ -60,7 +60,7 @@ namespace Threading {
         excitement = -3;
 
         timesClimaxed++;
-        Util::APITable::getTimesClimaxedFaction().setRank(actor, timesClimaxed);
+        climaxAPI();
 
         if (!schlong || female && !MCM::MCMTable::futaUseMaleExcitement()) {
             excitement = std::min(MCM::MCMTable::getPostOrgasmExcitement() * timesClimaxed, MCM::MCMTable::getPostOrgasmExcitementMax());

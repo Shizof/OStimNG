@@ -37,6 +37,30 @@
 			"description": "$ostim_nav_kiss_t{1}",
 			"icon": "OStim/sensual/kissing_mf",
 			"priority": 1000
+		},
+		{
+			"destination": "OStim2PStandingKneelingMF",
+			"description": "$ostim_nav_kneel_before_t{0}",
+			"icon": "OStim/positional/kneeling_f",
+			"priority": 1000
+		},
+		{
+			"destination": "OStim2PStandingSquattingMF",
+			"description": "$ostim_nav_squat_before_t{0}",
+			"icon": "OStim/positional/squatting_f",
+			"priority": 1000
+		},
+		{
+			"destination": "OStim2PSittingMaleInMF",
+			"description": "$ostim_nav_sit_down",
+			"icon": "OStim/symbols/arrow_down",
+			"priority": 1000
+		},
+		{
+			"destination": "OStim2PStandingCunnilingusMF",
+			"description": "$ostim_nav_cunnilingus_t{1}",
+			"icon": "OStim/sexual/cunnilingus_standing_mf",
+			"priority": 1000
 		}
 	],
 	"actors":[
@@ -51,6 +75,7 @@
 		},
 		{
 			"intendedSex": "female",
+			"lookLeft": 0,
 			"tags": [
 				"standing"
 			],

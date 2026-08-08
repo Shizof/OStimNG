@@ -1,0 +1,24 @@
+{
+	"aliases":[
+		"stroketail"
+	],
+	"actor":{
+		"info": "the one with the hand",
+		"requirements":[
+			"hand"
+		],
+		"strippingSlots":[
+			33
+		]
+	},
+	"target":{
+		"info": "the one with the tail",
+		"requierments": [
+			"tail"
+		],
+		"equipObject": "tail"
+	},
+	"tags":[
+		"romantic"
+	]
+}

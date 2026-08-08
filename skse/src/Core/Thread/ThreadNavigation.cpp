@@ -32,7 +32,7 @@ namespace Threading {
     }
 
     void addFurniture2(std::vector<std::function<bool(Graph::Node*)>>& conditions, Furniture::FurnitureType* furnitureType) {
-        std::string furnitureTypeID = furnitureType->getListType()->id;
+        std::string furnitureTypeID = furnitureType->getListTypeInternal()->id;
         if (furnitureTypeID == "none") {
             conditions.push_back([&](Graph::Node* node) {
                 return forAnyActor2(node, [&](Graph::GraphActor& actor) {
@@ -146,7 +146,7 @@ namespace Threading {
 
         std::vector<Graph::SequenceEntry> nodes = m_currentNode->getRoute(MCM::MCMTable::navigationDistanceMax(), getActorConditions(), node);
         if (nodes.empty()) {
-            warpTo(node, MCM::MCMTable::useAutoModeFades());
+            warpTo(node, MCM::MCMTable::useAutoModeFades() || node->fadeOnEntry);
             nodeQueueCooldown = duration + 1000;
         } else {
             nodes.back().duration = duration;
@@ -154,7 +154,11 @@ namespace Threading {
                 nodeQueue.push(nodes[i]);
             }
             nodeQueueCooldown = nodes.front().duration;
-            ChangeNode(nodes.front().node);
+            if (playerThread && (MCM::MCMTable::useAutoModeFades() || nodes.front().node->fadeOnEntry)) {
+                fadeAndChangeNode(nodes.front().node);
+            } else {
+                ChangeNode(nodes.front().node);
+            }
         }
     }
 

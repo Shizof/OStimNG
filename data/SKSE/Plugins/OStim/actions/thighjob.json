@@ -23,6 +23,36 @@
 			"mod": "OStim.esp",
 			"formid": "0xE88"
 		},
+		"statFaction":{
+			"info": "OStimThighjobActorCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0xF73"
+		},
+		"playerStatFaction":{
+			"info": "OStimThighjobWithPlayerActorCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0xFFC"
+		},
+		"partnerClimaxStatFaction":{
+			"info": "OStimThighjobActorPartnerClimaxCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x972"
+		},
+		"playerPartnerClimaxStatFaction":{
+			"info": "OStimThighjobWithPlayerActorPartnerClimaxCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x973"
+		},
+		"playerStatList":{
+			"info": "OStimThighjobWithPlayerActorList",
+			"mod": "OStim.esp",
+			"formid": "0x96E"
+		},
+		"playerPartnerClimaxStatList":{
+			"info": "OStimThighjobWithPlayerActorPartnerClimaxList",
+			"mod": "OStim.esp",
+			"formid": "0x96F"
+		},
 		"stringLists":{
 			"cum":[
 				"thighs"
@@ -50,6 +80,36 @@
 			"mod": "OStim.esp",
 			"formid": "0xE89"
 		},
+		"statFaction":{
+			"info": "OStimThighjobActorCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0xF74"
+		},
+		"playerStatFaction":{
+			"info": "OStimThighjobWithPlayerTargetCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0xFFD"
+		},
+		"climaxStatFaction":{
+			"info": "OStimThighjobTargetClimaxCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x974"
+		},
+		"playerClimaxStatFaction":{
+			"info": "OStimThighjobWithPlayerTargetClimaxCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x975"
+		},
+		"playerStatList":{
+			"info": "OStimThighjobWithPlayerTargetList",
+			"mod": "OStim.esp",
+			"formid": "0x970"
+		},
+		"playerClimaxStatList":{
+			"info": "OStimThighjobWithPlayerTargetClimaxList",
+			"mod": "OStim.esp",
+			"formid": "0x971"
+		},
 		"toySlot": "genital"
 	},
 	"performer":{
@@ -62,6 +122,7 @@
 		}
 	},
 	"tags":[
+		"penilestimulation",
 		"sexual"
 	]
 }

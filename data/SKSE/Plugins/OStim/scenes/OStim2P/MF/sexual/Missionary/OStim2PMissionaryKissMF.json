@@ -44,6 +44,12 @@
 			"description": "$ostim_nav_hold_hands",
 			"icon": "OStim/detail/holdinghand_mf",
 			"priority": 0
+		},
+		{
+			"destination": "OStim2PMissionaryJerkToPussyMF",
+			"description": "$ostim_nav_masturbate_a{0}",
+			"icon": "OStim/sexual/malemasturbation",
+			"priority": 3000
 		}
 	],
 	"tags":[

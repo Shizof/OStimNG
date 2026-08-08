@@ -1,0 +1,110 @@
+{
+  "name": "$OStim2PStandingBehindFuckHoldingWristsMF",
+  "modPack": "OStim",
+  "length": 2.0,
+  "speeds": [
+    {
+      "animation": "OStim2PStandingBehindFuckHoldingWristsMF_S1",
+      "playbackSpeed": 1,
+      "displaySpeed": 0.5
+    },
+    {
+      "animation": "OStim2PStandingBehindFuckHoldingWristsMF_S2",
+      "playbackSpeed": 1,
+      "displaySpeed": 1
+    },
+    {
+      "animation": "OStim2PStandingBehindFuckHoldingWristsMF_S3",
+      "playbackSpeed": 1,
+      "displaySpeed": 1.5
+    },
+    {
+      "animation": "OStim2PStandingBehindFuckHoldingWristsMF_S4",
+      "playbackSpeed": 1,
+      "displaySpeed": 2
+    },
+    {
+      "animation": "OStim2PStandingBehindFuckHoldingWristsMF_S5",
+      "playbackSpeed": 1,
+      "displaySpeed": 2.5
+    }
+  ],
+  "navigations": [
+    {
+      "destination": "OStim2PStandingBehindFuckMF",
+      "description": "$ostim_nav_hold_hip_t{1}",
+      "icon": "OStim/detail/holdinghip_behind_mf",
+      "priority": -1000,
+      "noWarnings": false
+    },
+    {
+      "destination": "OStim2PStandingButtjobMF",
+      "description": "$ostim_nav_crackfuck_t{1}",
+      "icon": "OStim/sexual/buttjob_mf",
+      "priority": 0,
+      "noWarnings": false 
+    },
+    {
+      "destination": "OStim2PStandingBehindFuckNoHandsMF",
+      "description": "$ostim_nav_hold_stop_t{1}",
+      "icon": "OStim/detail/grab_m_end",
+      "priority": 1000,
+      "noWarnings": false
+    },
+    {
+      "destination": "OStim2PStandingBehindFuckHoldingArmsMF",
+      "description": "$ostim_nav_hold_arms_t{1}",
+      "icon": "OStim/detail/grab_2h_m",
+      "priority": 1000,
+      "noWarnings": false
+    },
+    {
+      "destination": "OStim2PSquattingBehindGropingButtBothHandsMF",
+      "description": "$ostim_nav_grope_butt_t{1}",
+      "icon": "OStim/detail/gropingbutt_behind_2h_mf",
+      "priority": 2000,
+      "noWarnings": false
+    },
+    {
+      "destination": "OStim2PStandingBehindJerkToButtMF",
+      "description": "$ostim_nav_masturbate_to_butt_t{1}",
+      "icon": "OStim/sexual/malemasturbation",
+      "priority": 2000,
+      "noWarnings": false
+    }
+  ],
+  "actors": [
+    {
+      "type": "npc",
+      "intendedSex": "male",
+      "sosBend": 2,
+      "scale": 1.03,
+      "lookUp": -50,
+      "tags": [
+        "standing"
+      ],
+      "feetOnGround": true
+    },
+    {
+      "type": "npc",
+      "intendedSex": "female",
+      "scaleHeight": 67,
+      "scale": 1.0,
+      "lookUp": -30,
+      "tags": [
+        "bendover",
+        "facingaway",
+        "standing"
+      ],
+      "feetOnGround": true
+    }
+  ],
+  "actions": [
+    {
+      "type": "vaginalsex",
+      "actor": 0,
+      "target": 1,
+      "performer": 0
+    }
+  ]
+}

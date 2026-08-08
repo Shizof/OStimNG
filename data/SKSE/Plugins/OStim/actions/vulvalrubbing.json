@@ -1,0 +1,122 @@
+{
+	"aliases":[
+		"clitoralrubbing",
+		"rubbingclit",
+		"rubbingclitoris",
+		"rubclit",
+		"rubclitoris",
+		"rubbingvulva",
+		"rubvulva",
+		"vaginalrubbing"
+	],
+	"actor":{
+		"info": "the one with the hand",
+		"stimulation":0.1,
+		"maxStimulation":50,
+		"moan": true,
+		"talk":true,
+		"requirements":[
+			"hand"
+		],
+		"strippingSlots":[
+			33
+		],
+		"faction":{
+			"info": "OStimVulvalRubbingActorFaction",
+			"mod": "OStim.esp",
+			"formid": "0xE82"
+		},
+		"statFaction":{
+			"info": "OStimVulvalRubbingActorCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0xF6F"
+		},
+		"playerStatFaction":{
+			"info": "OStimVulvalRubbingWithPlayerActorCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0xFDC"
+		},
+		"partnerClimaxStatFaction":{
+			"info": "OStimVulvalRubbingActorPartnerClimaxCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x9CE"
+		},
+		"playerPartnerClimaxStatFaction":{
+			"info": "OStimVulvalRubbingWithPlayerActorPartnerClimaxCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x9CF"
+		},
+		"playerStatList":{
+			"info": "OStimVulvalRubbingWithPlayerActorList",
+			"mod": "OStim.esp",
+			"formid": "0x9D2"
+		},
+		"playerPartnerClimaxStatList":{
+			"info": "OStimVulvalRubbingWithPlayerActorPartnerClimaxList",
+			"mod": "OStim.esp",
+			"formid": "0x9D3"
+		}
+	},
+	"target":{
+		"info": "the one with the vulva",
+		"stimulation":1.3,
+		"fullStrip":true,
+		"moan":true,
+		"talk":true,
+		"requirements":[
+			"vagina"
+		],
+		"strippingSlots":[
+			32,
+			49,
+			52,
+			53,
+			54
+		],
+		"faction":{
+			"info": "OStimVulvalRubbingTargetFaction",
+			"mod": "OStim.esp",
+			"formid": "0xE83"
+		},
+		"statFaction":{
+			"info": "OStimVulvalRubbingActorCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0xF70"
+		},
+		"playerStatFaction":{
+			"info": "OStimVulvalRubbingWithPlayerTargetCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0xFDD"
+		},
+		"climaxStatFaction":{
+			"info": "OStimVulvalRubbingSexTargetClimaxCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x9D0"
+		},
+		"playerClimaxStatFaction":{
+			"info": "OStimVulvalRubbingWithPlayerTargetClimaxCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x9D1"
+		},
+		"playerStatList":{
+			"info": "OStimVulvalRubbingWithPlayerTargetList",
+			"mod": "OStim.esp",
+			"formid": "0x9D4"
+		},
+		"playerClimaxStatList":{
+			"info": "OStimVulvalRubbingWithPlayerTargetClimaxList",
+			"mod": "OStim.esp",
+			"formid": "0x9D5"
+		},
+		"toySlot": "genital"
+	},
+	"performer":{
+		"floats":{
+			"stamina":0.75
+		}
+	},
+	"tags":[
+		"vulvalstimulation",
+		"sexual"
+	]
+}

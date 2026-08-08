@@ -3,12 +3,13 @@
 #include "ThreadActor.h"
 #include "ThreadActorVisitor.h"
 
+#include "../Furniture/FurnitureType.h"
 #include "../Graph/Node.h"
 
 namespace OStim {
     class Thread {
     public:
-        // --- API version 1 ---
+        // --- ABI version 1 ---
         virtual int32_t getThreadID() = 0;
 
         virtual bool isPlayerThread() = 0;
@@ -18,5 +19,10 @@ namespace OStim {
         virtual void forEachThreadActor(ThreadActorVisitor* visitor) = 0;
 
         virtual Node* getCurrentNode() = 0;
+
+        // --- ABI version 3 ---
+        virtual FurnitureType* getFurnitureType() = 0;
+        // cast this to RE::TESObjectREFR*
+        virtual void* getFurnitureObject() = 0;
     };
 }

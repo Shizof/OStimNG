@@ -32,6 +32,12 @@
 			"description": "$ostim_nav_kiss_stop_t{1}",
 			"icon": "OStim/sensual/kissing_end",
 			"priority": 0
+		},
+		{
+			"destination": "OStim2PMissionaryJerkToPussyMF",
+			"description": "$ostim_nav_masturbate_a{0}",
+			"icon": "OStim/sexual/malemasturbation",
+			"priority": 3000
 		}
 	],
 	"tags":[

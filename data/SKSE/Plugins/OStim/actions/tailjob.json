@@ -1,0 +1,115 @@
+{
+	"aliases":[
+		"tailj",
+		"tj"
+	],
+	"actor":{
+		"info": "the one with the tail",
+		"stimulation":0.1,
+		"maxStimulation":50,
+		"moan": true,
+		"talk":true,
+		"requirements":[
+			"tail"
+		],
+		"equipObject": "tail",
+		"faction":{
+			"info": "OStimTailjobActorFaction",
+			"mod": "OStim.esp",
+			"formid": "0xF7E"
+		},
+		"statFaction":{
+			"info": "OStimTailjobActorCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0xF80"
+		},
+		"playerStatFaction":{
+			"info": "OStimTailjobWithPlayerActorCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0xFF6"
+		},
+		"partnerClimaxStatFaction":{
+			"info": "OStimTailjobActorPartnerClimaxCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x966"
+		},
+		"playerPartnerClimaxStatFaction":{
+			"info": "OStimTailjobWithPlayerActorPartnerClimaxCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x967"
+		},
+		"playerStatList":{
+			"info": "OStimTailjobWithPlayerActorList",
+			"mod": "OStim.esp",
+			"formid": "0x96A"
+		},
+		"playerPartnerClimaxStatList":{
+			"info": "OStimTailjobWithPlayerActorPartnerClimaxList",
+			"mod": "OStim.esp",
+			"formid": "0x96B"
+		}
+	},
+	"target":{
+		"info": "the one with the penis",
+		"stimulation":0.9,
+		"fullStrip":true,
+		"moan":true,
+		"talk":true,
+		"requirements":[
+			"penis"
+		],
+		"strippingSlots":[
+			32,
+			49,
+			52,
+			53,
+			54
+		],
+		"toySlot": "genital",
+		"equipObject": "tail",
+		"faction":{
+			"info": "OStimTailjobTargetFaction",
+			"mod": "OStim.esp",
+			"formid": "0xF7F"
+		},
+		"statFaction":{
+			"info": "OStimTailjobTargetCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0xF81"
+		},
+		"playerStatFaction":{
+			"info": "OStimTailjobWithPlayerTargetCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0xFF7"
+		},
+		"climaxStatFaction":{
+			"info": "OStimTailjobTargetClimaxCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x968"
+		},
+		"playerClimaxStatFaction":{
+			"info": "OStimTailjobWithPlayerTargetClimaxCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x969"
+		},
+		"playerStatList":{
+			"info": "OStimTailjobWithPlayerTargetList",
+			"mod": "OStim.esp",
+			"formid": "0x96C"
+		},
+		"playerClimaxStatList":{
+			"info": "OStimTailjobWithPlayerTargetClimaxList",
+			"mod": "OStim.esp",
+			"formid": "0x96D"
+		}
+	},
+	"performer":{
+		"floats":{
+			"stamina":0.75
+		}
+	},
+	"tags":[
+		"penilestimulation",
+		"sexual"
+	]
+}

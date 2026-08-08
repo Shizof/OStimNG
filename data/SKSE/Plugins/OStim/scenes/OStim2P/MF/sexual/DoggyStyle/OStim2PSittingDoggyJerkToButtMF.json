@@ -1,0 +1,83 @@
+{
+  "name": "$OStim2PSittingDoggyJerkToButtMF",
+  "modpack": "OStim",
+  "length": 2.0,
+  "speeds": [
+    {
+      "animation": "OStim2PSittingDoggyJerkToButtMF_S1",
+      "displaySpeed": 1
+    }
+  ],
+  "navigations": [
+    {
+      "destination": "OStim2PDoggyIdleMF",
+      "description": "$ostim_nav_return",
+      "icon": "OStim/symbols/return",
+      "priority": -1000
+    },
+    {
+      "destination": "OStim2PDoggyStyleMF",
+      "description": "$ostim_nav_doggy_t{1}",
+      "icon": "OStim/sexual/doggystyle_mf",
+      "priority": 1000
+    },
+    {
+      "destination": "OStim2PProneJerkToButtMF",
+      "description": "$ostim_nav_lie_front_a{1}",
+      "icon": "OStim/positional/lyingfront_f",
+      "priority": 3000
+    },
+    {
+      "destination": "OStim2PKneelingBehindTeaseJerkMF",
+      "description": "$ostim_nav_stand_up_a{1}",
+      "icon": "OStim/positional/standup_f",
+      "priority": 3000
+    }
+  ],
+  "tags":[
+    "doggystyle"
+  ],
+  "actors": [
+    {
+      "intendedSex": "male",
+      "sosBend": 2,
+      "scale": 1.03,
+      "lookUp": 50,
+      "tags": [
+        "sitting"
+      ],
+      "feetOnGround": false
+    },
+    {
+      "intendedSex": "female",
+      "lookUp": -50,
+      "lookLeft": 100,
+      "tags": [
+        "facingaway",
+        "kneeling"
+      ],
+      "feetOnGround": false
+    }
+  ],
+  "actions": [
+    {
+      "type": "malemasturbation",
+      "actor": 0
+    },
+    {
+      "type": "spectating",
+      "actor": 1,
+      "target": 0
+    },
+    {
+      "type": "cumonbutt",
+      "actor": 0,
+      "target": 1
+    },
+    {
+      "type": "cumonvulva",
+      "actor": 0,
+      "target": 1
+    }
+  ]
+}

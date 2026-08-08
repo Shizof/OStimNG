@@ -31,6 +31,18 @@
 			"description": "$ostim_nav_missionary_t{1}",
 			"icon": "OStim/sexual/vaginalsex_mf",
 			"priority": 3000
+		},
+		{
+			"destination": "OStim2PStandingKneelingMF",
+			"description": "$ostim_nav_stand_up_a{0}",
+			"icon": "OStim/positional/standup_m",
+			"priority": 3000
+		},
+		{
+			"destination": "OStim2PMissionaryJerkToPussyMF",
+			"description": "$ostim_nav_masturbate_a{0}",
+			"icon": "OStim/sexual/malemasturbation",
+			"priority": 3000
 		}
 	],
 	"tags":[
@@ -49,6 +61,7 @@
 		},
 		{
 			"intendedSex": "female",
+			"lookUp": -75,
 			"tags": [
 				"lyingback",
 				"onbottom"

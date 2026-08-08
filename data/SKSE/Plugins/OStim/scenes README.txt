@@ -94,6 +94,8 @@ actor fields:
 	the default value is the total height of the vanilla skeleton
 "animationIndex" (int): the index of the animation to play (see speed fields: animation) (defaults to the actors index)
 	this can be used to invert the roles of a scene without having to register the animations twice
+"singleSpeed" (bool): if true the actor will always play the animation for the first speed
+	this can be used to not register the same animation multiple times when not needed (e.g. the female in a male masturbation animation)
 "underlyingExpression" (string): an expression set to be used as the underlying expression, if left out the underlying expression will be determined based on the actions instead (see facial expressions README)
 "expressionAction" (int): the index of the action that takes priority for the actors facial expression (see facial expressions README)
 	this does nothing if the "underlyingExpression" property is used

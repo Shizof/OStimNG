@@ -16,12 +16,12 @@ namespace Graph {
         std::unordered_map<int, std::vector<Node*>*>* innerMap;
         std::vector<Node*>* innerList;
         int count = node->actors.size();
-        auto iter = nodeList.find(node->furnitureType->getMasterType());
+        auto iter = nodeList.find(node->furnitureType->getMasterTypeInternal());
         if (iter != nodeList.end()) {
             innerMap = iter->second;
         } else {
             innerMap = new std::unordered_map<int, std::vector<Node*>*>();
-            nodeList.insert({node->furnitureType->getMasterType(), innerMap});
+            nodeList.insert({node->furnitureType->getMasterTypeInternal(), innerMap});
         }
 
         auto iter2 = innerMap->find(count);
@@ -67,10 +67,15 @@ namespace Graph {
                 logger::warn("Couldn't add navigation from {} to {} because their actor types don't match.", raw.origin, raw.destination);
             }
 
+            bool alreadyExists = false;
             for (auto& existingNavigation : start->navigations) {
                 if (existingNavigation.nodes.back() == destination || existingNavigation.nodes.front() == destination) {
-                    continue;
+                    alreadyExists = true;
+                    break;
                 }
+            }
+            if (alreadyExists) {
+                continue;
             }
 
             Navigation navigation;
@@ -85,6 +90,13 @@ namespace Graph {
                         next = GraphTable::getNodeById(nav.destination);
                         break;
                     }
+                }
+
+                // Fallback for partial-reload: the transition's destination isn't in the
+                // local navigations vector (only the reloaded node's navs are present),
+                // so use the transition node's already-built navigation chain instead.
+                if (!next && !currentNode->navigations.empty()) {
+                    next = currentNode->navigations.front().nodes.front();
                 }
 
                 if (!next) {
@@ -161,7 +173,7 @@ namespace Graph {
     }
 
     bool GraphTable::hasNodes(Furniture::FurnitureType* furnitureType, int actorCount) {
-        furnitureType = furnitureType->getMasterType();
+        furnitureType = furnitureType->getMasterTypeInternal();
 
         auto iter = nodeList.find(furnitureType);
         if (iter == nodeList.end()) {
@@ -173,7 +185,7 @@ namespace Graph {
     }
 
     Node* GraphTable::getRandomNode(Furniture::FurnitureType* furnitureType, std::vector<Trait::ActorCondition> actorConditions, std::function<bool(Node*)> nodeCondition) {
-        Furniture::FurnitureType* masterType = furnitureType->getMasterType();
+        Furniture::FurnitureType* masterType = furnitureType->getMasterTypeInternal();
 
         auto iter = nodeList.find(masterType);
         if (iter == nodeList.end()) {

@@ -6,6 +6,7 @@
 namespace OStim {
     class ActionType {
     public:
+        // --- ABI version 1 ---
         virtual const char* getActionID() = 0;
 
         virtual bool hasTag(const char* tag) = 0;

@@ -1,0 +1,81 @@
+{
+  "name": "$OStim2PKneelingBehindTeaseJerkMF",
+  "modpack": "OStim",
+  "length": 2,
+  "speeds": [
+    {
+      "animation": "OStim2PKneelingBehindTeaseJerkMF_S1",
+      "displaySpeed": 1
+    }
+  ],
+  "navigations": [
+    {
+      "destination": "OStim2PSquattingBehindGropingButtBothHandsMF",
+      "description": "$ostim_nav_grope_butt_t{1}",
+      "icon": "OStim/detail/gropingbutt_behind_2h_mf",
+      "priority": 0
+    },
+    {
+      "destination": "OStim2PDoggyStyleHoldingArmsPullUpMF",
+      "description": "$ostim_nav_pull_down_t{1}",
+      "icon": "OStim/sexual/analsex_mf",
+      "priority": 0
+    },
+    {
+      "destination": "OStim2PFaceRidingMF",
+      "description": "$ostim_nav_facesitting_t{0}",
+      "icon": "OStim/sexual/facesitting_mf",
+      "priority": 1000
+    },
+    {
+      "destination": "OStim2PStandingBehindJerkToButtMF",
+      "description": "$ostim_nav_stand_up_a{0}",
+      "icon": "OStim/positional/standup_m",
+      "priority": 2000
+    }
+  ],
+  "actors": [
+    {
+      "intendedSex": "male",
+      "sosBend": 2,
+      "scale": 1.03,
+      "lookUp": -25,
+      "tags": [
+        "kneeling"
+      ],
+      "feetOnGround": false
+    },
+    {
+      "intendedSex": "female",
+      "lookUp": -30,
+      "lookLeft": 100,
+      "scaleHeight": 106,
+      "tags": [
+        "facingaway",
+        "standing"
+      ],
+      "feetOnGround": true
+    }
+  ],
+  "actions": [
+    {
+      "type": "malemasturbation",
+      "actor": 0
+    },
+    {
+      "type": "spectating",
+      "actor": 1,
+      "target": 0
+    },
+    {
+      "type": "cumonvulva",
+      "actor": 0,
+      "target": 1
+    },
+    {
+      "type": "gropingbreast",
+      "actor": 1,
+      "performer": 1
+    }
+  ]
+}

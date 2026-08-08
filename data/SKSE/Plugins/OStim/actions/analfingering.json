@@ -1,4 +1,8 @@
 {
+	"aliases":[
+		"fingeringanus",
+		"fingeranus"
+	],
 	"actor":{
 		"info": "the one with the hand",
 		"stimulation":0.1,
@@ -15,6 +19,36 @@
 			"info": "OStimAnalFingeringActorFaction",
 			"mod": "OStim.esp",
 			"formid": "0xE4B"
+		},
+		"statFaction":{
+			"info": "OStimAnalFingeringActorCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0xF03"
+		},
+		"playerStatFaction":{
+			"info": "OStimAnalFingeringWithPlayerActorCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0xFC6"
+		},
+		"partnerClimaxStatFaction":{
+			"info": "OStimAnalFingeringActorPartnerClimaxCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x90E"
+		},
+		"playerPartnerClimaxStatFaction":{
+			"info": "OStimAnalFingeringWithPlayerActorPartnerClimaxCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x90F"
+		},
+		"playerStatList":{
+			"info": "OStimAnalFingeringWithPlayerActorList",
+			"mod": "OStim.esp",
+			"formid": "0x912"
+		},
+		"playerPartnerClimaxStatList":{
+			"info": "OStimAnalFingeringWithPlayerActorPartnerClimaxList",
+			"mod": "OStim.esp",
+			"formid": "0x913"
 		}
 	},
 	"target":{
@@ -38,6 +72,36 @@
 			"mod": "OStim.esp",
 			"formid": "0xE4C"
 		},
+		"statFaction":{
+			"info": "OStimAnalFingeringTargetCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0xF04"
+		},
+		"playerStatFaction":{
+			"info": "OStimAnalFingeringWithPlayerTargetCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0xFC7"
+		},
+		"climaxStatFaction":{
+			"info": "OStimAnalFingeringTargetClimaxCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x910"
+		},
+		"playerClimaxStatFaction":{
+			"info": "OStimAnalFingeringWithPlayerTargetClimaxCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x911"
+		},
+		"playerStatList":{
+			"info": "OStimAnalFingeringWithPlayerTargetList",
+			"mod": "OStim.esp",
+			"formid": "0x914"
+		},
+		"playerClimaxStatList":{
+			"info": "OStimAnalFingeringWithPlayerTargetClimaxList",
+			"mod": "OStim.esp",
+			"formid": "0x915"
+		},
 		"toySlot": "anus"
 	},
 	"performer":{
@@ -46,6 +110,8 @@
 		}
 	},
 	"tags":[
+		"analstimulation",
+		"fingering",
 		"sexual"
 	]
 }

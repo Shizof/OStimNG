@@ -165,7 +165,7 @@ namespace Threading {
         if (params.startingNodes.empty()) {
             std::string nodeTag = MCM::MCMTable::useIntroScenes() ? "intro" : "idle";
             Furniture::FurnitureType* furnitureType = Furniture::FurnitureTable::getFurnitureType(params.furniture, false);
-            std::string furnitureTypeID = furnitureType->getListType()->id;
+            std::string furnitureTypeID = furnitureType->getListTypeInternal()->id;
 
             Graph::Node* node = nullptr;
             if (furnitureTypeID == "none") {

@@ -1,0 +1,31 @@
+note: there are much more API forms listed in the individual action files
+this is just a list of the general API forms
+
+### Factions ###
+	note: faction ranks are mirrors of the represented values, changing faction ranks will not change the actual values
+	note: actors will only be in these factions during scenes
+
+OStimExcitementFaction - 0xD93
+	faction rank will reflect the current excitement level of the actor
+
+OStimActorCountFaction - 0xECA
+	faction rank will reflect the amount of actors in the scene
+
+OStimTimesClimaxedFaction - 0xE49
+	faction rank will reflect how many times the actor climaxed in the current scene
+
+OStimTimeUntilClimaxFaction - 0xE4A
+	faction rank will reflect the time in seconds until the actor reaches a climax at their current excitement rate
+	a value of 101 means more than 100 seconds, a value of -1 means the actor cannot reach a climax in the current animation
+
+OStimSchlongifiedFaction - 0xE9C
+	faction membership will reflect whether or not the actor has a penis, mainly used to identify futas
+
+OStimInWaterFaction - 0xEDF
+	faction membership will reflect whether or not the scene takes place in water, mainly used to washing animations
+
+
+### Formlists ###
+
+OStimActorList - 0x815
+	a list of all actors that have participated in an OStim scene at least once

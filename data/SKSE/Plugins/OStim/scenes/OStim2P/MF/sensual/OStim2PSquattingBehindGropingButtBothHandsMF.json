@@ -1,0 +1,89 @@
+{
+  "name": "$OStim2PSquattingBehindGropingButtBothHandsMF",
+  "modPack": "OStim",
+  "length": 2.0,
+  "speeds": [
+    {
+      "animation": "OStim2PSquattingBehindGropingButtBothHandsMF_S1",
+      "playbackSpeed": 1,
+      "displaySpeed": 0.5
+    },
+    {
+      "animation": "OStim2PSquattingBehindGropingButtBothHandsMF_S2",
+      "playbackSpeed": 1,
+      "displaySpeed": 1
+    },
+    {
+      "animation": "OStim2PSquattingBehindGropingButtBothHandsMF_S3",
+      "playbackSpeed": 1,
+      "displaySpeed": 1.5
+    },
+    {
+      "animation": "OStim2PSquattingBehindGropingButtBothHandsMF_S4",
+      "playbackSpeed": 1,
+      "displaySpeed": 2
+    }
+  ],
+  "navigations": [
+    {
+      "destination": "OStim2PStandingHoldingFromBehindMF",
+      "description": "$ostim_nav_return",
+      "icon": "OStim/symbols/return",
+      "priority": -1000,
+      "noWarnings": false
+    },
+    {
+      "destination": "OStim2PKneelingBehindCunnilingusMF",
+      "description": "$ostim_nav_cunnilingus_t{1}",
+      "icon": "OStim/sexual/cunnilingus_behind_mf",
+      "priority": 1000,
+      "noWarnings": false
+    },
+    {
+      "destination": "OStim2PDoggyIdleMF",
+      "description": "$ostim_nav_all_fours_a{1}",
+      "icon": "OStim/positional/allfours_alt_f",
+      "priority": 0
+    },
+    {
+      "destination": "OStim2PStandingBehindFuckNoHandsMF",
+      "description": "$ostim_nav_sex_behind_t{1}",
+      "icon": "OStim/sexual/bendover_standing_mf",
+      "priority": 1000,
+      "noWarnings": false
+    }
+  ],
+  "actors": [
+    {
+      "type": "npc",
+      "intendedSex": "male",
+      "sosBend": 6,
+      "scale": 1.03,
+      "tags": [
+        "squatting"
+      ],
+      "feetOnGround": true
+    },
+    {
+      "type": "npc",
+      "intendedSex": "female",
+      "scaleHeight": 118,
+      "scale": 1.0,
+      "lookUp": -77,
+      "lookLeft": 33,
+      "tags": [
+        "standing",
+        "facingaway"
+      ],
+      "feetOnGround": true
+    }
+  ],
+  "actions": [
+    {
+      "type": "gropingbutt",
+      "actor": 0,
+      "target": 1,
+      "performer": 0
+    }
+  ]
+}

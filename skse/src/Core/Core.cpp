@@ -30,7 +30,7 @@ namespace Threading {
         actor.playAnimation("SOSFlaccid");
     }
 
-    bool isEligible(GameAPI::GameActor actor) {
+    bool isEligible(GameAPI::GameActor actor) {   //for vr version
         if (!actor) {
             logger::warn("actor eligibility failed: null actor");
             return false;

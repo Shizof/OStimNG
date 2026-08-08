@@ -131,7 +131,7 @@ namespace OstimNG_API::Thread
             for (auto& nav : currentNode->navigations)
             {
                 if (nav.fulfilledBy(conditions) &&
-                    thread->getFurnitureType()->isChildOf(nav.nodes.back()->furnitureType))
+                    thread->getFurnitureTypeInternal()->isChildOf(nav.nodes.back()->furnitureType))
                 {
                     count++;
                 }
@@ -166,7 +166,7 @@ namespace OstimNG_API::Thread
                 if (count >= bufferSize) break;
 
                 if (nav.fulfilledBy(conditions) &&
-                    thread->getFurnitureType()->isChildOf(nav.nodes.back()->furnitureType))
+                    thread->getFurnitureTypeInternal()->isChildOf(nav.nodes.back()->furnitureType))
                 {
                     m_navDescCache.push_back(nav.getDescription(thread));
                     buffer[count].sceneId = nav.nodes.front()->scene_id.c_str();
@@ -444,7 +444,7 @@ namespace OstimNG_API::Thread
                 if (count >= bufferSize) break;
 
                 if (node->actors.size() != thread->getActorCount()) continue;
-                if (!thread->getFurnitureType()->isChildOf(node->furnitureType)) continue;
+                if (!thread->getFurnitureTypeInternal()->isChildOf(node->furnitureType)) continue;
                 if (node->isTransition) continue;
 
                 buffer[count].sceneId = node->scene_id.c_str();
@@ -586,7 +586,7 @@ namespace OstimNG_API::Thread
             for (auto& a : actors) conditions.push_back(Trait::ActorCondition::create(a.form));
 
             auto node = Graph::GraphTable::getRandomNode(
-                thread->getFurnitureType(), conditions,
+                thread->getFurnitureTypeInternal(), conditions,
                 [](Graph::Node* n) { return !n->isTransition; });
             return node != nullptr;
         }

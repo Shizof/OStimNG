@@ -20,7 +20,7 @@
 #include "pugixml.hpp"
 #include "nlohmann/json.hpp"
 
-template <>
+template <>   //for vr version
 struct fmt::formatter<nlohmann::json> : fmt::formatter<std::string> {
     auto format(const nlohmann::json& j, fmt::format_context& ctx) const {
         return fmt::formatter<std::string>::format(j.dump(), ctx);

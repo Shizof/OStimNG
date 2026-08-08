@@ -1,0 +1,74 @@
+{
+	"actor":{
+		"info": "the one holding the toy",
+		"stimulation":0.1,
+		"maxStimulation":75,
+		"moan":true,
+		"talk":true,
+		"faction":{
+			"info": "OStimOralToyingActorFaction",
+			"mod": "OStim.esp",
+			"formid": "0xF27"
+		},
+		"statFaction":{
+			"info": "OStimOralToyingActorCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0xF58"
+		},
+		"playerStatFaction":{
+			"info": "OStimOralToyingWithPlayerActorCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0xFEE"
+		},
+		"playerStatList":{
+			"info": "OStimOralToyingWithPlayerActorList",
+			"mod": "OStim.esp",
+			"formid": "0x8B3"
+		}
+	},
+	"target":{
+		"info": "the one with the mouth",
+		"stimulation":0.1,
+		"maxStimulation":75,
+		"moan":true,
+		"muffled":true,
+		"requirements":[
+			"mouth"
+		],
+		"strippingSlots":[
+			30,
+			31,
+			44,
+			55
+		],
+		"faction":{
+			"info": "OStimOralToyingTargetFaction",
+			"mod": "OStim.esp",
+			"formid": "0xF28"
+		},
+		"statFaction":{
+			"info": "OStimOralToyingTargetCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0xF59"
+		},
+		"playerStatFaction":{
+			"info": "OStimOralToyingWithPlayerTargetCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0xFEF"
+		},
+		"playerStatList":{
+			"info": "OStimOralToyingWithPlayerTargetList",
+			"mod": "OStim.esp",
+			"formid": "0x8B4"
+		}
+	},
+	"performer":{
+		"floats":{
+			"stamina":0.75
+		}
+	},
+	"tags":[
+		"sexual",
+		"toying"
+	]
+}

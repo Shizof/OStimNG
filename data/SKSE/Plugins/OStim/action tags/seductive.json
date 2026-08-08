@@ -1,0 +1,46 @@
+{
+	"actor":{
+		"faction":{
+			"info": "OStimSeductiveActorFaction",
+			"mod": "OStim.esp",
+			"formid": "0xFBA"
+		},
+		"statFaction":{
+			"info": "OStimSeductiveActorCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0xFBC"
+		},
+		"playerStatFaction":{
+			"info": "OStimSeductiveWithPlayerActorCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0xFBE"
+		},
+		"playerStatList":{
+			"info": "OStimSeductiveWithPlayerActorList",
+			"mod": "OStim.esp",
+			"formid": "0x89B"
+		}
+	},
+	"target":{
+		"faction":{
+			"info": "OStimSeductiveTargetFaction",
+			"mod": "OStim.esp",
+			"formid": "0xFBB"
+		},
+		"statFaction":{
+			"info": "OStimSeductiveTargetCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0xFBD"
+		},
+		"playerStatFaction":{
+			"info": "OStimSeductiveWithPlayerTargetCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0xFBF"
+		},
+		"playerStatList":{
+			"info": "OStimSeductiveWithPlayerTargetList",
+			"mod": "OStim.esp",
+			"formid": "0x89C"
+		}
+	}
+}

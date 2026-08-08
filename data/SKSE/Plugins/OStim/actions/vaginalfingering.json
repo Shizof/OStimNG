@@ -1,7 +1,9 @@
 {
 	"info": "vaginalfingering is for when actor and target are different, when they are the same use femalemasturbation",
 	"aliases":[
-		"fingering"
+		"fingering",
+		"fingeringvagina",
+		"fingervagina"
 	],
 	"actor":{
 		"info": "the one with the hand",
@@ -19,6 +21,36 @@
 			"info": "OStimVaginalFingeringActorFaction",
 			"mod": "OStim.esp",
 			"formid": "0xE8C"
+		},
+		"statFaction":{
+			"info": "OStimVaginalFingeringActorCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0xF07"
+		},
+		"playerStatFaction":{
+			"info": "OStimVaginalFingeringWithPlayerActorCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0xFFF"
+		},
+		"partnerClimaxStatFaction":{
+			"info": "OStimVaginalFingeringActorPartnerClimaxCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x99E"
+		},
+		"playerPartnerClimaxStatFaction":{
+			"info": "OStimVaginalFingeringWithPlayerActorPartnerClimaxCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x99F"
+		},
+		"playerStatList":{
+			"info": "OStimVaginalFingeringWithPlayerActorList",
+			"mod": "OStim.esp",
+			"formid": "0x9A2"
+		},
+		"playerPartnerClimaxStatList":{
+			"info": "OStimVaginalFingeringWithPlayerActorPartnerClimaxList",
+			"mod": "OStim.esp",
+			"formid": "0x9A3"
 		}
 	},
 	"target":{
@@ -42,6 +74,36 @@
 			"mod": "OStim.esp",
 			"formid": "0xE8D"
 		},
+		"statFaction":{
+			"info": "OStimVaginalFingeringTargetCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0xF08"
+		},
+		"playerStatFaction":{
+			"info": "OStimVaginalFingeringWithPlayerTargetCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x803"
+		},
+		"climaxStatFaction":{
+			"info": "OStimVaginalFingeringTargetClimaxCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x9A0"
+		},
+		"playerClimaxStatFaction":{
+			"info": "OStimVaginalFingeringWithPlayerTargetClimaxCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x9A1"
+		},
+		"playerStatList":{
+			"info": "OStimVaginalFingeringWithPlayerTargetList",
+			"mod": "OStim.esp",
+			"formid": "0x9A4"
+		},
+		"playerClimaxStatList":{
+			"info": "OStimVaginalFingeringWithPlayerTargetClimaxList",
+			"mod": "OStim.esp",
+			"formid": "0x9A5"
+		},
 		"toySlot": "genital"
 	},
 	"performer":{
@@ -50,6 +112,8 @@
 		}
 	},
 	"tags":[
-		"sexual"
+		"fingering",
+		"sexual",
+		"vaginalstimulation"
 	]
 }

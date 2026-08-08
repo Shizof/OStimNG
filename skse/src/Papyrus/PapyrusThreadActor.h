@@ -178,14 +178,14 @@ namespace PapyrusThreadActor {
     void UndressPartial(RE::StaticFunctionTag*, RE::Actor* actor, int mask) {
         Threading::ThreadActor* threadActor = Threading::ThreadManager::GetSingleton()->findActor(actor);
         if (threadActor) {
-            threadActor->undressPartial(mask);
+            threadActor->undressPartialInternal(mask);
         }
     }
 
     void RedressPartial(RE::StaticFunctionTag*, RE::Actor* actor, int mask) {
         Threading::ThreadActor* threadActor = Threading::ThreadManager::GetSingleton()->findActor(actor);
         if (threadActor) {
-            threadActor->redressPartial(mask);
+            threadActor->redressPartialInternal(mask);
         }
     }
 

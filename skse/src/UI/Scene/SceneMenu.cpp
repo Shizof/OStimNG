@@ -26,7 +26,7 @@ namespace UI::Scene {
 
             RE::GFxValue args[1]{UI::Settings::fadeTime};
             optionBoxes.Invoke("SetSettings", nullptr, args, 1);
-            OStimMenu::PostRegister();
+            OStimMenu::PostRegister(); //for vr version
         });
     }
 
@@ -146,7 +146,7 @@ namespace UI::Scene {
 
             for (auto& nav : currentNode->navigations) {
                 if (nav.fulfilledBy(conditions) &&
-                    state->currentThread->getFurnitureType()->isChildOf(nav.nodes.back()->furnitureType)) {
+                    state->currentThread->getFurnitureTypeInternal()->isChildOf(nav.nodes.back()->furnitureType)) {
                     menuData.options.push_back({.nodeId = nav.nodes.front()->scene_id,
                                                 .title = nav.nodes.back()->scene_name,
                                                 .imagePath = nav.icon,

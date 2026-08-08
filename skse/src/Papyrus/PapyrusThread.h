@@ -202,7 +202,7 @@ namespace PapyrusThread {
     std::string GetFurnitureType(RE::StaticFunctionTag*, int threadID) {
         Threading::Thread* thread = Threading::ThreadManager::GetSingleton()->GetThread(threadID);
         if (thread) {
-            return thread->getFurnitureType()->getListType()->id;
+            return thread->getFurnitureTypeInternal()->getListTypeInternal()->id;
         }
         return "";
     }

@@ -3,13 +3,42 @@
 		"info": "the one holding the toy",
 		"stimulation":0.1,
 		"maxStimulation":75,
-		"fullStrip":true,
 		"moan":true,
 		"talk":true,
 		"faction":{
 			"info": "OStimAnalToyingActorFaction",
 			"mod": "OStim.esp",
 			"formid": "0xEA1"
+		},
+		"statFaction":{
+			"info": "OStimAnalToyingActorCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0xF35"
+		},
+		"playerStatFaction":{
+			"info": "OStimAnalToyingWithPlayerActorCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0xFD0"
+		},
+		"partnerClimaxStatFaction":{
+			"info": "OStimAnalToyingActorPartnerClimaxCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x92E"
+		},
+		"playerPartnerClimaxStatFaction":{
+			"info": "OStimAnalToyingWithPlayerActorPartnerClimaxCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x92F"
+		},
+		"playerStatList":{
+			"info": "OStimAnalToyingWithPlayerActorList",
+			"mod": "OStim.esp",
+			"formid": "0x932"
+		},
+		"playerPartnerClimaxStatList":{
+			"info": "OStimAnalToyingWithPlayerActorPartnerClimaxList",
+			"mod": "OStim.esp",
+			"formid": "0x933"
 		}
 	},
 	"target":{
@@ -33,6 +62,36 @@
 			"mod": "OStim.esp",
 			"formid": "0xEA2"
 		},
+		"statFaction":{
+			"info": "OStimAnalToyingTargetCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0xF36"
+		},
+		"playerStatFaction":{
+			"info": "OStimAnalToyingWithPlayerTargetCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0xFD1"
+		},
+		"climaxStatFaction":{
+			"info": "OStimAnalToyingTargetClimaxCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x930"
+		},
+		"playerClimaxStatFaction":{
+			"info": "OStimAnalToyingWithPlayerTargetClimaxCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x931"
+		},
+		"playerStatList":{
+			"info": "OStimAnalToyingWithPlayerTargetList",
+			"mod": "OStim.esp",
+			"formid": "0x934"
+		},
+		"playerClimaxStatList":{
+			"info": "OStimAnalToyingWithPlayerTargetClimaxList",
+			"mod": "OStim.esp",
+			"formid": "0x935"
+		},
 		"toySlot": "anus"
 	},
 	"performer":{
@@ -41,7 +100,9 @@
 		}
 	},
 	"tags":[
+		"analpenetration",
+		"analstimulation",
 		"sexual",
-		"toy"
+		"toying"
 	]
 }

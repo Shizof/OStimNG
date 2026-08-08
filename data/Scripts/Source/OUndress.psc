@@ -1,5 +1,7 @@
 ;/* OUndress
-* * bunch of papyrus functions that can be invoked instead of the C++ undressing code
+* * IMPORTANT: Do not call these functions, use the OActor.UndressX functions. OStim will call these functions.
+* *
+* * bunch of papyrus functions that will be invoked instead of the C++ undressing code if UsePapyrusUndressing returns true
 * * so that other mods can overwrite them if they want to modify undressing behavior
 * * by default all undressing is done in C++ and this script is useless
 */;

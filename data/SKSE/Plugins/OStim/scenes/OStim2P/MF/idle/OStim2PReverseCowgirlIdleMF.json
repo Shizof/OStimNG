@@ -15,6 +15,24 @@
 			"priority": -1000
 		},
 		{
+		  "destination": "OStim2PFaceSittingMF",
+		  "description": "$ostim_nav_facesitting_t{0}",
+		  "icon": "OStim/sexual/facesitting_mf",
+		  "priority": 0
+		},
+		{
+			"destination": "OStim2PReverseCowgirlButtJobMF",
+			"description": "$ostim_nav_buttjob_t{0}",
+			"icon": "OStim/sexual/buttjob_mf",
+			"priority": 0
+		},
+		{
+			"destination": "OStim2PReverseIdleCowgirlToReverseCowgirl1MF",
+			"description": "$ostim_nav_cowgirl_reverse_t{0}",
+			"icon": "OStim/sexual/reversecowgirl_mf",
+			"priority": 0
+		},
+		{
 			"destination": "OStim2PReverseToCowgirlIdleMF",
 			"description": "$ostim_nav_turn_around_a{1}",
 			"icon": "OStim/sexual/cowgirl_mf",

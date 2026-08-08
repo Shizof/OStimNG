@@ -3,7 +3,7 @@
 #include "GameUtil.h"
 
 #include "Game/LocaleManager.h"
-#include "RE/M/MessageBoxMenu.h"
+#include "RE/M/MessageBoxMenu.h" 
 
 namespace GameAPI {
     void Game::setGameSpeed(float speed) {
@@ -56,6 +56,6 @@ namespace GameAPI {
         for (std::string& text : options) {
             messagebox->buttonText.push_back(text.c_str());
         }
-        RE::MessageBoxMenu::QueueMessage(messagebox);
+        RE::MessageBoxMenu::QueueMessage(messagebox);   //for vr version
     }
 }

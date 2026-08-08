@@ -1,0 +1,92 @@
+{
+  "name": "$OStim2PStandingBehindJerkToButtMF",
+  "modpack": "OStim",
+  "length": 2,
+  "speeds": [
+    {
+      "animation": "OStim2PStandingBehindJerkToButtMF_S1",
+      "displaySpeed": 1
+    }
+  ],
+  "navigations": [
+    {
+      "destination": "OStim2PStandingHoldingFromBehindMF",
+      "description": "$ostim_nav_return",
+      "icon": "OStim/symbols/return",
+      "priority": -1000
+    },
+    {
+      "destination": "OStim2PStandingSpankIdleMF",
+      "description": "$ostim_nav_bend_over_spank_t{1}",
+      "icon": "OStim/sexual/spank_right_mf",
+      "priority": 1000
+    },
+    {
+      "destination": "OStim2PSquattingBehindGropingButtBothHandsMF",
+      "description": "$ostim_nav_grope_butt_t{1}",
+      "icon": "OStim/detail/gropingbutt_behind_2h_mf",
+      "priority": 2000
+    },
+    {
+      "destination": "OStim2PStandingButtjobMF",
+      "description": "$ostim_nav_crackfuck_t{1}",
+      "icon": "OStim/sexual/buttjob_mf",
+      "priority": 2000
+    },
+    {
+      "destination": "OStim2PStandingBehindFuckMF",
+      "description": "$ostim_nav_sex_behind_t{1}",
+      "icon": "OStim/sexual/bendover_standing_mf",
+      "priority": 2000
+    },
+    {
+      "destination": "OStim2PKneelingJerkToFaceMF",
+      "description": "$ostim_nav_turn_around_a{1}",
+      "icon": "OStim/positional/turnaround_f",
+      "priority": 2000
+    }
+  ],
+  "actors": [
+    {
+      "intendedSex": "male",
+      "sosBend": 2,
+      "scale": 1.03,
+      "lookUp": -50,
+      "tags": [
+        "standing"
+      ],
+      "feetOnGround": true
+    },
+    {
+      "intendedSex": "female",
+      "lookUp": -30,
+      "lookLeft": 100,
+      "tags": [
+        "facingaway",
+        "standing"
+      ],
+      "feetOnGround": true
+    }
+  ],
+  "actions": [
+    {
+      "type": "malemasturbation",
+      "actor": 0
+    },
+    {
+      "type": "spectating",
+      "actor": 1,
+      "target": 0
+    },
+    {
+      "type": "cumonbutt",
+      "actor": 0,
+      "target": 1
+    },
+    {
+      "type": "gropingbreast",
+      "actor": 1,
+      "performer": 1
+    }
+  ]
+}

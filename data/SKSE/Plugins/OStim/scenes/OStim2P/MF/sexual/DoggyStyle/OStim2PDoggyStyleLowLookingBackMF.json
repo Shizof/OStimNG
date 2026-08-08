@@ -44,6 +44,12 @@
 			"description": "$ostim_nav_hold_arm_t{1}",
 			"icon": "OStim/detail/holdingarm_mf",
 			"priority": 0
+		},
+		{
+			"destination": "OStim2PSittingDoggyJerkToButtMF",
+			"description": "$ostim_nav_masturbate_to_butt_t{1}",
+			"icon": "OStim/sexual/malemasturbation",
+			"priority": 3000
 		}
 	],
 	"tags":[

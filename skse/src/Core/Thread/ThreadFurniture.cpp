@@ -66,7 +66,7 @@ namespace Threading {
 
         if (!node) {
             std::string nodeTag = MCM::MCMTable::useIntroScenes() ? "intro" : "idle";
-            std::string furnitureTypeID = furnitureType->getListType()->id;
+            std::string furnitureTypeID = furnitureType->getListTypeInternal()->id;
             if (furnitureTypeID == "bed") {
                 node = Graph::GraphTable::getRandomNode(furnitureType, getActorConditions(), [&nodeTag](Graph::Node* node) {
                         return node->hasTag(nodeTag) && !node->hasActorTagOnAny("standing");

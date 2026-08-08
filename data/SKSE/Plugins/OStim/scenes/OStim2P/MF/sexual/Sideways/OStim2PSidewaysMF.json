@@ -1,0 +1,79 @@
+{
+  "name": "$OStim2PSidewaysMF",
+  "modpack": "OStim",
+  "length": 2,
+  "speeds": [
+    {
+      "animation": "OStim2PSidewaysMF_S1",
+      "displaySpeed": 0.5
+    },
+    {
+      "animation": "OStim2PSidewaysMF_S2",
+      "displaySpeed": 1
+    },
+    {
+      "animation": "OStim2PSidewaysMF_S3",
+      "displaySpeed": 2
+    },
+    {
+      "animation": "OStim2PSidewaysMF_S4",
+      "displaySpeed": 3
+    }
+  ],
+  "navigations": [
+    {
+      "destination": "OStim2PSidewaysIdleMF",
+      "description": "$ostim_nav_return",
+      "icon": "OStim/symbols/return",
+      "priority": -1000
+    },
+    {
+      "destination": "OStim2PSidewaysGrabArmMF",
+      "description": "$ostim_nav_hold_arm_t{1}",
+      "icon": "OStim/detail/holdingarm_mf",
+      "priority": 0
+    },
+    {
+      "destination": "OStim2PSidewaysHoldingLegMF",
+      "description": "$ostim_nav_hold_leg_t{1}",
+      "icon": "OStim/detail/holdingleg_mf",
+      "priority": 1000
+    },
+    {
+      "destination": "OStim2PSidewaysJerkToBodyMF",
+      "description": "$ostim_nav_masturbate_a{0}",
+      "icon": "OStim/sexual/malemasturbation",
+      "priority": 3000
+    }
+  ],
+  "actors": [
+    {
+      "intendedSex": "male",
+      "sosBend": 2,
+      "scale": 1.03,
+      "lookUp": -25,
+      "feetOnGround": false,
+      "tags": [
+        "kneeling",
+        "ontop"
+      ]
+    },
+    {
+      "intendedSex": "female",
+      "lookUp": -50,
+      "lookLeft": -75,
+      "feetOnGround": false,
+      "tags": [
+        "lyingside",
+        "onbottom"
+      ]
+    }
+  ],
+  "actions": [
+    {
+      "type": "vaginalsex",
+      "actor": 0,
+      "target": 1
+    }
+  ]
+}

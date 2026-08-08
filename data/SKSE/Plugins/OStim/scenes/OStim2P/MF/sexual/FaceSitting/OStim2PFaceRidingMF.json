@@ -1,0 +1,77 @@
+{
+	"name": "$OStim2PFaceRidingMF",
+	"modpack": "OStim",
+	"length": 2.0,
+	"speeds":[
+		{
+			"animation": "OStim2PFaceRidingMF_S1",
+			"displaySpeed": 0.5
+		},
+		{
+			"animation": "OStim2PFaceRidingMF_S2",
+			"displaySpeed": 1.0
+		},
+		{
+			"animation": "OStim2PFaceRidingMF_S3",
+			"displaySpeed": 2.0
+		},
+		{
+			"animation": "OStim2PFaceRidingMF_S4",
+			"displaySpeed": 3.0
+		}
+	],
+	"navigations":[
+		{
+			"destination": "OStim2PCowgirlIdleMF",
+			"description": "$ostim_nav_return",
+			"icon": "OStim/symbols/return",
+			"priority": -1000
+		},
+	    {
+	      "destination": "OStim2PFaceSittingMF",
+	      "description": "$ostim_nav_turn_around_a{1}",
+	      "icon": "OStim/positional/turnaround_f",
+	      "priority": 2000
+	    }
+	],
+	"tags":[
+		"facesitting"
+	],
+	"actors":[
+		{
+			"intendedSex": "male",
+			"sosBend": 9,
+			"scale": 1.03,
+      		"lookUp": 20,
+			"tags": [
+				"lyingback"
+			],
+			"feetOnGround": false
+		},
+		{
+			"intendedSex": "female",
+      		"lookUp": -100,
+			"tags": [
+				"kneeling"
+			],
+			"feetOnGround": false
+		}
+	],
+  	"actions": [
+  		{
+      		"type": "lickingvagina",
+      		"actor": 0,
+      		"target": 1
+    	},
+    	{
+    		"type": "analfingering",
+    		"actor": 0,
+    		"target": 1
+    	},
+    	{
+    		"type": "gropingbutt",
+    		"actor": 0,
+    		"target": 1
+    	}
+  	]
+}

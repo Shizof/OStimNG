@@ -14,7 +14,27 @@
 			52,
 			53,
 			54
-		]
+		],
+		"faction":{
+			"info": "OStimFacialActorFaction",
+			"mod": "OStim.esp",
+			"formid": "0x860"
+		},
+		"climaxStatFaction":{
+			"info": "OStimFacialActorClimaxCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x8F8"
+		},
+		"playerClimaxStatFaction":{
+			"info": "OStimFacialWithPlayerActorClimaxCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x8FA"
+		},
+		"playerClimaxStatList":{
+			"info": "OStimFacialWithPlayerActorClimaxList",
+			"mod": "OStim.esp",
+			"formid": "0x8FC"
+		}
 	},
 	"target":{
 		"info": "the one with the face",
@@ -24,6 +44,26 @@
 			44,
 			55
 		],
+		"faction":{
+			"info": "OStimFacialTargetFaction",
+			"mod": "OStim.esp",
+			"formid": "0x861"
+		},
+		"partnerClimaxStatFaction":{
+			"info": "OStimFacialTargetPartnerClimaxCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x8F9"
+		},
+		"playerPartnerClimaxStatFaction":{
+			"info": "OStimFacialWithPlayerTargetPartnerClimaxCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x8FB"
+		},
+		"playerPartnerClimaxStatList":{
+			"info": "OStimFacialWithPlayerTargetPartnerClimaxList",
+			"mod": "OStim.esp",
+			"formid": "0x8FD"
+		},
 		"stringLists":{
 			"cum":[
 				"face",
@@ -32,7 +72,7 @@
 		}
 	},
 	"tags":[
-		"climax",
+		"cumshot",
 		"sexual"
 	]
 }

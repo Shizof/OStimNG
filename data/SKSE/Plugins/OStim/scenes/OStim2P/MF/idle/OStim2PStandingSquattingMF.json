@@ -9,7 +9,7 @@
 	],
 	"navigations":[
 		{
-			"destination": "OStim2PStandingSquattingToStandingApartMF",
+			"destination": "OStim2PStandingHoldingMF",
 			"description": "$ostim_nav_stand_up_a{1}",
 			"icon": "OStim/positional/standup_f",
 			"priority": 0
@@ -25,6 +25,36 @@
 			"description": "$ostim_nav_idle_undressing",
 			"icon": "OStim/clothes/top",
 			"priority": 2000
+		},
+		{
+			"destination": "OStim2PSquattingHandjobMF",
+			"description": "$ostim_nav_handjob_t{0}",
+			"icon": "OStim/sexual/handjob_mf",
+			"priority": 3000
+		},
+		{
+			"destination": "OStim2PSquattingBlowjobMF",
+			"description": "$ostim_nav_blowjob_t{0}",
+			"icon": "OStim/sexual/blowjob_mf",
+			"priority": 3000
+		},
+	    {
+	      "destination": "OStim2PSquattingFaceFuckMF",
+	      "description": "$ostim_nav_facefuck_t{1}",
+	      "icon": "OStim/sexual/facefuck_mf",
+	      "priority": 0
+	    },
+		{
+			"destination": "OStim2PMissionaryIdleMF",
+			"description": "$ostim_nav_lie_back_a{1}",
+			"icon": "OStim/positional/lyingback_f",
+			"priority": 3000
+		},
+		{
+			"destination": "OStim2PSquattingJerkToFaceMF",
+			"description": "$ostim_nav_masturbate_to_face_t{1}",
+			"icon": "OStim/sexual/malemasturbation",
+			"priority": 3000
 		}
 	],
 	"tags":[
@@ -42,6 +72,8 @@
 		},
 		{
 			"intendedSex": "female",
+			"scaleHeight": 67,
+			"scale": 1.0,
 			"tags": [
 				"squatting"
 			],

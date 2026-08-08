@@ -1,0 +1,107 @@
+{
+  "name": "$OStim2PStandingSittingJerkToFaceMasturbationMF",
+  "modPack": "OStim",
+  "length": 2,
+  "speeds": [
+    {
+      "animation": "OStim2PStandingSittingJerkToFaceMasturbationMF_S1",
+      "playbackSpeed": 1,
+      "displaySpeed": 0.5
+    },
+    {
+      "animation": "OStim2PStandingSittingJerkToFaceMasturbationMF_S2",
+      "playbackSpeed": 1,
+      "displaySpeed": 1
+    },
+    {
+      "animation": "OStim2PStandingSittingJerkToFaceMasturbationMF_S3",
+      "playbackSpeed": 1,
+      "displaySpeed": 1.5
+    },
+    {
+      "animation": "OStim2PStandingSittingJerkToFaceMasturbationMF_S4",
+      "playbackSpeed": 1,
+      "displaySpeed": 2
+    }
+  ],
+  "navigations": [
+    {
+      "destination": "OStim2PStandingKneelingMF",
+      "description": "$ostim_nav_return",
+      "icon": "ostim/symbols/return",
+      "priority": -1000
+    },
+    {
+      "destination": "OStim2PKneelingJerkToFaceMF",
+      "description": "$ostim_nav_masturbate_stop_a{1}",
+      "icon": "OStim/detail/grab_f_end",
+      "priority": 1000
+    },
+    {
+      "destination": "OStim2PKneelingFacefuckMF",
+      "description": "$ostim_nav_facefuck_t{1}",
+      "icon": "OStim/sexual/facefuck_mf",
+      "priority": 2000
+    },
+    {
+      "destination": "OStim2PMissionaryJerkToPussyMF",
+      "description": "$ostim_nav_lie_back_a{1}",
+      "icon": "OStim/positional/lyingback_f",
+      "priority": 3000
+    }
+  ],
+  "defaultSpeed": 1,
+  "noRandomSelection": false,
+  "actors": [
+    {
+      "type": "npc",
+      "intendedSex": "male",
+      "sosBend": 2,
+      "scale": 1.03,
+      "lookUp": -50,
+      "tags": [
+        "standing"
+      ],
+      "feetOnGround": true
+    },
+    {
+      "type": "npc",
+      "intendedSex": "female",
+      "lookLeft": 0,
+      "tags": [
+        "sitting"
+      ],
+      "feetOnGround": false
+    }
+  ],
+  "actions": [
+    {
+      "type": "malemasturbation",
+      "actor": 0
+    },
+    {
+      "type": "femalemasturbation",
+      "actor": 1
+    },
+    {
+      "type": "spectating",
+      "actor": 1,
+      "target": 0
+    },
+    {
+      "type": "spectating",
+      "actor": 0,
+      "target": 1
+    },
+    {
+      "type": "facial",
+      "actor": 0,
+      "target": 1
+    },
+    {
+      "type": "cumonchest",
+      "actor": 0,
+      "target": 1
+    }
+  ]
+}

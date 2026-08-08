@@ -10,6 +10,7 @@
 namespace OStim {
     class Node {
     public:
+        // --- ABI version 1 ---
         virtual const char* getNodeID() = 0; // this will always be fully lowercase
 
         virtual uint32_t getActorCount() = 0;

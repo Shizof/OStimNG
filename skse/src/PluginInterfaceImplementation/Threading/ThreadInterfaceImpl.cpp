@@ -1,12 +1,13 @@
 #include "ThreadInterfaceImpl.h"
 
 #include "ThreadBuilderImpl.h"
+#include "../InterfaceMapImpl.h"
 
 #include "Core/ThreadManager.h"
 
 namespace Interface {
     uint32_t ThreadInterfaceImpl::getVersion() {
-        return 2;
+        return InterfaceMapImpl::CORE_INTERFACE_VERSION;
     }
 
 
@@ -48,5 +49,9 @@ namespace Interface {
         }
 
         return new ThreadBuilderImpl(gameActors);
+    }
+
+    OStim::ThreadActor* ThreadInterfaceImpl::getActor(void* gameActor) {
+        return Threading::ThreadManager::GetSingleton()->findActor(gameActor);
     }
 }

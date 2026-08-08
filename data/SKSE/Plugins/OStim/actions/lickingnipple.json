@@ -20,18 +20,41 @@
 			44,
 			55
 		],
-		"faction":[
-			{
-				"info": "OStimLickingNipplesActorFaction",
-				"mod": "OStim.esp",
-				"formid": "0xE77"
-			},
-			{
-				"info": "OStimAnyOralActorFaction",
-				"mod": "OStim.esp",
-				"formid": "0xEA7"
-			}
-		]
+		"faction":{
+			"info": "OStimLickingNipplesActorFaction",
+			"mod": "OStim.esp",
+			"formid": "0xE77"
+		},
+		"statFaction":{
+			"info": "OStimLickingNippleActorCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0xF6B"
+		},
+		"playerStatFaction":{
+			"info": "OStimLickingNippleWithPlayerActorCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0xFEC"
+		},
+		"partnerClimaxStatFaction":{
+			"info": "OStimLickingNippleActorPartnerClimaxCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x97E"
+		},
+		"playerPartnerClimaxStatFaction":{
+			"info": "OStimLickingNippleWithPlayerActorPartnerClimaxCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x97F"
+		},
+		"playerStatList":{
+			"info": "OStimLickingNippleWithPlayerActorList",
+			"mod": "OStim.esp",
+			"formid": "0x982"
+		},
+		"playerPartnerClimaxStatList":{
+			"info": "OStimLickingNippleWithPlayerActorPartnerClimaxList",
+			"mod": "OStim.esp",
+			"formid": "0x983"
+		}
 	},
 	"target":{
 		"info": "the one with the nipple",
@@ -47,18 +70,41 @@
 			46,
 			56
 		],
-		"faction":[
-			{
-				"info": "OStimLickingNipplesTargetFaction",
-				"mod": "OStim.esp",
-				"formid": "0xE78"
-			},
-			{
-				"info": "OStimAnyOralTargetFaction",
-				"mod": "OStim.esp",
-				"formid": "0xEA8"
-			}
-		],
+		"faction":{
+			"info": "OStimLickingNipplesTargetFaction",
+			"mod": "OStim.esp",
+			"formid": "0xE78"
+		},
+		"statFaction":{
+			"info": "OStimLickingNippleTargetCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0xF6C"
+		},
+		"playerStatFaction":{
+			"info": "OStimLickingNippleWithPlayerTargetCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0xFED"
+		},
+		"climaxStatFaction":{
+			"info": "OStimLickingNippleTargetClimaxCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x980"
+		},
+		"playerClimaxStatFaction":{
+			"info": "OStimLickingNippleWithPlayerTargetClimaxCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x981"
+		},
+		"playerStatList":{
+			"info": "OStimLickingNippleWithPlayerTargetList",
+			"mod": "OStim.esp",
+			"formid": "0x984"
+		},
+		"playerClimaxStatList":{
+			"info": "OStimLickingNippleWithPlayerTargetClimaxList",
+			"mod": "OStim.esp",
+			"formid": "0x985"
+		},
 		"toySlot": "nipples"
 	},
 	"performer":{
@@ -67,6 +113,7 @@
 		}
 	},
 	"tags":[
+		"licking",
 		"oral",
 		"sexual"
 	]

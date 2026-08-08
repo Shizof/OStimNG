@@ -54,6 +54,12 @@
 			"description": "finger {1}",
 			"icon": "OStim/sexual/vaginalfingering_mf",
 			"priority": 2000
+		},
+		{
+			"destination": "OStim2PStandingSquattingMF",
+			"description": "$ostim_nav_squat_before_t{0}",
+			"icon": "OStim/positional/squatting_f",
+			"priority": 2000
 		}
 	],
 	"actors":[

@@ -18,6 +18,36 @@
 			"info": "OStimVaginalFistingActorFaction",
 			"mod": "OStim.esp",
 			"formid": "0xE8E"
+		},
+		"statFaction":{
+			"info": "OStimVaginalFistingActorCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0xF0F"
+		},
+		"playerStatFaction":{
+			"info": "OStimVaginalFistingWithPlayerActorCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x807"
+		},
+		"partnerClimaxStatFaction":{
+			"info": "OStimVaginalFistingActorPartnerClimaxCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x9A6"
+		},
+		"playerPartnerClimaxStatFaction":{
+			"info": "OStimVaginalFistingWithPlayerActorPartnerClimaxCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x9A7"
+		},
+		"playerStatList":{
+			"info": "OStimVaginalFistingWithPlayerActorList",
+			"mod": "OStim.esp",
+			"formid": "0x9AA"
+		},
+		"playerPartnerClimaxStatList":{
+			"info": "OStimVaginalFistingWithPlayerActorPartnerClimaxList",
+			"mod": "OStim.esp",
+			"formid": "0x9AB"
 		}
 	},
 	"target":{
@@ -41,6 +71,36 @@
 			"mod": "OStim.esp",
 			"formid": "0xE8F"
 		},
+		"statFaction":{
+			"info": "OStimVaginalFistingTargetCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0xF10"
+		},
+		"playerStatFaction":{
+			"info": "OStimVaginalFistingWithPlayerTargetCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x808"
+		},
+		"climaxStatFaction":{
+			"info": "OStimVaginalFistingTargetClimaxCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x9A8"
+		},
+		"playerClimaxStatFaction":{
+			"info": "OStimVaginalFistingWithPlayerTargetClimaxCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x9A9"
+		},
+		"playerStatList":{
+			"info": "OStimVaginalFistingWithPlayerTargetList",
+			"mod": "OStim.esp",
+			"formid": "0x9AC"
+		},
+		"playerClimaxStatList":{
+			"info": "OStimVaginalFistingWithPlayerTargetClimaxList",
+			"mod": "OStim.esp",
+			"formid": "0x9AD"
+		},
 		"toySlot": "genital"
 	},
 	"performer":{
@@ -49,6 +109,9 @@
 		}
 	},
 	"tags":[
-		"sexual"
+		"fisting",
+		"sexual",
+		"vaginalpenetration",
+		"vaginalstimulation"
 	]
 }

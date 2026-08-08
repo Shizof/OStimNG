@@ -13,7 +13,7 @@ namespace Furniture {
         std::unordered_map<std::string, std::string> rawSuperTypes;
 
         Util::JsonFileLoader::LoadFilesInSubfolders(FURNITURE_TYPE_FILE_PATH, [&rawSuperTypes](std::string path, std::string filename, json json) {
-            FurnitureType furnitureType{.id = filename};
+            FurnitureType furnitureType(filename);
             StringUtil::toLower(&furnitureType.id);
 
             JsonUtil::loadTranslatedString(json, furnitureType.name, "name", filename, "furniture type", false);
@@ -211,7 +211,9 @@ namespace Furniture {
             furnitureTypes[furnitureType.id] = furnitureType;
         });
 
-        furnitureTypes["none"] = {.id = "none", .name = "None"};
+        FurnitureType none("none");
+        none.name = "None";
+        furnitureTypes["none"] = none;
 
         for (auto& [subtype, supertype] : rawSuperTypes) {
             if (furnitureTypes.contains(supertype)) {

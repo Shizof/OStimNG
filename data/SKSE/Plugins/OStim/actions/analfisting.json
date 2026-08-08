@@ -15,6 +15,36 @@
 			"info": "OStimAnalFistingActorFaction",
 			"mod": "OStim.esp",
 			"formid": "0xE4D"
+		},
+		"statFaction":{
+			"info": "OStimAnalFistingActorCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0xF0B"
+		},
+		"playerStatFaction":{
+			"info": "OStimAnalFistingWithPlayerActorCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0xFC8"
+		},
+		"partnerClimaxStatFaction":{
+			"info": "OStimAnalFistingActorPartnerClimaxCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x916"
+		},
+		"playerPartnerClimaxStatFaction":{
+			"info": "OStimAnalFistingWithPlayerActorPartnerClimaxCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x917"
+		},
+		"playerStatList":{
+			"info": "OStimAnalFistingWithPlayerActorList",
+			"mod": "OStim.esp",
+			"formid": "0x91A"
+		},
+		"playerPartnerClimaxStatList":{
+			"info": "OStimAnalFistingWithPlayerActorPartnerClimaxList",
+			"mod": "OStim.esp",
+			"formid": "0x91B"
 		}
 	},
 	"target":{
@@ -38,6 +68,36 @@
 			"mod": "OStim.esp",
 			"formid": "0xE4E"
 		},
+		"statFaction":{
+			"info": "OStimAnalFistingTargetCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0xF0C"
+		},
+		"playerStatFaction":{
+			"info": "OStimAnalFistingWithPlayerTargetCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0xFC9"
+		},
+		"climaxStatFaction":{
+			"info": "OStimAnalFistingTargetClimaxCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x918"
+		},
+		"playerClimaxStatFaction":{
+			"info": "OStimAnalFistingWithPlayerTargetClimaxCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x919"
+		},
+		"playerStatList":{
+			"info": "OStimAnalFistingWithPlayerTargetList",
+			"mod": "OStim.esp",
+			"formid": "0x91C"
+		},
+		"playerClimaxStatList":{
+			"info": "OStimAnalFistingWithPlayerTargetClimaxList",
+			"mod": "OStim.esp",
+			"formid": "0x91D"
+		},
 		"toySlot": "anus"
 	},
 	"performer":{
@@ -46,6 +106,9 @@
 		}
 	},
 	"tags":[
+		"analpenetration",
+		"analstimulation",
+		"fisting",
 		"sexual"
 	]
 }

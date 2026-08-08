@@ -38,6 +38,30 @@
 			"description": "$ostim_nav_lick_penis_t{0}",
 			"icon": "OStim/sensual/licking",
 			"priority": 0
+		},
+		{
+			"destination": "OStim2PKneelingBlowjobHoldLegsMF",
+			"description": "$ostim_nav_hold_leg_t{0}",
+			"icon": "OStim/detail/grab_f",
+			"priority": 0
+		},
+		{
+			"destination": "OStim2PKneelingFacefuckMF",
+			"description": "$ostim_nav_facefuck_t{1}",
+			"icon": "OStim/sexual/facefuck_mf",
+			"priority": 0
+		},
+		{
+			"destination": "OStim2PStandingKneelingTitfuckMF",
+			"description": "$ostim_nav_titfuck_t{1}",
+			"icon": "OStim/sexual/boobjob_mf",
+			"priority": 0
+		},
+		{
+			"destination": "OStim2PKneelingJerkToFaceMF",
+			"description": "$ostim_nav_masturbate_to_face_t{1}",
+			"icon": "OStim/sexual/malemasturbation",
+			"priority": 2000
 		}
 	],
 	"actors":[
@@ -45,7 +69,6 @@
 			"intendedSex": "male",
 			"sosBend": 1,
 			"scale": 1.03,
-      		"scaleHeight": 67,
       		"lookUp": -75,
 			"tags": [
 				"standing"
@@ -54,7 +77,7 @@
 		},
 		{
 			"intendedSex": "female",
-      		"scaleHeight": 67,
+			"scale": 1.0,
       		"lookUp": 100,
 			"tags": [
 				"kneeling"
@@ -72,11 +95,6 @@
     		"type": "holdinghead",
     		"actor": 0,
     		"target": 1
-    	},
-    	{
-    		"type": "holdingbody",
-    		"actor": 1,
-    		"target": 0
     	}
   	]
 }

@@ -7,7 +7,7 @@ message("Using toolchain file ${CMAKE_TOOLCHAIN_FILE}.")
 ########################################################################################################################
 project(
         OStim
-        VERSION 7.4.0.3
+        VERSION 7.5.0.2
         DESCRIPTION ""
         LANGUAGES CXX)
 
@@ -65,6 +65,7 @@ set(sources
     src/Core/Thread/ThreadNavigation.cpp
     src/Core/Thread/ThreadSound.cpp
     src/Core/ThreadActor/ThreadActorAnimation.cpp
+    src/Core/ThreadActor/ThreadActorAPI.cpp
     src/Core/ThreadActor/ThreadActorClimax.cpp
     src/Core/ThreadActor/ThreadActorEquipObjects.cpp
     src/Core/ThreadActor/ThreadActorExcitement.cpp
@@ -107,11 +108,13 @@ set(sources
     src/Graph/Action/Peak/Loop/LoopPeakType.cpp
     src/Graph/Action/Peak/PeakType.cpp
     src/Graph/Action/Action.cpp
+    src/Graph/Action/ActionActor.cpp
     src/Graph/Action/ActionAttributes.cpp
     src/Graph/Action/ActionTag.cpp
     src/Graph/GraphTable/GraphTableActions.cpp
     src/Graph/GraphTable/GraphTableEvents.cpp
     src/Graph/GraphTable/GraphTableNodes.cpp
+    src/Graph/GraphTable/GraphTableReloadNode.cpp
     src/Graph/GraphTable/GraphTableSequences.cpp
     src/Graph/GraphTable/GraphTableSetupNodes.cpp
     src/Graph/GraphTable/GraphTableSetupOptions.cpp
@@ -129,6 +132,7 @@ set(sources
 	src/PCH.h
 	src/Papyrus/Papyrus.cpp
 	src/Papyrus/Script.h
+    src/PluginInterfaceImplementation/Furniture/FurnitureInterfaceImpl.cpp
     src/PluginInterfaceImplementation/Settings/SettingInterfaceImpl.cpp
     src/PluginInterfaceImplementation/SexToys/SexToyInterfaceImpl.cpp
     src/PluginInterfaceImplementation/Threading/ThreadBuilderImpl.cpp

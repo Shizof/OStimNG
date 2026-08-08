@@ -1,0 +1,129 @@
+{
+	"aliases":[
+		"lickdick",
+		"lickpenis",
+		"lickingdick",
+		"lickingpenis"
+	],
+	"actor":{
+		"info": "the one with the mouth",
+		"stimulation":0.1,
+		"maxStimulation":50,
+		"moan":true,
+		"muffled":true,
+		"expressionOverride":"tongue",
+		"requirements":[
+			"mouth"
+		],
+		"strippingSlots":[
+			30,
+			31,
+			44,
+			55
+		],
+		"faction":{
+			"info": "OStimLickingPenisActorFaction",
+			"mod": "OStim.esp",
+			"formid": "0xE79"
+		},
+		"statFaction":{
+			"info": "OStimPenileLickingActorCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0xF6D"
+		},
+		"playerStatFaction":{
+			"info": "OStimPenileLickingWithPlayerActorCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0xFF0"
+		},
+		"partnerClimaxStatFaction":{
+			"info": "OStimPenileLickingActorPartnerClimaxCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x986"
+		},
+		"playerPartnerClimaxStatFaction":{
+			"info": "OStimPenileLickingWithPlayerActorPartnerClimaxCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x987"
+		},
+		"playerStatList":{
+			"info": "OStimPenileLickingWithPlayerActorList",
+			"mod": "OStim.esp",
+			"formid": "0x98A"
+		},
+		"playerPartnerClimaxStatList":{
+			"info": "OStimPenileLickingWithPlayerActorPartnerClimaxList",
+			"mod": "OStim.esp",
+			"formid": "0x98B"
+		},
+		"stringLists":{
+			"cum":[
+				"mouth"
+			]
+		}
+	},
+	"target":{
+		"info": "the one with the penis",
+		"stimulation":1.4,
+		"fullStrip":true,
+		"moan":true,
+		"talk":true,
+		"requirements":[
+			"penis"
+		],
+		"strippingSlots":[
+			32,
+			49,
+			52,
+			53
+		],
+		"faction":{
+			"info": "OStimLickingPenisTargetFaction",
+			"mod": "OStim.esp",
+			"formid": "0xE7A"
+		},
+		"statFaction":{
+			"info": "OStimPenileLickingTargetCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0xF6E"
+		},
+		"playerStatFaction":{
+			"info": "OStimPenileLickingWithPlayerTargetCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0xFF1"
+		},
+		"climaxStatFaction":{
+			"info": "OStimPenileLickingTargetClimaxCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x988"
+		},
+		"playerClimaxStatFaction":{
+			"info": "OStimPenileLickingWithPlayerTargetClimaxCounterFaction",
+			"mod": "OStim.esp",
+			"formid": "0x989"
+		},
+		"playerStatList":{
+			"info": "OStimPenileLickingWithPlayerTargetList",
+			"mod": "OStim.esp",
+			"formid": "0x98C"
+		},
+		"playerClimaxStatList":{
+			"info": "OStimPenileLickingWithPlayerTargetClimaxList",
+			"mod": "OStim.esp",
+			"formid": "0x98D"
+		},
+		"toySlot": "genital"
+	},
+	"performer":{
+		"floats":{
+			"stamina":0.5
+		}
+	},
+	"tags":[
+		"fellatio",
+		"licking",
+		"oral",
+		"penilestimulation",
+		"sexual"
+	]
+}

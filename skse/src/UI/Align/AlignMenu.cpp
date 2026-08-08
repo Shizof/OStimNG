@@ -44,7 +44,7 @@ namespace UI::Align {
             RE::GFxValue alignmentInfo;
             GetAlignmentInfo(alignmentInfo);
             OverrideFunction(alignmentInfo, new UI::doHideMenuRequest, "doHideMenuRequest");
-            OStimMenu::PostRegister();
+            OStimMenu::PostRegister(); //for vr version
         });
     }
 
