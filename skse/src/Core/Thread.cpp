@@ -6,6 +6,7 @@
 #include "GameAPI/Game.h"
 #include "GameAPI/GameCamera.h"
 #include "GameAPI/GameEvents.h"
+#include "GameLogic/GameHooks.h"
 #include "Graph/GraphTable.h"
 #include "Graph/Node.h"
 #include <Messaging/IMessages.h>
@@ -137,6 +138,9 @@ namespace Threading {
         }
 
         if (playerThread) {
+            if (REL::Module::IsVR()) {
+                GameLogic::VRPlayerClipUpdate::SetPlayerSceneActive(true);
+            }
             auto uiState = UI::UIState::GetSingleton();
             if (uiState) {
                 uiState->SetThread(this);
@@ -690,6 +694,9 @@ namespace Threading {
         logger::info("closing thread {}", m_threadId);
 
         if (playerThread) {
+            if (REL::Module::IsVR()) {
+                GameLogic::VRPlayerClipUpdate::SetPlayerSceneActive(false);
+            }
             // During migration: close UI but DON'T reset camera - new thread will reuse it
             UI::EndControlledScene();
             if(!isMigrating) {
@@ -825,6 +832,7 @@ namespace Threading {
         RE::BSAnimationGraphManagerPtr graphManager;
         a_actor->GetAnimationGraphManager(graphManager);
         if (graphManager) {
+
 		    for (const auto& animationGraph : graphManager->graphs) {
 			    animationGraph->GetEventSource<RE::BSAnimationGraphEvent>()->AddEventSink(this);
 		    }
@@ -861,8 +869,14 @@ namespace Threading {
 
         std::string tag = a_event->tag.c_str();
 
+		//for VR version
         if (tag == "OStimClimax") {
-            GetActor(actor)->climax();
+            auto threadActor = GetActor(actor);
+            if (!REL::Module::IsVR()) {
+                threadActor->climax();
+            } else if (!actor->IsPlayerRef() && threadActor && m_currentNode && m_currentNode->hasActorTag(threadActor->index, "climaxing")) {
+                threadActor->climax();
+            }
         } else if (tag == "OStimEvent") {
             std::vector<std::string> payloadVec = stl::string_split(a_event->payload.c_str(), ',');
             if (payloadVec.size() == 2) {
