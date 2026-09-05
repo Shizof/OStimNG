@@ -24,10 +24,11 @@ namespace Graph {
             bool isType(std::string type);
             bool isType(std::vector<std::string> types);
 
-
+#pragma region ABI
             virtual OStim::ActionType* getType() override;
 
             virtual int32_t getActor(OStim::Role role) override;
+#pragma endregion
         };
     }
 }

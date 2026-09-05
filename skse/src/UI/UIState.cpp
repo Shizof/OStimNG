@@ -84,7 +84,9 @@ namespace UI {
         if (currentThread != thread) return;
         
         currentNode = node;
-        SKSE::GetTaskInterface()->AddTask([node]() {
+        SKSE::GetTaskInterface()->AddTask([thread]() {
+            if (UIState::GetSingleton()->currentThread != thread) return;
+            
             UI::Align::AlignMenu::GetMenu()->NodeChanged();
 #ifndef ENABLE_SKYRIM_VR
             UI::Scene::SceneMenu::GetMenu()->UpdateMenuData();

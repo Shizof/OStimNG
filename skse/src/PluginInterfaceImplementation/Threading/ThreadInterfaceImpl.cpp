@@ -7,7 +7,7 @@
 
 namespace Interface {
     uint32_t ThreadInterfaceImpl::getVersion() {
-        return InterfaceMapImpl::CORE_INTERFACE_VERSION;
+        return SKSE::PluginDeclaration::GetSingleton()->GetVersion().pack();
     }
 
 

@@ -1,7 +1,9 @@
 #pragma once
 
+#include "ActionActor.h"
 #include "ActionTag.h"
 #include "ActionTagVisitor.h"
+#include "Role.h"
 
 namespace OStim {
     class ActionType {
@@ -13,5 +15,8 @@ namespace OStim {
         virtual uint32_t getTagCount() = 0;
         virtual ActionTag* getTag(uint32_t index) = 0;
         virtual void forEachTag(ActionTagVisitor* visitor) = 0;
+
+        // --- ABI version 0x07050003 ---
+        virtual ActionActor* getActor(Role role) = 0;
     };
 }

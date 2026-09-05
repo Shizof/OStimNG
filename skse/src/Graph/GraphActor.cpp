@@ -14,57 +14,17 @@ namespace Graph {
         for (const std::string& equipObject : actor.equipObjects) {
             equipObjects.insert(equipObject);
         }
-        for (GameAPI::GameFaction faction : actor.factions) {
-            if (!VectorUtil::contains(factions, faction)) {
-                factions.push_back(faction);
-            }
-        }
-        for (GameAPI::GameFaction faction : actor.statFactions) {
-            if (!VectorUtil::contains(statFactions, faction)) {
-                statFactions.push_back(faction);
-            }
-        }
-        for (GameAPI::GameFaction faction : actor.playerStatFactions) {
-            if (!VectorUtil::contains(statFactions, faction)) {
-                statFactions.push_back(faction);
-            }
-        }
-        for (GameAPI::GameFaction faction : actor.climaxStatFactions) {
-            if (!VectorUtil::contains(climaxStatFactions, faction)) {
-                climaxStatFactions.push_back(faction);
-            }
-        }
-        for (GameAPI::GameFaction faction : actor.partnerClimaxStatFactions) {
-            if (!VectorUtil::contains(partnerClimaxStatFactions, faction)) {
-                partnerClimaxStatFactions.push_back(faction);
-            }
-        }
-        for (GameAPI::GameFaction faction : actor.playerClimaxStatFactions) {
-            if (!VectorUtil::contains(playerClimaxStatFactions, faction)) {
-                playerClimaxStatFactions.push_back(faction);
-            }
-        }
-        for (GameAPI::GameFaction faction : actor.playerPartnerClimaxStatFactions) {
-            if (!VectorUtil::contains(playerPartnerClimaxStatFactions, faction)) {
-                playerPartnerClimaxStatFactions.push_back(faction);
-            }
-        }
 
-        for (GameAPI::GameList list : actor.playerStatLists) {
-            if (!VectorUtil::contains(playerStatLists, list)) {
-                playerStatLists.push_back(list);
-            }
-        }
-        for (GameAPI::GameList list : actor.playerClimaxStatLists) {
-            if (!VectorUtil::contains(playerClimaxStatLists, list)) {
-                playerClimaxStatLists.push_back(list);
-            }
-        }
-        for (GameAPI::GameList list : actor.playerPartnerClimaxStatLists) {
-            if (!VectorUtil::contains(playerPartnerClimaxStatLists, list)) {
-                playerPartnerClimaxStatLists.push_back(list);
-            }
-        }
+        VectorUtil::mergeDistinct(factions, actor.factions);
+        VectorUtil::mergeDistinct(statFactions, actor.statFactions);
+        VectorUtil::mergeDistinct(playerStatFactions, actor.playerStatFactions);
+        VectorUtil::mergeDistinct(climaxStatFactions, actor.climaxStatFactions);
+        VectorUtil::mergeDistinct(partnerClimaxStatFactions, actor.partnerClimaxStatFactions);
+        VectorUtil::mergeDistinct(playerClimaxStatFactions, actor.playerClimaxStatFactions);
+        VectorUtil::mergeDistinct(playerPartnerClimaxStatFactions, actor.playerPartnerClimaxStatFactions);
+        VectorUtil::mergeDistinct(playerStatLists, actor.playerStatLists);
+        VectorUtil::mergeDistinct(playerClimaxStatLists, actor.playerClimaxStatLists);
+        VectorUtil::mergeDistinct(playerPartnerClimaxStatLists, actor.playerPartnerClimaxStatLists);
     }
 
 

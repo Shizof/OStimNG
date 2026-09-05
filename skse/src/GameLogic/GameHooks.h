@@ -7,6 +7,11 @@
 #include <atomic>
 #include <cstring>
 
+
+namespace OStimVR {
+    void QueuePlayerAnimObjectUpdate();
+}
+
 namespace GameLogic {
     void installHooks();
     void installHooksPostPost();
@@ -59,6 +64,7 @@ namespace GameLogic {
             RE::hkaAnimation* animationBefore = bindingBefore && bindingBefore->animation ? bindingBefore->animation.get() : nullptr;
             const float oldTime = pthis->localTime;
             func(pthis, context, timestep);
+            OStimVR::QueuePlayerAnimObjectUpdate();
             if (!animationBefore || pthis->binding != bindingBefore || !pthis->binding->animation || pthis->binding->animation.get() != animationBefore) return;
 
             const float newTime = pthis->localTime;

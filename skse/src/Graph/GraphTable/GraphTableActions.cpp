@@ -42,6 +42,17 @@ namespace Graph {
         JsonUtil::loadGameRecordList(json, path, "playerClimaxStatList", actor.playerClimaxStatLists);
         JsonUtil::loadGameRecordList(json, path, "playerPartnerClimaxStatList", actor.playerPartnerClimaxStatLists);
 
+        actor.displayStatFaction = actor.statFactions.empty() ? nullptr : actor.statFactions[0];
+        actor.displayPlayerStatFaction = actor.playerStatFactions.empty() ? nullptr : actor.playerStatFactions[0];
+        actor.displayClimaxStatFaction = actor.climaxStatFactions.empty() ? nullptr : actor.climaxStatFactions[0];
+        actor.displayPartnerClimaxStatFaction = actor.partnerClimaxStatFactions.empty() ? nullptr : actor.partnerClimaxStatFactions[0];
+        actor.displayPlayerClimaxStatFaction = actor.playerClimaxStatFactions.empty() ? nullptr : actor.playerClimaxStatFactions[0];
+        actor.displayPlayerPartnerClimaxStatFaction = actor.playerPartnerClimaxStatFactions.empty() ? nullptr : actor.playerPartnerClimaxStatFactions[0];
+
+        actor.displayPlayerStatList = actor.playerStatLists.empty() ? nullptr : actor.playerStatLists[0];
+        actor.displayPlayerClimaxStatList = actor.playerClimaxStatLists.empty() ? nullptr : actor.playerClimaxStatLists[0];
+        actor.displayPlayerPartnerClimaxStatList = actor.playerPartnerClimaxStatLists.empty() ? nullptr : actor.playerPartnerClimaxStatLists[0];
+
         if (json.contains("ints")) {
             for (auto& [key, val] : json["ints"].items()) {
                 std::string mutableKey = key;
@@ -219,12 +230,29 @@ namespace Graph {
         return type;
     }
 
-    Action::ActionAttributes* GraphTable::GetActionAttributesByType(std::string type) {
+    Action::ActionAttributes* GraphTable::getActionAttributesByType(std::string type) {
         if (auto it = actions.find(type); it != actions.end()) {
             return &it->second;
         } else {
             logger::warn("No action found for {} using default", type);
             return &actions.at("default");
         }
+    }
+
+
+    Action::ActionTag* GraphTable::getActionTag(std::string id) {
+        if (auto it = actionTags.find(id); it != actionTags.end()) {
+            return &it->second;
+        }
+
+        return nullptr;
+    }
+
+    Action::ActionAttributes* GraphTable::getActionTypeUnsafe(std::string id) {
+        if (auto it = actions.find(id); it != actions.end()) {
+            return &it->second;
+        }
+
+        return nullptr;
     }
 }

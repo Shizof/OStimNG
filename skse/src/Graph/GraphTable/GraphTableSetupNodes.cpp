@@ -441,7 +441,7 @@ namespace Graph {
                         } else {
                             logger::warn("action {} of scene {} is malformed", index, node->scene_id);
                         }
-                        action.attributes = GetActionAttributesByType(action.type);
+                        action.attributes = getActionAttributesByType(action.type);
                         node->actions.push_back(action);
                         index++;
                     }

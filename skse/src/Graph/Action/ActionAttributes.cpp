@@ -10,7 +10,7 @@ namespace Graph {
             for (ActionTag& tag : tags) {
                 tag.roles.forEach([&](Graph::Role role, Action::ActionActor& actor) {
                     roles.get(role)->merge(actor);
-                });
+                    });
             }
         }
 
@@ -88,6 +88,19 @@ namespace Graph {
                 if (!visitor->visit(&tag)) {
                     break;
                 }
+            }
+        }
+
+        OStim::ActionActor* ActionAttributes::getActor(OStim::Role role) {
+            switch (role){
+            case OStim::Role::ACTOR:
+                return &roles.actor;
+            case OStim::Role::TARGET:
+                return &roles.target;
+            case OStim::Role::PERFORMER:
+                return &roles.performer;
+            default:
+                return nullptr;
             }
         }
     }

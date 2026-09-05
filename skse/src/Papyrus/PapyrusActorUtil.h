@@ -102,11 +102,16 @@ namespace PapyrusActorUtil {
             }
 
             RE::Actor* actor = ref->As<RE::Actor>();
+
             if (!includeCenter && actor == center) {
                 return RE::BSContainer::ForEachResult::kContinue;
             }
 
             if (!includePlayer && actor->IsPlayerRef()) {
+                return RE::BSContainer::ForEachResult::kContinue;
+            }
+
+            if (actor->IsDisabled() || actor->IsGhost()) {
                 return RE::BSContainer::ForEachResult::kContinue;
             }
 

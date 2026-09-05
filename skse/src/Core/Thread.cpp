@@ -339,13 +339,15 @@ namespace Threading {
 
         nodeChangedAutoControl();
 
-        auto messaging = SKSE::GetMessagingInterface();
+		if (REL::Module::IsVR()) {
+	        auto messaging = SKSE::GetMessagingInterface();
 
-        Messaging::AnimationChangedMessage msg;
-        msg.newAnimation = a_node;
-        logger::info("Sending animation changed event");
-        Messaging::MessagingRegistry::GetSingleton()->SendMessageToListeners(msg);
-
+	        Messaging::AnimationChangedMessage msg;
+	        msg.newAnimation = a_node;
+	        logger::info("Sending animation changed event");
+	        Messaging::MessagingRegistry::GetSingleton()->SendMessageToListeners(msg);
+		}
+		
         GameAPI::GameEvents::sendSceneChangedEvent(m_threadId, m_currentNode->scene_id);
     }
 

@@ -6,7 +6,7 @@
 namespace ScriptAPI {
     namespace ActionData {
         bool fulfillsActorConditions(std::string actionType, GameAPI::GameActor actor) {
-            Graph::Action::ActionAttributes* action = Graph::GraphTable::GetActionAttributesByType(actionType);
+            Graph::Action::ActionAttributes* action = Graph::GraphTable::getActionAttributesByType(actionType);
             if (!action) {
                 return false;
             }
@@ -16,7 +16,7 @@ namespace ScriptAPI {
         }
 
         bool fulfillsTargetConditions(std::string actionType, GameAPI::GameActor actor) {
-            Graph::Action::ActionAttributes* action = Graph::GraphTable::GetActionAttributesByType(actionType);
+            Graph::Action::ActionAttributes* action = Graph::GraphTable::getActionAttributesByType(actionType);
             if (!action) {
                 return false;
             }
@@ -26,7 +26,7 @@ namespace ScriptAPI {
         }
 
         bool fulfillsPerformerConditions(std::string actionType, GameAPI::GameActor actor) {
-            Graph::Action::ActionAttributes* action = Graph::GraphTable::GetActionAttributesByType(actionType);
+            Graph::Action::ActionAttributes* action = Graph::GraphTable::getActionAttributesByType(actionType);
             if (!action) {
                 return false;
             }

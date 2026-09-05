@@ -7,7 +7,7 @@
 
 namespace Interface {
     uint32_t SettingInterfaceImpl::getVersion() {
-        return 1;
+        return SKSE::PluginDeclaration::GetSingleton()->GetVersion().pack();
     }
 
     void SettingInterfaceImpl::addGroup(OStim::SettingGroup* group) {

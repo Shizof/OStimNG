@@ -4,7 +4,7 @@
 
 namespace Interface {
     uint32_t SexToyInterfaceImpl::getVersion() {
-        return 1;
+        return SKSE::PluginDeclaration::GetSingleton()->GetVersion().pack();
     }
 
     void SexToyInterfaceImpl::registerReloadListener(OStim::SexToyReloadListener* listener) {

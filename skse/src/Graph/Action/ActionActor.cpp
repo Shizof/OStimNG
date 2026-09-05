@@ -31,65 +31,17 @@ namespace Graph {
                 equipObjects.insert(equipObject);
             }
 
-            for (GameAPI::GameFaction faction : other.factions) {
-                if (!VectorUtil::contains(factions, faction)) {
-                    factions.push_back(faction);
-                }
-            }
 
-            for (GameAPI::GameFaction faction : other.statFactions) {
-                if (!VectorUtil::contains(statFactions, faction)) {
-                    statFactions.push_back(faction);
-                }
-            }
-
-            for (GameAPI::GameFaction faction : other.playerStatFactions) {
-                if (!VectorUtil::contains(playerStatFactions, faction)) {
-                    playerStatFactions.push_back(faction);
-                }
-            }
-
-            for (GameAPI::GameFaction faction : other.climaxStatFactions) {
-                if (!VectorUtil::contains(climaxStatFactions, faction)) {
-                    climaxStatFactions.push_back(faction);
-                }
-            }
-
-            for (GameAPI::GameFaction faction : other.partnerClimaxStatFactions) {
-                if (!VectorUtil::contains(partnerClimaxStatFactions, faction)) {
-                    partnerClimaxStatFactions.push_back(faction);
-                }
-            }
-
-            for (GameAPI::GameFaction faction : other.playerClimaxStatFactions) {
-                if (!VectorUtil::contains(playerClimaxStatFactions, faction)) {
-                    playerClimaxStatFactions.push_back(faction);
-                }
-            }
-
-            for (GameAPI::GameFaction faction : other.playerPartnerClimaxStatFactions) {
-                if (!VectorUtil::contains(playerPartnerClimaxStatFactions, faction)) {
-                    playerPartnerClimaxStatFactions.push_back(faction);
-                }
-            }
-
-            for (GameAPI::GameList list : other.playerStatLists) {
-                if (!VectorUtil::contains(playerStatLists, list)) {
-                    playerStatLists.push_back(list);
-                }
-            }
-
-            for (GameAPI::GameList list : other.playerClimaxStatLists) {
-                if (!VectorUtil::contains(playerClimaxStatLists, list)) {
-                    playerClimaxStatLists.push_back(list);
-                }
-            }
-
-            for (GameAPI::GameList list : other.playerPartnerClimaxStatLists) {
-                if (!VectorUtil::contains(playerPartnerClimaxStatLists, list)) {
-                    playerPartnerClimaxStatLists.push_back(list);
-                }
-            }
+            VectorUtil::mergeDistinct(factions, other.factions);
+            VectorUtil::mergeDistinct(statFactions, other.statFactions);
+            VectorUtil::mergeDistinct(playerStatFactions, other.playerStatFactions);
+            VectorUtil::mergeDistinct(climaxStatFactions, other.climaxStatFactions);
+            VectorUtil::mergeDistinct(partnerClimaxStatFactions, other.partnerClimaxStatFactions);
+            VectorUtil::mergeDistinct(playerClimaxStatFactions, other.playerClimaxStatFactions);
+            VectorUtil::mergeDistinct(playerPartnerClimaxStatFactions, other.playerPartnerClimaxStatFactions);
+            VectorUtil::mergeDistinct(playerStatLists, other.playerStatLists);
+            VectorUtil::mergeDistinct(playerClimaxStatLists, other.playerClimaxStatLists);
+            VectorUtil::mergeDistinct(playerPartnerClimaxStatLists, other.playerPartnerClimaxStatLists);
 
 
             for (std::string& slot : other.toySlots) {
@@ -98,5 +50,17 @@ namespace Graph {
                 }
             }
         }
+
+
+        void* ActionActor::getTimesPerformedFaction() { return displayStatFaction.toABIPointer(); }
+        void* ActionActor::getTimesPerformedWithPlayerFaction() { return displayPlayerStatFaction.toABIPointer(); }
+        void* ActionActor::getTimesClimaxedFaction() { return displayClimaxStatFaction.toABIPointer(); }
+        void* ActionActor::getTimesPartnerClimaxedFaction() { return displayPartnerClimaxStatFaction.toABIPointer(); }
+        void* ActionActor::getTimesClimaxedWithPlayerFaction() { return displayPlayerClimaxStatFaction.toABIPointer(); }
+        void* ActionActor::getTimesPartnerClimaxedWithPlayerFaction() { return displayPlayerPartnerClimaxStatFaction.toABIPointer(); }
+
+        void* ActionActor::getPlayerMateList() { return displayPlayerStatList.toABIPointer(); }
+        void* ActionActor::getPlayerMateClimaxedList() { return displayPlayerClimaxStatList.toABIPointer(); }
+        void* ActionActor::getPlayerMatePartnerClimaxedList() { return displayPlayerPartnerClimaxStatList.toABIPointer(); }
     }
 }

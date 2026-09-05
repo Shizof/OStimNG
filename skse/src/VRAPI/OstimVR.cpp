@@ -1,5 +1,12 @@
 #include "VRAPI/OstimVR.h"
 
+#include <algorithm>
+#include <atomic>
+#include <cctype>
+#include <fstream>
+#include <sstream>
+#include <unordered_map>
+
 namespace OStimVR 
 {
     vrikPluginApi::IVrikInterface001* vrikInterface;
@@ -92,6 +99,449 @@ namespace OStimVR
     RE::NiMatrix3 sceneHeightOffsetBaselineRotation;
     std::uint32_t cameraTransitionGeneration = 0;
     std::uint32_t hmdPositionTransitionGeneration = 0;
+
+    struct PlayerAnimObjectAttachment
+    {
+        RE::NiPointer<RE::NiNode> parent;
+        RE::NiPointer<RE::NiAVObject> object;
+        RE::NiPointer<RE::NiAVObject> transformSource;
+        RE::NiTransform transformSourceLocal;
+        bool useTransformSource = false;
+    };
+
+    std::unordered_map<std::string, std::vector<std::string>> playerAnimObjectEventMap;
+    std::vector<PlayerAnimObjectAttachment> playerAnimObjectAttachments;
+    std::atomic<std::uint32_t> playerAnimObjectGeneration{0};
+    std::atomic<bool> playerAnimObjectUpdateQueued{false};
+
+    std::string NormalizePlayerAnimObjectString(std::string value)
+    {
+        const auto first = value.find_first_not_of(" \t\r\n");
+        if (first == std::string::npos) {
+            return {};
+        }
+        const auto last = value.find_last_not_of(" \t\r\n");
+        value = value.substr(first, last - first + 1);
+        std::ranges::transform(value, value.begin(), [](unsigned char ch) {
+            return static_cast<char>(std::tolower(ch));
+        });
+        return value;
+    }
+
+    bool IsPlayerAnimObjectList(const fs::path& path)
+    {
+        if (!path.has_filename() || NormalizePlayerAnimObjectString(path.extension().string()) != ".txt") {
+            return false;
+        }
+        const auto name = NormalizePlayerAnimObjectString(path.filename().string());
+        return (name.starts_with("fnis_") && name.ends_with("_list.txt")) ||
+               (name.starts_with("att_") && name.ends_with("_animlist.txt"));
+    }
+
+    bool EndsWithHKX(std::string value)
+    {
+        std::ranges::transform(value, value.begin(), [](unsigned char ch) {
+            return static_cast<char>(std::tolower(ch));
+        });
+        return value.ends_with(".hkx");
+    }
+
+    void ParsePlayerAnimObjectList(const fs::path& path)
+    {
+        std::ifstream input(path);
+        if (!input.is_open()) {
+            return;
+        }
+
+        std::string line;
+        while (std::getline(input, line)) {
+            const auto first = line.find_first_not_of(" \t\r\n");
+            if (first == std::string::npos || line[first] == '\'') {
+                continue;
+            }
+
+            std::istringstream stream(line);
+            std::vector<std::string> tokens;
+            for (std::string token; stream >> token;) {
+                if (!token.empty() && token.front() == '\'') {
+                    break;
+                }
+                tokens.push_back(std::move(token));
+            }
+
+            const auto hkx = std::ranges::find_if(tokens, EndsWithHKX);
+            if (hkx == tokens.end() || hkx == tokens.begin() || std::next(hkx) == tokens.end()) {
+                continue;
+            }
+
+            const auto eventName = NormalizePlayerAnimObjectString(*std::prev(hkx));
+            auto& objects = playerAnimObjectEventMap[eventName];
+            for (auto it = std::next(hkx); it != tokens.end(); ++it) {
+                std::string editorID = *it;
+                if (const auto slash = editorID.find('/'); slash != std::string::npos) {
+                    editorID.resize(slash);
+                }
+                if (editorID.empty()) {
+                    continue;
+                }
+                if (std::ranges::find(objects, editorID) == objects.end()) {
+                    objects.push_back(std::move(editorID));
+                }
+            }
+        }
+    }
+
+    void BuildPlayerAnimObjectEventMap()
+    {
+        playerAnimObjectEventMap.clear();
+
+        std::error_code error;
+        const auto root = fs::current_path() / "Data" / "meshes" / "actors" / "character" / "animations";
+        if (!fs::exists(root, error)) {
+            return;
+        }
+
+        const auto options = fs::directory_options::skip_permission_denied;
+        for (fs::recursive_directory_iterator it(root, options, error), end; it != end; it.increment(error)) {
+            if (error) {
+                error.clear();
+                continue;
+            }
+
+            if (it->is_regular_file(error) && IsPlayerAnimObjectList(it->path())) {
+                ParsePlayerAnimObjectList(it->path());
+            }
+        }
+    }
+
+    bool GetPlayerWeaponBindTransform(RE::PlayerCharacter* player, RE::NiAVObject* actor3D, RE::NiPointer<RE::NiAVObject>& transformSource, RE::NiTransform& weaponLocal)
+    {
+        if (!player || !actor3D) {
+            return false;
+        }
+
+        auto actorBase = player->GetActorBase();
+        auto race = actorBase ? actorBase->GetRace() : nullptr;
+        if (!actorBase || !race) {
+            return false;
+        }
+
+        const char* skeletonPath = race->skeletonModels[actorBase->GetSex()].GetModel();
+        if (!skeletonPath || skeletonPath[0] == '\0') {
+            return false;
+        }
+
+        RE::NiPointer<RE::NiNode> skeletonModel;
+        const RE::BSModelDB::DBTraits::ArgsType args{};
+        if (RE::BSModelDB::Demand(skeletonPath, skeletonModel, args) != RE::BSResource::ErrorCode::kNone || !skeletonModel) {
+            return false;
+        }
+
+        auto bindWeapon = skeletonModel->GetObjectByName(RE::BSFixedString("WEAPON"));
+        if (!bindWeapon || !bindWeapon->parent || bindWeapon->parent->name.c_str()[0] == '\0') {
+            return false;
+        }
+
+        auto liveParent = actor3D->GetObjectByName(RE::BSFixedString(bindWeapon->parent->name.c_str()));
+        if (!liveParent) {
+            return false;
+        }
+
+        transformSource = RE::NiPointer<RE::NiAVObject>(liveParent);
+        weaponLocal = bindWeapon->local;
+        return true;
+    }
+
+    void RefreshPlayerAnimObject(RE::NiAVObject* object, RE::NiNode* parent)
+    {
+        if (!object) {
+            return;
+        }
+
+        object->CullNode(false);
+
+        auto& flags = object->GetFlags();
+        flags.reset(RE::NiAVObject::Flag::kSelectiveUpdate);
+        flags.reset(RE::NiAVObject::Flag::kSelectiveUpdateTransforms);
+        flags.reset(RE::NiAVObject::Flag::kSelectiveUpdateController);
+        flags.reset(RE::NiAVObject::Flag::kSelectiveUpdateRigid);
+        flags.reset(RE::NiAVObject::Flag::kSelectiveUpdateTransformsOverride);
+        flags.set(RE::NiAVObject::Flag::kForceUpdate);
+
+        RE::NiUpdateData updateData{0.0F, RE::NiUpdateData::Flag::kDirty};
+        object->UpdateWorldData(&updateData);
+        object->UpdateDownwardPass(updateData, 0);
+        object->UpdateWorldBound();
+
+        if (parent) {
+            parent->UpdateWorldBound();
+        }
+    }
+
+    void SyncPlayerAnimObject(PlayerAnimObjectAttachment& attachment)
+    {
+        auto object = attachment.object.get();
+        auto parent = attachment.parent.get();
+        if (!object || !parent || object->parent != parent) {
+            return;
+        }
+
+        object->previousWorld = object->world;
+        if (attachment.useTransformSource && attachment.transformSource) {
+            const auto objectWorld = attachment.transformSource->world * attachment.transformSourceLocal;
+            object->local = parent->world.Invert() * objectWorld;
+            object->world = objectWorld;
+        } 
+		else {
+            object->world = parent->world * object->local;
+        }
+
+        object->CullNode(false);
+
+        RE::NiUpdateData updateData{0.0F, RE::NiUpdateData::Flag::kDirty};
+        if (auto node = object->AsNode()) {
+            for (auto& child : node->GetChildren()) {
+                if (child) {
+                    child->UpdateDownwardPass(updateData, 0);
+                }
+            }
+        }
+
+        object->UpdateWorldBound();
+        parent->UpdateWorldBound();
+    }
+
+    void QueuePlayerAnimObjectUpdate()
+    {
+        bool expected = false;
+        if (!playerAnimObjectUpdateQueued.compare_exchange_strong(expected, true)) {
+            return;
+        }
+
+        SKSE::GetTaskInterface()->AddTask([]() {
+            playerAnimObjectUpdateQueued.store(false);
+            if (!playerInScene) {
+                return;
+            }
+
+            for (auto& attachment : playerAnimObjectAttachments) {
+                if (attachment.object && attachment.parent) {
+                    SyncPlayerAnimObject(attachment);
+                }
+            }
+        });
+    }
+
+    void ClearPlayerAnimObjectsNow()
+    {
+        for (auto& attachment : playerAnimObjectAttachments) {
+            if (attachment.parent && attachment.object && attachment.object->parent == attachment.parent.get()) {
+                attachment.parent->DetachChild(attachment.object.get());
+                attachment.parent->UpdateWorldBound();
+            }
+        }
+
+        playerAnimObjectAttachments.clear();
+    }
+
+    void AttachPlayerAnimObject(const std::string& editorID)
+    {
+        auto form = RE::TESForm::LookupByEditorID<RE::TESObjectANIO>(editorID);
+        if (!form) {
+            return;
+        }
+
+        const char* modelPath = form->GetModel();
+        if (!modelPath || modelPath[0] == '\0') {
+            return;
+        }
+
+        RE::NiPointer<RE::NiNode> loadedModel;
+        const RE::BSModelDB::DBTraits::ArgsType args{};
+        const auto error = RE::BSModelDB::Demand(modelPath, loadedModel, args);
+        if (error != RE::BSResource::ErrorCode::kNone || !loadedModel) {
+            return;
+        }
+
+        RE::NiPointer<RE::NiAVObject> modelClone{netimmerse_cast<RE::NiAVObject*>(loadedModel->Clone())};
+        auto modelNode = modelClone ? modelClone->AsNode() : nullptr;
+        if (!modelNode) {
+            return;
+        }
+
+        auto player = RE::PlayerCharacter::GetSingleton();
+        if (!player) {
+            return;
+        }
+
+        auto actor3D = player->Get3D(false);
+        if (!actor3D) {
+            actor3D = player->Get3D();
+        }
+        if (!actor3D) {
+            return;
+        }
+
+        const RE::NiStringExtraData* prn = nullptr;
+        const RE::NiStringExtraData* frn = nullptr;
+        for (std::uint16_t i = 0; i < modelNode->GetExtraDataSize(); ++i) {
+            auto extra = netimmerse_cast<RE::NiStringExtraData*>(modelNode->GetExtraDataAt(i));
+            if (!extra || !extra->value || extra->value[0] == '\0') {
+                continue;
+            }
+
+            if (_stricmp(extra->GetName().c_str(), "Prn") == 0 && !prn) {
+                prn = extra;
+            } 
+            else if (_stricmp(extra->GetName().c_str(), "Frn") == 0 && !frn) {
+                frn = extra;
+            }
+        }
+
+        const char* nodeName = "NPC Root [Root]";
+        if (prn) {
+            nodeName = prn->value;
+        } 
+        else if (frn) {
+            nodeName = frn->value;
+        }
+
+        if (frn && !prn && _stricmp(nodeName, "Scene Root") == 0) {
+            return;
+        }
+
+        const bool sceneFixedFrn =
+            frn && !prn &&
+            (_stricmp(nodeName, "AnimObjectA") == 0 || _stricmp(nodeName, "AnimObjectB") == 0);
+        const bool sceneFixedDefault = !prn && !frn;
+        const bool animationWeaponPrn = prn && _stricmp(nodeName, "WEAPON") == 0;
+
+        RE::NiPointer<RE::NiAVObject> transformSource;
+        RE::NiTransform transformSourceLocal;
+        bool useTransformSource = false;
+
+        RE::NiNode* parent = nullptr;
+        if (animationWeaponPrn) {
+            RE::NiTransform weaponLocal;
+            if (GetPlayerWeaponBindTransform(player, actor3D, transformSource, weaponLocal)) {
+                parent = actor3D->parent ? actor3D->parent->AsNode() : nullptr;
+                if (parent) {
+                    transformSourceLocal = weaponLocal * modelNode->local;
+                    useTransformSource = true;
+
+                    const auto objectWorld = transformSource->world * transformSourceLocal;
+                    modelNode->local = parent->world.Invert() * objectWorld;
+                }
+            }
+        } 
+		else if (sceneFixedDefault) {
+            parent = actor3D->parent ? actor3D->parent->AsNode() : nullptr;
+            if (parent) {
+                const auto nifLocal = modelNode->local;
+
+                RE::NiTransform slotWorld;
+                slotWorld.translate = {ostimAlignmentX, ostimAlignmentY, ostimAlignmentZ};
+                slotWorld.rotate.SetEulerAnglesXYZ(0.0f, 0.0f, ostimAlignmentR);
+                slotWorld.scale = player->GetScale();
+
+                const auto objectWorld = slotWorld * nifLocal;
+                modelNode->local = parent->world.Invert() * objectWorld;
+            }
+        } 
+        else if (sceneFixedFrn) {
+            parent = actor3D->parent ? actor3D->parent->AsNode() : nullptr;
+            auto locatorObject = actor3D->GetObjectByName(RE::BSFixedString(nodeName));
+            if (parent && locatorObject) {
+                const auto nifLocal = modelNode->local;
+                auto locatorLocal = locatorObject->local;
+                locatorLocal.translate = {0.0f, 0.0f, 0.0f};
+
+                RE::NiTransform slotWorld;
+                slotWorld.translate = {ostimAlignmentX, ostimAlignmentY, ostimAlignmentZ};
+                slotWorld.rotate.SetEulerAnglesXYZ(0.0f, 0.0f, ostimAlignmentR);
+                slotWorld.scale = player->GetScale();
+
+                const auto objectWorld = slotWorld * locatorLocal * nifLocal;
+                modelNode->local = parent->world.Invert() * objectWorld;
+            }
+        }
+
+        if (!parent) 
+        {
+            if (auto object = actor3D->GetObjectByName(RE::BSFixedString(nodeName)); object) {
+                parent = object->AsNode();
+            }
+
+            if (!parent) {
+                if (auto object = actor3D->GetObjectByName(RE::BSFixedString("NPC Root [Root]")); object) {
+                    parent = object->AsNode();
+                }
+            }
+
+            if (!parent) {
+                parent = actor3D->AsNode();
+            }
+        }
+
+        if (!parent) {
+            return;
+        }
+
+        if (!sceneFixedFrn && (_stricmp(nodeName, "AnimObjectA") == 0 || _stricmp(nodeName, "AnimObjectB") == 0)) {
+            parent->SetAppCulled(false);
+        }
+
+        parent->AttachChild(modelNode, true);
+        RefreshPlayerAnimObject(modelNode, parent);
+
+        PlayerAnimObjectAttachment attachment;
+        attachment.parent = RE::NiPointer<RE::NiNode>(parent);
+        attachment.object = modelClone;
+        attachment.transformSource = transformSource;
+        attachment.transformSourceLocal = transformSourceLocal;
+        attachment.useTransformSource = useTransformSource;
+        SyncPlayerAnimObject(attachment);
+        playerAnimObjectAttachments.push_back(std::move(attachment));
+
+    }
+
+    void ApplyPlayerAnimObjectsForEvent(std::string_view animationEvent)
+    {
+        if (!playerInScene || animationEvent.empty()) {
+            return;
+        }
+
+        const auto eventName = NormalizePlayerAnimObjectString(std::string(animationEvent));
+        const auto generation = ++playerAnimObjectGeneration;
+        std::vector<std::string> editorIDs;
+
+        if (const auto it = playerAnimObjectEventMap.find(eventName); it != playerAnimObjectEventMap.end()) {
+            editorIDs = it->second;
+        }
+
+        SKSE::GetTaskInterface()->AddTask([editorIDs = std::move(editorIDs), generation]() {
+            if (!playerInScene || generation != playerAnimObjectGeneration.load()) {
+                return;
+            }
+
+            ClearPlayerAnimObjectsNow();
+            for (const auto& editorID : editorIDs) {
+                AttachPlayerAnimObject(editorID);
+            }
+        });
+    }
+
+    void ClearPlayerAnimObjects()
+    {
+        const auto generation = ++playerAnimObjectGeneration;
+        SKSE::GetTaskInterface()->AddTask([generation]() {
+            if (generation != playerAnimObjectGeneration.load()) {
+                return;
+            }
+
+            ClearPlayerAnimObjectsNow();
+        });
+    }
 
     float NormalizeAngleRadians(float angle)
     {
@@ -795,6 +1245,7 @@ namespace OStimVR
     void PlayerSceneStart() 
     {
         playerInScene = true;
+        ClearPlayerAnimObjects();
         ++cameraTransitionGeneration;
         ++hmdPositionTransitionGeneration;
         CaptureSceneVRRotationBaseline();
@@ -925,6 +1376,7 @@ namespace OStimVR
 
     void PlayerSceneEnd() 
     {
+        ClearPlayerAnimObjects();
         playerInScene = false;
         ++cameraTransitionGeneration;
         ++hmdPositionTransitionGeneration;

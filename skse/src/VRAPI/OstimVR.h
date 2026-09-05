@@ -42,6 +42,8 @@ namespace OStimVR
 
     void PlayerSceneStart();
     void PlayerSceneEnd();
+    void BuildPlayerAnimObjectEventMap();
+    void ApplyPlayerAnimObjectsForEvent(std::string_view animationEvent);
     void CameraSwitchFunc(bool firstPerson);
     bool GetIsCameraFirstPerson();
     void loadConfig();

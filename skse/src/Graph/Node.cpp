@@ -432,4 +432,23 @@ namespace Graph {
             }
         }
     }
+
+    bool Node::isValid(uint32_t actorCount, void** actors) {
+        std::vector<GameAPI::GameActor> gameActors;
+
+        for (int i = 0; i < actorCount; i++) {
+            GameAPI::GameActor actor = *(actors + i);
+            if (!Threading::isEligible(actor)) {
+                return false;
+            }
+            gameActors.push_back(actor);
+        }
+
+        std::vector<Trait::ActorCondition> conditions = Trait::ActorCondition::create(gameActors);
+        return fulfilledBy(conditions);
+    }
+
+    OStim::FurnitureType* Node::getFurnitureType() {
+        return furnitureType;
+    }
 }

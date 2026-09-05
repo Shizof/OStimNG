@@ -123,6 +123,10 @@ namespace Graph {
         virtual uint32_t getActionCount() override;
         virtual OStim::Action* getAction(uint32_t index) override;
         virtual void forEachAction(OStim::ActionVisitor* visitor) override;
+
+        virtual bool isValid(uint32_t actorCount, void** actors) override;
+
+        virtual OStim::FurnitureType* getFurnitureType() override;
 #pragma endregion
     };
 }

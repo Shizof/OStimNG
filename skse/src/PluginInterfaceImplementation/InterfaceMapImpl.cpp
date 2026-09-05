@@ -1,5 +1,7 @@
 #include "InterfaceMapImpl.h"
 
+#include "Furniture/FurnitureInterfaceImpl.h"
+#include "Graph/GraphInterfaceImpl.h"
 #include "Settings/SettingInterfaceImpl.h"
 #include "SexToys/SexToyInterfaceImpl.h"
 #include "Threading/ThreadInterfaceImpl.h"
@@ -37,6 +39,8 @@ namespace Interface {
     }
 
     void InterfaceMapImpl::setupInterfaces() {
+        addInterface(OStim::FurnitureInterface::NAME, FurnitureInterfaceImpl::getSingleton());
+        addInterface(OStim::GraphInterface::NAME, GraphInterfaceImpl::getSingleton());
         addInterface(OStim::SettingInterface::NAME, SettingInterfaceImpl::getSingleton());
         addInterface(OStim::SexToyInterface::NAME, SexToyInterfaceImpl::getSingleton());
         addInterface(OStim::ThreadInterface::NAME, ThreadInterfaceImpl::getSingleton());

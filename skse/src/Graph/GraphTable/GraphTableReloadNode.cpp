@@ -261,7 +261,7 @@ namespace Graph {
                     JsonUtil::loadBool(jsonAction, action.doPeaks, "doPeaks", sceneId, objectType, false);
                     JsonUtil::loadBool(jsonAction, action.peaksAnnotated, "peaksAnnotated", sceneId, objectType, false);
                 }
-                action.attributes = GetActionAttributesByType(action.type);
+                action.attributes = getActionAttributesByType(action.type);
                 node->actions.push_back(action);
                 index++;
             }

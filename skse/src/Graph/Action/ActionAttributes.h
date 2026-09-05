@@ -28,13 +28,16 @@ namespace Graph {
             float getStimulation(Role role, GameAPI::GameActor actor);
             float getMaxStimulation(Role role, GameAPI::GameActor actor);
 
-
+#pragma region ABI
             virtual const char* getActionID() override;
             
             virtual bool hasTag(const char* tag) override;
             virtual uint32_t getTagCount() override;
             virtual OStim::ActionTag* getTag(uint32_t index) override;
             virtual void forEachTag(OStim::ActionTagVisitor* visitor) override;
+
+            virtual OStim::ActionActor* getActor(OStim::Role role) override;
+#pragma endregion
         };
     }
 }

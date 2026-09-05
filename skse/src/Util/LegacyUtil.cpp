@@ -292,7 +292,7 @@ namespace LegacyUtil {
                     } else {
                         actionObj.roles.performer = actor.as_int();
                     }
-                    actionObj.attributes = Graph::GraphTable::GetActionAttributesByType(actionObj.type);
+                    actionObj.attributes = Graph::GraphTable::getActionAttributesByType(actionObj.type);
                     node->actions.push_back(actionObj);
                 }
 
@@ -392,13 +392,13 @@ namespace LegacyUtil {
             }
             if (actionObj) {
                 actionObj->roles.performer = actionObj->roles.actor;
-                actionObj->attributes = Graph::GraphTable::GetActionAttributesByType(actionObj->type);
+                actionObj->attributes = Graph::GraphTable::getActionAttributesByType(actionObj->type);
                 node->actions.push_back(*actionObj);
                 delete actionObj;
             }
             if (actionObj2) {
                 actionObj2->roles.performer = actionObj2->roles.actor;
-                actionObj2->attributes = Graph::GraphTable::GetActionAttributesByType(actionObj2->type);
+                actionObj2->attributes = Graph::GraphTable::getActionAttributesByType(actionObj2->type);
                 node->actions.push_back(*actionObj2);
                 delete actionObj2;
             }

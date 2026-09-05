@@ -7,7 +7,7 @@ message("Using toolchain file ${CMAKE_TOOLCHAIN_FILE}.")
 ########################################################################################################################
 project(
         OStim
-        VERSION 7.5.0.2
+        VERSION 7.5.1.0
         DESCRIPTION ""
         LANGUAGES CXX)
 
@@ -133,6 +133,9 @@ set(sources
 	src/Papyrus/Papyrus.cpp
 	src/Papyrus/Script.h
     src/PluginInterfaceImplementation/Furniture/FurnitureInterfaceImpl.cpp
+    src/PluginInterfaceImplementation/Graph/GraphInterfaceImpl.cpp
+    src/PluginInterfaceImplementation/Graph/GraphInterfaceImpl.h
+    src/PluginInterface/Graph/ActionActor.h
     src/PluginInterfaceImplementation/Settings/SettingInterfaceImpl.cpp
     src/PluginInterfaceImplementation/SexToys/SexToyInterfaceImpl.cpp
     src/PluginInterfaceImplementation/Threading/ThreadBuilderImpl.cpp

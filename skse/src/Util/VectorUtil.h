@@ -62,6 +62,15 @@ namespace VectorUtil {
         return vec;
     }
 
+    template <class T>
+    void mergeDistinct(std::vector<T>& target, std::vector<T>& source) {
+        for (T element : source) {
+            if (!VectorUtil::contains(target, element)) {
+                target.push_back(element);
+            }
+        }
+    }
+
     bool contains(std::vector<int> haystack, int needle);
     std::vector<int> stoiv(std::string string);
     std::vector<float> stofv(std::string string);

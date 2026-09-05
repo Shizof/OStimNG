@@ -13,6 +13,8 @@ namespace Graph {
             RoleMap<ActionActor> roles;
 
             virtual const char* getTagID() override;
+
+            virtual OStim::ActionActor* getActor(OStim::Role role) override;
         };
     }
 }

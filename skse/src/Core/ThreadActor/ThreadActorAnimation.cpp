@@ -1,6 +1,7 @@
 #include "Core/ThreadActor.h"
 
 #include "MCM/MCMTable.h"
+#include "VRAPI/OstimVR.h"
 
 namespace Threading {
     void ThreadActor::playAnimation(Graph::Speed& speed) {
@@ -8,7 +9,12 @@ namespace Threading {
             return;
         }
 
-        actor.playAnimation(speed.animation + "_" + std::to_string(graphActor->animationIndex), speed.playbackSpeed);
+		//VR
+        std::string animationEvent = speed.animation + "_" + std::to_string(graphActor->animationIndex);
+        actor.playAnimation(animationEvent, speed.playbackSpeed);
+        if (REL::Module::IsVR() && actor.isPlayer()) {
+            OStimVR::ApplyPlayerAnimObjectsForEvent(animationEvent);
+        }
     }
 
     void ThreadActor::bendSchlong() {

@@ -81,7 +81,7 @@ namespace PapyrusData {
             return stimulation;
 		}
 
-        Graph::Action::ActionAttributes* attributes = Graph::GraphTable::GetActionAttributesByType(action);
+        Graph::Action::ActionAttributes* attributes = Graph::GraphTable::getActionAttributesByType(action);
         if (!attributes) {
             return 0.0f;
 		}
@@ -99,7 +99,7 @@ namespace PapyrusData {
             return stimulation;
         }
 
-        Graph::Action::ActionAttributes* attributes = Graph::GraphTable::GetActionAttributesByType(action);
+        Graph::Action::ActionAttributes* attributes = Graph::GraphTable::getActionAttributesByType(action);
         if (!attributes) {
             return 0.0f;
         }
@@ -112,7 +112,7 @@ namespace PapyrusData {
     }
 
     float GetActionDefaultStimulation(RE::StaticFunctionTag*, int role, std::string action) {
-        Graph::Action::ActionAttributes* attributes = Graph::GraphTable::GetActionAttributesByType(action);
+        Graph::Action::ActionAttributes* attributes = Graph::GraphTable::getActionAttributesByType(action);
         if (!attributes) {
             return 0.0f;
         }
@@ -125,7 +125,7 @@ namespace PapyrusData {
     }
 
     float GetActionDefaultMaxStimulation(RE::StaticFunctionTag*, int role, std::string action) {
-        Graph::Action::ActionAttributes* attributes = Graph::GraphTable::GetActionAttributesByType(action);
+        Graph::Action::ActionAttributes* attributes = Graph::GraphTable::getActionAttributesByType(action);
         if (!attributes) {
             return 0.0f;
         }

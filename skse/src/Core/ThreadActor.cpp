@@ -50,6 +50,9 @@ namespace Threading {
         Util::APITable::getTimeUntilClimaxFaction().add(actor, -1);
 
         addToStatList(Util::APITable::getActorList());
+        if (thread->isPlayerThread() && !actor.isPlayer()) {
+            addToStatList(Util::APITable::getPlayerPartnerList());
+        }
 
         if (MCM::MCMTable::removeWeaponsAtStart()) {
             removeWeapons();

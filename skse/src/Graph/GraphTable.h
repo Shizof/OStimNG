@@ -16,7 +16,10 @@ namespace Graph{
         static void SetupActions();
         static std::vector<std::string> getActions();
         static std::string getActionAlias(std::string type);
-        static Action::ActionAttributes* GetActionAttributesByType(std::string type);
+        static Action::ActionAttributes* getActionAttributesByType(std::string type);
+
+        static Action::ActionTag* getActionTag(std::string id);
+        static Action::ActionAttributes* getActionTypeUnsafe(std::string id);
 
     private:
         inline static std::unordered_map<std::string, Action::ActionTag> actionTags;

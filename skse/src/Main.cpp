@@ -151,6 +151,9 @@ namespace {
                 OStimVR::loadConfig();
                 OStimVR::loadSceneAlignmentsConfig();
                 OStimVR::loadGlobalAlignmentConfig();
+                if (REL::Module::IsVR()) {
+                    OStimVR::BuildPlayerAnimObjectEventMap();
+                }
 
                 Core::dataLoaded();
                 SKSE::GetTaskInterface()->AddTask([]() { Core::postDataLoaded(); });
@@ -179,7 +182,7 @@ namespace {
 
 extern "C" DLLEXPORT constinit auto SKSEPlugin_Version = []() {
     SKSE::PluginVersionData v;
-    v.PluginVersion(REL::Version("7.5.0.2"sv));
+    v.PluginVersion(REL::Version("7.5.1.0"sv));
     v.PluginName("OStim");
     v.AuthorName("VersuchDrei");
     v.UsesAddressLibrary();
@@ -191,7 +194,7 @@ extern "C" DLLEXPORT constinit auto SKSEPlugin_Version = []() {
 extern "C" DLLEXPORT bool SKSEAPI SKSEPlugin_Query(const SKSE::QueryInterface* a_skse, SKSE::PluginInfo* a_info) {
     a_info->infoVersion = SKSE::PluginInfo::kVersion;
     a_info->name = "OStim";
-    a_info->version = 0x07050002;
+    a_info->version = 0x07050010;
 
     return true;
 }
